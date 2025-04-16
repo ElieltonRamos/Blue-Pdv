@@ -1,5 +1,45 @@
-<main class="bg-indigo-950 h-screen w-screen flex items-center justify-center">
-  <section>
-    
-  </section>
-</main>
+<div class="min-h-screen bg-gradient-to-b from-purple-900 to-purple-950 flex flex-col items-center justify-start py-12">
+  <span class="bg-indigo-600 text-white px-6 py-2 rounded-full mb-8 shadow-md hover:bg-indigo-700 transition">
+    Menu
+  </span>
+
+  <div class="bg-slate-800 rounded-xl p-10 grid grid-cols-1 md:grid-cols-3 gap-6 shadow-lg w-[90%] max-w-5xl">
+
+     <app-card-menu
+      [title]="'Cadastro de Cliente'"
+      [icon]="'👤➕'"
+      [path]="'/cadastro-cliente'"
+    />
+
+     <app-card-menu
+     [title]="'Cadastro de Produto'"
+      [icon]="'🏷️'"
+      [path]="'/cadastro-produto'"
+     />
+
+     <app-card-menu
+     [title]="'Cadastro de Usuario'"
+      [icon]="'🚚'"
+      [path]="'/cadastro-usuario'"
+     />
+
+     <app-card-menu
+     [title]="'Histórico de Vendas'"
+      [icon]="'🔁'"
+      [path]="'/historico-vendas'"
+     />
+
+     <app-card-menu
+      [title]="'Relatórios'"
+      [icon]="'📄'"
+      [path]="'/relatorios'"
+    />
+
+     <app-card-menu
+      [title]="'Vendas'"
+      [icon]="'🛒'"
+      [path]="'/vendas'"
+    />
+
+  </div>
+</div>
