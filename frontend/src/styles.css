@@ -1,1 +1,7 @@
 @import "tailwindcss";
+
+@layer components {
+  .msg-error {
+    @apply text-red-500 font-light text-sm;
+  }
+}

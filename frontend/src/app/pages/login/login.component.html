@@ -1,21 +1,35 @@
 <main class="bg-indigo-950 h-screen w-screen flex items-center justify-center">
-  <form class="bg-gray-300 p-4 w-96 h-64 rounded-md flex justify-center items-center flex-col shadow-lg mt-4">
-    <h1 class="text-indigo-950 font-bold text-3xl mb-10">Bem Vindo ao Ponto V</h1>
+  <form
+    [formGroup]="form"
+    (ngSubmit)="onSubmit()"
+    class="bg-gray-300 p-4 w-96 h-64 rounded-md flex justify-center items-center flex-col shadow-lg mt-4"
+  >
+    <h1 class="text-indigo-950 font-bold text-3xl mb-10">
+      Bem Vindo ao Ponto V
+    </h1>
     <input
       type="text"
       placeholder="Usuario"
-      class="rounded-sm border-1 w-full h-14 mb-2.5 pl-2"
+      formControlName="username"
+      class="rounded-sm border-1 w-full h-14 mt-2.5 pl-2"
     />
+    @if (form.get('username')?.touched && form.get('username')?.invalid) {
+    <p class="msg-error">O usuario é invalido</p>
+    }
     <input
       type="password"
       placeholder="Senha"
-      class="rounded-sm border-1 w-full h-14 mb-2.5 pl-2"
+      formControlName="password"
+      class="rounded-sm border-1 w-full h-14 mt-2.5 pl-2"
     />
+    @if (form.get('password')?.touched && form.get('password')?.invalid) {
+    <p class="msg-error">Digite sua senha</p>
+    }
     <button
       type="submit"
-      class="h-12 w-full bg-blue-600 rounded-md text-white cursor-pointer"
+      class="h-12 w-full bg-blue-600 rounded-md text-white cursor-pointer mt-2"
     >
-      Login
+      Entrar
     </button>
   </form>
 </main>
