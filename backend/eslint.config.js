@@ -13,7 +13,12 @@ export default [
       parserOptions: {
         ecmaVersion: 'latest',
         sourceType: 'module'
-      }
+      },
+      globals: {
+        process: 'readonly',
+        __dirname: 'readonly',
+        console: 'readonly', 
+      },
     },
     plugins: {
       '@typescript-eslint': tsPlugin,
