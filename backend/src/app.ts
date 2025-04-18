@@ -7,7 +7,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/', (_req, res) => {
-  res.status(200).send({ message: 'backend is running!'});
+  res.status(200).send({ message: 'backend is running!' });
 });
 
 export default app;
