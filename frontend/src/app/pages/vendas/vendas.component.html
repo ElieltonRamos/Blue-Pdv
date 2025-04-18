@@ -1,55 +1,87 @@
-<div class="min-h-screen bg-gradient-to-b from-purple-900 to-purple-950 p-6 flex flex-col items-center gap-6">
+<div
+  class="min-h-screen bg-gradient-to-b from-purple-900 to-purple-950 p-6 flex flex-col items-center gap-6"
+>
+  <div class="flex flex-col md:flex-row gap-4 items-center">
+    <div class="flex items-center gap-2">
+      <input
+        type="number"
+        placeholder="ID do cliente"
+        class="w-24 p-2 rounded bg-gray-200 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+      <button
+        class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded text-sm flex items-center justify-center"
+      >
+        Buscar
+      </button>
+    </div>
 
-  <!-- Cliente -->
-  <select class="w-full max-w-3xl bg-gray-200 text-center text-xl font-semibold p-3 rounded shadow">
-    <option selected>Ciclano da Silva</option>
-  </select>
+    <div class="flex items-center gap-2">
+      <input
+        type="text"
+        placeholder="Nome do cliente"
+        class="w-56 p-2 rounded bg-gray-200 text-black focus:outline-none focus:ring-2 focus:ring-green-500"
+      />
+      <button
+        class="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded text-sm flex items-center justify-center"
+      >
+        Buscar
+      </button>
+    </div>
 
-  <!-- Produto -->
-  <select class="w-full max-w-3xl bg-gray-200 text-center text-2xl font-bold p-3 rounded shadow">
-    <option selected>Coca Cola Lata</option>
-  </select>
+    <div
+      class="flex items-center bg-gray-200 text-black px-3 py-2 rounded text-sm"
+    >
+      <span class="font-medium mr-1">Cliente:</span>
+      <span>Ciclano da Silva</span>
+    </div>
+  </div>
 
-  <!-- Conteúdo Principal -->
-  <div class="w-full max-w-6xl bg-slate-800 rounded-xl p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-
-    <!-- Formulário Produto -->
-    <div class="flex flex-col gap-4">
-
-      <!-- Quantidade e Valor -->
-      <div class="flex flex-wrap gap-4">
-        <div class="flex-1">
-          <label class="block text-sm text-white mb-1">Quantidade</label>
-          <input type="number" value="14" class="w-full p-2 rounded bg-gray-200 text-center font-bold" />
-        </div>
-        <div class="flex-1">
-          <label class="block text-sm text-white mb-1">Valor Unitário</label>
-          <input type="text" value="8,00" class="w-full p-2 rounded bg-gray-200 text-center font-bold" />
-        </div>
+  <div
+    class="w-full max-w-6xl bg-slate-800 rounded-xl p-6 grid grid-cols-1 md:grid-cols-3 gap-6"
+  >
+    <div class="flex flex-col gap-4 md:col-span-1">
+      <div class="w-full">
+        <label class="block text-white text-sm mb-1">
+          Leitor de Código de Barras
+        </label>
+        <input
+          type="text"
+          placeholder="Escaneie o produto"
+          [(ngModel)]="codigoBarras"
+          (keydown.enter)="buscarProdutoPorCodigo()"
+          autofocus
+          class="w-full p-2 rounded bg-gray-200 text-black font-semibold text-lg text-center focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
       </div>
 
-      <!-- Valor Total + Botão -->
-      <div class="flex gap-4">
-        <div class="flex-1">
-          <label class="block text-sm text-white mb-1">Valor Total</label>
-          <div class="w-full p-2 rounded bg-gray-200 text-center font-bold">R$ 112,00</div>
-        </div>
-        <button class="flex-1 bg-green-600 text-white font-semibold rounded p-2 mt-6 hover:bg-green-700 transition">
-          Adicionar Produto
-        </button>
+      <div>
+        <label class="block text-sm text-white mb-1">Quantidade</label>
+        <input
+          type="number"
+          value="14"
+          class="w-full p-2 rounded bg-gray-200 text-center font-bold"
+        />
       </div>
 
-      <!-- Imagem -->
-      <div class="bg-white p-4 rounded-lg flex items-center justify-center">
-        <img src="https://i.imgur.com/HZlJQYx.png" alt="Coca Cola" class="w-48" />
+      <div>
+        <label class="block text-sm text-white mb-1">Valor Unitário</label>
+        <input
+          type="text"
+          value="8,00"
+          class="w-full p-2 rounded bg-gray-200 text-center font-bold"
+        />
+      </div>
+
+      <div>
+        <label class="block text-sm text-white mb-1">Valor Total</label>
+        <div class="w-full p-2 rounded bg-gray-200 text-center font-bold">
+          R$ 112,00
+        </div>
       </div>
     </div>
 
-    <!-- Lista de Produtos -->
-    <div class="flex flex-col justify-between h-full">
-
-      <!-- Tabela -->
-      <div class="overflow-auto bg-white rounded-lg shadow">
+    <div class="flex flex-col justify-between h-full md:col-span-2">
+      <div class="bg-white rounded-lg shadow overflow-y-auto max-h-64">
         <table class="w-full text-sm text-left">
           <thead class="bg-gray-100">
             <tr>
@@ -58,45 +90,57 @@
               <th class="px-4 py-2">VLR. UN.</th>
               <th class="px-4 py-2">QTD</th>
               <th class="px-4 py-2">VLR. TOTAL</th>
-              <th class="px-4 py-2 text-center">🗑️</th>
+              <th class="px-4 py-2 text-center">Excluir</th>
+              <th class="px-4 py-2 text-center">Editar</th>
             </tr>
           </thead>
           <tbody>
             <tr class="border-t">
-              <td class="px-4 py-2">7</td>
+              <td class="px-4 py-2">001</td>
               <td class="px-4 py-2">Caixa de Chocolate</td>
-              <td class="px-4 py-2">20,00</td>
+              <td class="px-4 py-2">R$ 20,00</td>
               <td class="px-4 py-2">20</td>
               <td class="px-4 py-2">R$ 400,00</td>
               <td class="px-4 py-2 text-center">🗑️</td>
+              <td class="px-4 py-2 text-center">📝</td>
             </tr>
             <tr class="border-t">
-              <td class="px-4 py-2">2</td>
+              <td class="px-4 py-2">002</td>
               <td class="px-4 py-2">Coca Cola Lata</td>
-              <td class="px-4 py-2">8,00</td>
+              <td class="px-4 py-2">R$ 8,00</td>
               <td class="px-4 py-2">14</td>
               <td class="px-4 py-2">R$ 112,00</td>
               <td class="px-4 py-2 text-center">🗑️</td>
+              <td class="px-4 py-2 text-center">📝</td>
             </tr>
           </tbody>
         </table>
       </div>
 
-      <!-- Subtotal -->
-      <div class="bg-gray-200 mt-4 rounded p-3 text-right text-lg font-semibold">
+      <div
+        class="bg-gray-200 mt-4 rounded p-3 text-right text-lg font-semibold"
+      >
         Sub-total: <span class="ml-4">R$ 512,00</span>
       </div>
     </div>
   </div>
 
-  <!-- Botões finais -->
-  <div class="flex gap-4 w-full max-w-6xl justify-end">
-    <button class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition font-bold">
-      Fechar Pedido
-    </button>
-    <button class="bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700 transition font-bold">
-      Cancelar Venda
-    </button>
-  </div>
+  <div class="flex justify-between items-center w-full max-w-6xl">
+    <div class="bg-white text-black px-4 py-2 rounded font-semibold shadow">
+      Vendedor: <span class="text-lg">{{ vendedorLogado }}</span>
+    </div>
 
+    <div class="flex gap-4">
+      <button
+        class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition font-bold"
+      >
+        Finalizar Venda
+      </button>
+      <button
+        class="bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700 transition font-bold"
+      >
+        Cancelar Venda
+      </button>
+    </div>
+  </div>
 </div>
