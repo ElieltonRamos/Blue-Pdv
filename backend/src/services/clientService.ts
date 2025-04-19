@@ -17,6 +17,23 @@ async function register(clientData: Client): Promise<ServiceResponse<Client>> {
   return { status: 'CREATED', data: newClient.dataValues };
 }
 
+async function getAllClients(): Promise<ServiceResponse<Client[]>> {
+  const clients = await ClientModel.findAll();
+  if (!clients) {
+    return { status: 'SERVER_ERROR', data: { message: 'Erro ao buscar clientes' }};
+  }
+  const allClients = clients.map((client) => client.dataValues);
+  return { status: 'OK', data: allClients };
+}
+
+async function getClientById(id: string): Promise<ServiceResponse<Client>> {
+  const client = await ClientModel.findByPk(id);
+  if (!client) return { status: 'NOT_FOUND', data: { message: 'Cliente não encontrado' }};
+  return { status: 'OK', data: client.dataValues };
+}
+
 export default {
   register,
+  getAllClients,
+  getClientById,
 };
