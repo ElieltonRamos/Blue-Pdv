@@ -5,6 +5,7 @@ const clientRoutes = Router();
 
 clientRoutes.get('/', clientController.getAllClients);
 clientRoutes.get('/:id', clientController.getClientById);
+clientRoutes.get('/search/:name', clientController.searchClients);
 clientRoutes.post('/register', clientController.register);
 
 export default clientRoutes;

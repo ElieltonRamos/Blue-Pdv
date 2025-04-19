@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import ClientModel from '../database/models/client.model';
 import Client from '../interfaces/client';
 import { ServiceResponse } from '../interfaces/services';
@@ -26,6 +27,21 @@ async function getAllClients(): Promise<ServiceResponse<Client[]>> {
   return { status: 'OK', data: allClients };
 }
 
+async function searchClients(searchName: string): Promise<ServiceResponse<Client[]>> {
+  const clients = await ClientModel.findAll({
+    where: {
+      name: {
+        [Op.like]: `%${searchName}%`,
+      },
+    },
+  });
+  if (!clients) {
+    return { status: 'SERVER_ERROR', data: { message: 'Erro ao buscar clientes' }};
+  }
+  const foundClients = clients.map((client) => client.dataValues);
+  return { status: 'OK', data: foundClients };
+};
+
 async function getClientById(id: string): Promise<ServiceResponse<Client>> {
   const client = await ClientModel.findByPk(id);
   if (!client) return { status: 'NOT_FOUND', data: { message: 'Cliente não encontrado' }};
@@ -36,4 +52,5 @@ export default {
   register,
   getAllClients,
   getClientById,
+  searchClients,
 };

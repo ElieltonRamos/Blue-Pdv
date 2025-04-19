@@ -36,8 +36,20 @@ async function getClientById(req: Request, res: Response) {
   }
 }
 
+async function searchClients(req: Request, res: Response) {
+  try {
+    const { name } = req.params;
+    const { status, data } = await clientService.searchClients(name);
+    return res.status(mapHttpStatus(status)).json(data);
+  } catch (error) {
+    console.log('Error searching clients:', error);
+    return res.status(mapHttpStatus('SERVER_ERROR')).json({ message: internalMsgError });
+  }
+};
+
 export default {
   register,
   getAllClients,
   getClientById,
+  searchClients,
 };

@@ -1,7 +1,6 @@
 import bcrypt from 'bcryptjs';
 import UserModel from '../database/models/user.model';
 import { LoginResponse, ServiceResponse } from '../interfaces/services';
-import { generateToken } from '../utils/authenticateToken';
 
 async function login( username: string, password: string ): Promise<ServiceResponse<LoginResponse>> {
   if (!username || !password) {
@@ -17,10 +16,10 @@ async function login( username: string, password: string ): Promise<ServiceRespo
   if (!bcrypt.compareSync(password, user.dataValues.password))
     return { status: 'UNAUTHORIZED', data: { message: 'Senha invalida' } };
 
-  const token = generateToken({
+  const token = {
     username: user.dataValues.username,
     function: user.dataValues.function,
-  });
+  };
 
   return { status: 'OK', data: { token } };
 }

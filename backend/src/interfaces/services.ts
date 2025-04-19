@@ -5,4 +5,4 @@ export type ServiceResponse<Data> = {
   data: Data | { message: string };
 };
 
-export type LoginResponse = { token: string } | { message: string };
+export type LoginResponse = { token: { username: string, function: string } } | { message: string };
