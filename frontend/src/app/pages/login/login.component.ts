@@ -28,7 +28,7 @@ export class LoginComponent {
 
     this.service.login(username, password).subscribe({
       next: (data) => {
-        localStorage.setItem('token', data.token);
+        localStorage.setItem('token', JSON.stringify(data));
         this.route.navigate(['/menu']);
       },
       error: (err) => {
