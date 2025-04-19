@@ -1,10 +1,10 @@
 // eslint.config.js
-import js from '@eslint/js'
-import tsPlugin from '@typescript-eslint/eslint-plugin'
-import parser from '@typescript-eslint/parser'
-import sonarjs from 'eslint-plugin-sonarjs'
+const js = require('@eslint/js')
+const tsPlugin = require('@typescript-eslint/eslint-plugin')
+const parser = require('@typescript-eslint/parser')
+const sonarjs = require('eslint-plugin-sonarjs')
 
-export default [
+module.exports = [
   js.configs.recommended,
   {
     files: ['**/*.ts'],
@@ -105,6 +105,6 @@ export default [
     }    
   },
   {
-    ignores: ['node_modules/**', 'build/**', 'src/database/**']
+    ignores: ['eslint.config.js', 'node_modules/**', 'build/**', 'src/database/**']
   }
 ]
