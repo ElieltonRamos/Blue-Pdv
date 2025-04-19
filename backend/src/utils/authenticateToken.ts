@@ -14,6 +14,7 @@ export const verifyToken = (token: string): Payload | string => {
     const user = jwt.verify(token, secretKey) as Payload;
     return user;
   } catch (error) {
+    console.log('Error verifying token:', error);
     return 'Token Invalido';
   }
 };
