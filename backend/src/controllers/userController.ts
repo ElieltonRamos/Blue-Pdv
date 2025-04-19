@@ -1,12 +1,17 @@
 import { Request, Response } from 'express';
+import userService from '../services/userService';
+import mapHttpStatus from '../utils/mapStatusHttp';
 
-function login (req: Request, res: Response) {
+async function login (req: Request, res: Response) {
   try {
     const { username, password } = req.body;
 
-    return res.status(200).json({ message: 'ok', username, password });
+    const { status, data } = await userService.login(username, password);
+
+    return res.status(mapHttpStatus(status)).json(data);
   } catch (error) {
-    return res.status(500).json({ message: 'Internal server error', error });
+    console.log('Error in login controller:', error);
+    return res.status(mapHttpStatus('SERVER_ERROR')).json({ message: 'Internal server error' });
   }
 };
 
