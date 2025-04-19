@@ -5,7 +5,7 @@ import clientRoutes from './routes/clientRoutes';
 
 const app = express();
 
-app.use(cors());
+app.use(cors({ origin: '*' }));
 app.use(express.json());
 
 app.get('/', (_req, res) => {
