@@ -27,8 +27,14 @@ export class LoginComponent {
     if (typeof username !== 'string' || typeof password !== 'string' || this.form.invalid) return;
 
     this.service.login(username, password).subscribe({
-      next: () => this.route.navigate(['/menu']),
-      error: (err) => alert('Não foi possivel fazer o login'),
+      next: (data) => {
+        localStorage.setItem('token', data.token);
+        this.route.navigate(['/menu']);
+      },
+      error: (err) => {
+        alert('Não foi possivel fazer o login'),
+        console.log(err);
+      },
     });
 
     this.form.reset();

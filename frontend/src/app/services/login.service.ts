@@ -7,12 +7,11 @@ import { Observable, of } from 'rxjs';
   providedIn: 'root'
 })
 export class LoginService {
-  private apiUrl = 'localhost:3000/api';
+  private apiUrl = 'http://localhost:3001/api';
 
   constructor(private client: HttpClient) { }
 
   login(username: string, password: string) {
-    // return this.client.post<Token>(`${this.apiUrl}/login`, { username, password });
-    return of({ token: 'asdf', username, password });
+    return this.client.post<Token>(`${this.apiUrl}/user/login`, { username, password });
   }
 }
