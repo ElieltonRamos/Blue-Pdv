@@ -3,10 +3,7 @@ import UserModel from '../database/models/user.model';
 import { LoginResponse, ServiceResponse } from '../interfaces/services';
 import { generateToken } from '../utils/authenticateToken';
 
-async function login(
-  username: string,
-  password: string
-): Promise<ServiceResponse<LoginResponse>> {
+async function login( username: string, password: string ): Promise<ServiceResponse<LoginResponse>> {
   if (!username || !password) {
     return {
       status: 'BAD_REQUEST',

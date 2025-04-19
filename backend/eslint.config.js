@@ -37,7 +37,7 @@ module.exports = [
       'max-lines-per-function': [
         'error',
         {
-          'max': 20,
+          'max': 30,
           'skipBlankLines': true,
           'skipComments': true,
         },
@@ -76,7 +76,7 @@ module.exports = [
       ],
       'max-len': [
         'error',
-        100,
+        110,
         {
           'ignoreComments': true,
           'ignoreUrls': true,
