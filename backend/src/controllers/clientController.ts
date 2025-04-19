@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import mapHttpStatus from '../utils/mapStatusHttp';
+import clientService from '../services/clientService';
 
 async function register(req: Request, res: Response) {
   try {

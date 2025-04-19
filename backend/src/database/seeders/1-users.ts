@@ -1,6 +1,5 @@
 import { QueryInterface } from 'sequelize';
 import bcrypt from 'bcryptjs';
-import { password } from '../config/database';
 
 const SALT_ROUNDS = process.env.BCRYPT_SALT_ROUNDS || 10;
 
