@@ -123,6 +123,17 @@ async function deleteProduct(id: number): Promise<ServiceResponse<null>> {
   return { status: 'NO_CONTENT', data: null };
 }
 
+async function sugestionCode(): Promise<ServiceResponse<{ code: number }>> {
+  const lastProduct = await ProductModel.findOne({
+    order: [['id', 'DESC']],
+  });
+  const lastCode = Number(lastProduct?.dataValues.code);
+  if (!lastProduct || isNaN(lastCode)) return { status: 'OK', data: {code: 1234} };
+
+  const code =  lastCode + 1;
+  return { status: 'OK', data: { code } };
+}
+
 export default {
   register,
   getAllProducts,
@@ -131,4 +142,5 @@ export default {
   getProductByName,
   updateProduct,
   deleteProduct,
+  sugestionCode,
 };

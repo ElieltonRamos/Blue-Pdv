@@ -81,6 +81,16 @@ async function deleteProduct(req: Request, res: Response) {
   }
 };
 
+async function sugestionCode(req: Request, res: Response) {
+  try {
+    const { status, data } = await productService.sugestionCode();
+    return res.status(mapHttpStatus(status)).json(data);
+  } catch (error) {
+    console.log('Error in sugestionCode controller:', error);
+    return res.status(500).json({ message: msgInternalError });
+  }
+};
+
 export default {
   register,
   getAllProducts,
@@ -89,4 +99,5 @@ export default {
   getProductByName,
   updateProduct,
   deleteProduct,
+  sugestionCode,
 };

@@ -10,5 +10,6 @@ productRoutes.delete('/:id', productController.deleteProduct);
 productRoutes.post('/register', productController.register);
 productRoutes.get('/code/:code', productController.getProductByCode);
 productRoutes.get('/name/:name', productController.getProductByName);
+productRoutes.get('/sugestion/code', productController.sugestionCode);
 
 export default productRoutes;
