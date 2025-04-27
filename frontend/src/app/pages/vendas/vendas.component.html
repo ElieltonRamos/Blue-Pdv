@@ -63,7 +63,7 @@
           type="text"
           placeholder="Escaneie o produto"
           [(ngModel)]="this.product.code"
-          (keydown.enter)="buscarProdutoPorCodigo()"
+          (keydown.enter)="searchProductByCode()"
           autofocus
           class="w-full p-2 rounded bg-gray-200 text-black font-semibold text-lg text-center focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
@@ -90,7 +90,7 @@
       <div>
         <label class="block text-sm text-white mb-1">Valor Total</label>
         <div class="w-full p-2 rounded bg-gray-200 text-center font-bold">
-          {{ this.product.price * this.product.quantity }}
+          {{ formatNumber(this.product.price * this.product.quantity) }}
         </div>
       </div>
     </div>
@@ -116,7 +116,9 @@
               <td class="px-4 py-2">{{ item.name }}</td>
               <td class="px-4 py-2">R$ {{ item.price }}</td>
               <td class="px-4 py-2">{{ item.quantity }}</td>
-              <td class="px-4 py-2">R$ {{ item.price * (item.quantity ?? 0) }}</td>
+              <td class="px-4 py-2">
+                R$ {{ formatNumber(item.price * (item.quantity ?? 0)) }}
+              </td>
               <td class="px-4 py-2 text-center">
                 <button (click)="removeItem(item)">🗑️</button>
               </td>
@@ -127,12 +129,20 @@
             }
           </tbody>
         </table>
+        @if (showEditModal) {
+        <app-modal-edit-product
+          (cancel)="onCancelEdit()"
+          [item]="selectedItem"
+          (save)="onSaveItem($event)"
+        />
+        }
       </div>
 
       <div
         class="bg-gray-200 mt-4 rounded p-3 text-right text-lg font-semibold"
       >
-        Sub-total: <span class="ml-4">R$: {{subtotal()}}</span>
+        Sub-total:
+        <span class="ml-4">R$: {{ formatNumber(subtotalValue) }}</span>
       </div>
     </div>
   </div>
