@@ -6,10 +6,11 @@ import Product from '../../interfaces/product';
 import { ProductsService } from '../../services/products.service';
 import { ModalEditProductComponent } from '../../components/modal-edit-product/modal-edit-product.component';
 import { alertError } from '../../components/alerts/custom-alerts';
+import { FinishSaleComponent } from '../../components/finish-sale/finish-sale.component';
 
 @Component({
   selector: 'app-vendas',
-  imports: [FormsModule, ModalEditProductComponent],
+  imports: [FormsModule, ModalEditProductComponent, FinishSaleComponent],
   templateUrl: './vendas.component.html',
 })
 export class VendasComponent {
@@ -20,6 +21,7 @@ export class VendasComponent {
   searchClients: Client[] = [];
   products: Product[] = [];
   subtotalValue: number = 0;
+  totalValueDiscount: number = 0;
   showEditModal = false;
   selectedItem!: Product;
 
@@ -33,6 +35,19 @@ export class VendasComponent {
       (acc, product) => acc + product.price * (product.quantity ?? 1),
       0
     );
+    this.totalValueDiscount = this.subtotalValue;
+  }
+
+  calculateDiscount(value: string) {
+    let discount = Number(value);
+    if (isNaN(discount) || discount < 0) discount = 0;
+
+    if (discount === 0) {
+      this.totalValueDiscount = this.subtotalValue;
+    } else {
+      const newSubtotal = this.subtotalValue - discount;
+      this.totalValueDiscount = Math.max(newSubtotal, 0);
+    }
   }
 
   searchProductByCode() {
@@ -124,15 +139,17 @@ export class VendasComponent {
     });
   }
 
-  extractProductCodeAndWeight(ean13: string): { productCode: string, weightInGrams: number } | false {
+  extractProductCodeAndWeight(
+    ean13: string
+  ): { productCode: string; weightInGrams: number } | false {
     if (!/^02\d{11}$/.test(ean13)) {
-        return false;
+      return false;
     }
     const productCode = ean13.substring(2, 6);
     const weightInGrams = parseInt(ean13.substring(6, 11));
     return {
-        productCode,
-        weightInGrams
+      productCode,
+      weightInGrams,
     };
-}
+  }
 }

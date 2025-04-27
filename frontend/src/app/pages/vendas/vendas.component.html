@@ -52,9 +52,10 @@
   </div>
 
   <div
-    class="w-full max-w-6xl bg-slate-800 rounded-xl p-6 grid grid-cols-1 md:grid-cols-3 gap-6"
+    class="w-full max-w-6xl bg-slate-800 rounded-xl p-6 flex gap-6"
   >
-    <div class="flex flex-col gap-4 md:col-span-1">
+
+    <div class="flex flex-col gap-4 basis-1/4">
       <div class="w-full">
         <label class="block text-white text-sm mb-1">
           Leitor de Código de Barras
@@ -95,7 +96,7 @@
       </div>
     </div>
 
-    <div class="flex flex-col justify-between h-full md:col-span-2">
+    <div class="flex flex-row justify-between h-full basis-2/4">
       <div class="bg-white rounded-lg shadow overflow-y-auto max-h-64">
         <table class="w-full text-sm text-left">
           <thead class="bg-gray-100">
@@ -137,14 +138,12 @@
         />
         }
       </div>
-
-      <div
-        class="bg-gray-200 mt-4 rounded p-3 text-right text-lg font-semibold"
-      >
-        Sub-total:
-        <span class="ml-4">R$: {{ formatNumber(subtotalValue) }}</span>
-      </div>
     </div>
+
+    <div class="basis-1/4">
+      <app-finish-sale [totalValue]="formatNumber(this.totalValueDiscount)" (calculateDiscount)="calculateDiscount($event)"/>
+    </div>
+
   </div>
 
   <div class="flex justify-between items-center w-full max-w-6xl">
@@ -165,4 +164,5 @@
       </button>
     </div>
   </div>
+
 </div>
