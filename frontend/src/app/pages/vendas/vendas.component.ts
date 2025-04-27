@@ -39,6 +39,12 @@ export class VendasComponent {
       return alert('Informe o código e quantidade válidos!');
     }
 
+    const productHeavy = this.extractProductCodeAndWeight(this.product.code);
+    if (productHeavy) {
+      this.product.code = productHeavy.productCode;
+      this.product.quantity = productHeavy.weightInGrams / 1000;
+    }
+
     this.productService.getProductByCode(this.product.code).subscribe({
       next: (product) => {
         const existingProduct = this.products.find(
@@ -118,4 +124,16 @@ export class VendasComponent {
       },
     });
   }
+
+  extractProductCodeAndWeight(ean13: string): { productCode: string, weightInGrams: number } | false {
+    if (!/^02\d{11}$/.test(ean13)) {
+        return false;
+    }
+    const productCode = ean13.substring(2, 6);
+    const weightInGrams = parseInt(ean13.substring(6, 11));
+    return {
+        productCode,
+        weightInGrams
+    };
+}
 }
