@@ -5,6 +5,7 @@ import Client from '../../interfaces/client';
 import Product from '../../interfaces/product';
 import { ProductsService } from '../../services/products.service';
 import { ModalEditProductComponent } from '../../components/modal-edit-product/modal-edit-product.component';
+import { alertError } from '../../components/alerts/custom-alerts';
 
 @Component({
   selector: 'app-vendas',
@@ -36,7 +37,7 @@ export class VendasComponent {
 
   searchProductByCode() {
     if (!this.product.code || this.product.quantity <= 0) {
-      return alert('Informe o código e quantidade válidos!');
+      return alertError('Informe o código e quantidade válidos!');
     }
 
     const productHeavy = this.extractProductCodeAndWeight(this.product.code);
@@ -63,7 +64,7 @@ export class VendasComponent {
         this.updateSubtotalValue();
         this.product = { code: '', quantity: 1, price: 0 };
       },
-      error: (error) => alert(error),
+      error: (error) => alertError(error.error.message),
     });
   }
 
@@ -107,8 +108,7 @@ export class VendasComponent {
         this.client = client;
       },
       error: (error) => {
-        alert('Cliente não encontrado');
-        console.log('Erro ao buscar cliente:', error);
+        alertError(error.error.message);
       },
     });
   }
@@ -119,8 +119,7 @@ export class VendasComponent {
         this.searchClients = data;
       },
       error: (error) => {
-        alert('Cliente não encontrado');
-        console.log('Erro ao buscar cliente:', error);
+        alertError(error.error.message);
       },
     });
   }
