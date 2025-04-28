@@ -34,7 +34,7 @@ export function alertLoading() {
   });
 }
 
-export function alertConfirm(title: string, action: string): Promise<boolean> {
+export function alertConfirm(title: string): Promise<boolean> {
   return Swal.fire({
     title: title,
     icon: 'warning',

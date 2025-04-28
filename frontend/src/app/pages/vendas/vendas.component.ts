@@ -12,10 +12,16 @@ import {
 import { FinishSaleComponent } from '../../components/finish-sale/finish-sale.component';
 import { ModalSalesNoteComponent } from '../../components/modal-sales-note/modal-sales-note.component';
 import { Sale } from '../../interfaces/sale';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-vendas',
-  imports: [FormsModule, ModalEditProductComponent, FinishSaleComponent, ModalSalesNoteComponent],
+  imports: [
+    FormsModule,
+    ModalEditProductComponent,
+    FinishSaleComponent,
+    ModalSalesNoteComponent,
+  ],
   templateUrl: './vendas.component.html',
 })
 export class VendasComponent {
@@ -36,8 +42,24 @@ export class VendasComponent {
 
   constructor(
     private clientService: ClientService,
-    private productService: ProductsService
+    private productService: ProductsService,
+    private router: Router
   ) {}
+
+  goToMenu() {
+    alertConfirm(
+      'Voltar para o menu ? A venda sera cancelada!',
+    ).then((isConfirmed) => {
+      if (isConfirmed) {
+        this.products = [];
+        this.subtotalValue = 0;
+        this.totalValueDiscount = 0;
+        this.client = { id: 1, name: 'Avista', phone: '0', adress: 'rua 0' };
+        this.product = { code: '', quantity: 1, price: 0 };
+        this.router.navigate(['menu']);
+      }
+    });
+  }
 
   updateSubtotalValue() {
     this.subtotalValue = this.products.reduce(
@@ -131,7 +153,7 @@ export class VendasComponent {
   }
 
   cancelSale() {
-    alertConfirm('Cancelar Venda', 'A venda foi cancelada com sucesso!').then(
+    alertConfirm('Cancelar Venda').then(
       (isConfirmed) => {
         if (isConfirmed) {
           this.products = [];
@@ -162,7 +184,7 @@ export class VendasComponent {
 
     this.saleData = saleData;
 
-    alertConfirm('Finalizar Venda ?', 'Venda finalizada com sucesso!').then(
+    alertConfirm('Finalizar Venda ?').then(
       (isConfirmed) => {
         if (isConfirmed) {
           console.log('Venda finalizada:', saleData);
