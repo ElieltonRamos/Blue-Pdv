@@ -28,6 +28,8 @@
           name="paymentMethod"
           type="radio"
           value="Dinheiro"
+          (change)="onPaymentMethodChange(paymentMethod)"
+          [(ngModel)]="paymentMethod"
           class="w-6 h-6 rounded bg-gray-200 text-center font-bold"
         />
       </div>
@@ -38,6 +40,8 @@
           name="paymentMethod"
           type="radio"
           value="Cartão"
+          (change)="onPaymentMethodChange(paymentMethod)"
+          [(ngModel)]="paymentMethod"
           class="w-6 h-6 rounded bg-gray-200 text-center font-bold"
         />
       </div>
@@ -48,6 +52,8 @@
           name="paymentMethod"
           type="radio"
           value="Pix"
+          (change)="onPaymentMethodChange(paymentMethod)"
+          [(ngModel)]="paymentMethod"
           class="w-6 h-6 rounded bg-gray-200 text-center font-bold"
         />
       </div>

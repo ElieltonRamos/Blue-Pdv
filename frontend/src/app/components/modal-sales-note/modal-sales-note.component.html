@@ -1,0 +1,46 @@
+<div
+  class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center"
+  style="background-color: rgba(0, 0, 0, 0.8)"
+>
+  <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg">
+    <h2 class="text-2xl font-bold mb-4">Resumo da Venda - Não tem Valor Fiscal</h2>
+
+    <p><strong>Cliente:</strong> {{ saleData.clientName }}</p>
+    <p><strong>Data:</strong> {{ saleData.date }}</p>
+    <p><strong>Vendedor:</strong> {{ saleData.userOperator }}</p>
+
+    <table class="table-auto w-full mt-4">
+      <thead>
+        <tr>
+          <th class="px-4 py-2 border-b">Produto</th>
+          <th class="px-4 py-2 border-b">Quantidade</th>
+          <th class="px-4 py-2 border-b">Preço</th>
+          <th class="px-4 py-2 border-b">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of saleData.products; track item.id) {
+        <tr>
+          <td class="px-4 py-2 border-b">{{ item.name }}</td>
+          <td class="px-4 py-2 border-b">{{ item.quantity }}</td>
+          <td class="px-4 py-2 border-b">{{ item.price }}</td>
+          <td class="px-4 py-2 border-b">{{ item.price * (item.quantity ?? 0) }}</td>
+        </tr>
+        }
+      </tbody>
+    </table>
+
+    <p class="mt-4"><strong>Subtotal: R$</strong> {{ saleData.totalProduts }}</p>
+    <p><strong>Total: R$</strong> {{ saleData.total }}</p>
+    <p><strong>Forma de Pagamento:</strong> {{ saleData.paymentMethod }}</p>
+
+    <div class="mt-6 flex justify-end">
+      <button
+        (click)="close()"
+        class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+      >
+        Fechar
+      </button>
+    </div>
+  </div>
+</div>

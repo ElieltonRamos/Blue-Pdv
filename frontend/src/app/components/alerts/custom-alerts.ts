@@ -2,8 +2,8 @@ import Swal from 'sweetalert2';
 
 export function alertError(msg: string) {
   Swal.fire({
-    icon: "error",
-    title: "Oops...",
+    icon: 'error',
+    title: 'Oops...',
     text: msg,
   });
 }
@@ -31,5 +31,23 @@ export function alertLoading() {
     // if (result.dismiss === Swal.DismissReason.timer) {
     //   console.log('I was closed by the timer');
     // }
+  });
+}
+
+export function alertConfirm(title: string, action: string): Promise<boolean> {
+  return Swal.fire({
+    title: title,
+    icon: 'warning',
+    showCancelButton: true,
+    cancelButtonText: 'Cancelar',
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Sim, Confirmar!',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      return true;
+    } else {
+      return false;
+    }
   });
 }

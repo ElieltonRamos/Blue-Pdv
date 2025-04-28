@@ -5,12 +5,17 @@ import Client from '../../interfaces/client';
 import Product from '../../interfaces/product';
 import { ProductsService } from '../../services/products.service';
 import { ModalEditProductComponent } from '../../components/modal-edit-product/modal-edit-product.component';
-import { alertError } from '../../components/alerts/custom-alerts';
+import {
+  alertConfirm,
+  alertError,
+} from '../../components/alerts/custom-alerts';
 import { FinishSaleComponent } from '../../components/finish-sale/finish-sale.component';
+import { ModalSalesNoteComponent } from '../../components/modal-sales-note/modal-sales-note.component';
+import { Sale } from '../../interfaces/sale';
 
 @Component({
   selector: 'app-vendas',
-  imports: [FormsModule, ModalEditProductComponent, FinishSaleComponent],
+  imports: [FormsModule, ModalEditProductComponent, FinishSaleComponent, ModalSalesNoteComponent],
   templateUrl: './vendas.component.html',
 })
 export class VendasComponent {
@@ -24,6 +29,10 @@ export class VendasComponent {
   totalValueDiscount: number = 0;
   showEditModal = false;
   selectedItem!: Product;
+
+  showSaleModal = false;
+  saleData!: Sale;
+  paymentMethod = 'Dinheiro';
 
   constructor(
     private clientService: ClientService,
@@ -83,6 +92,10 @@ export class VendasComponent {
     });
   }
 
+  onPaymentMethodChange(newPaymentMethod: string) {
+    this.paymentMethod = newPaymentMethod;
+  }
+
   removeItem(item: Product) {
     this.products = this.products.filter((product) => product.id !== item.id);
     this.updateSubtotalValue();
@@ -115,6 +128,58 @@ export class VendasComponent {
 
   formatNumber(n: number): number {
     return parseFloat(n.toFixed(2));
+  }
+
+  cancelSale() {
+    alertConfirm('Cancelar Venda', 'A venda foi cancelada com sucesso!').then(
+      (isConfirmed) => {
+        if (isConfirmed) {
+          this.products = [];
+          this.subtotalValue = 0;
+          this.totalValueDiscount = 0;
+          this.client = { id: 1, name: 'Avista', phone: '0', adress: 'rua 0' };
+          this.product = { code: '', quantity: 1, price: 0 };
+        }
+      }
+    );
+  }
+
+  finishSale() {
+    if (this.products.length === 0) {
+      return alertError('Adicione produtos à venda!');
+    }
+
+    const saleData = {
+      date: new Date().toLocaleString(),
+      clientId: this.client.id || 1,
+      clientName: this.client.name,
+      paymentMethod: this.paymentMethod,
+      products: this.products,
+      totalProduts: this.subtotalValue,
+      total: this.totalValueDiscount,
+      userOperator: this.vendedorLogado,
+    };
+
+    this.saleData = saleData;
+
+    alertConfirm('Finalizar Venda ?', 'Venda finalizada com sucesso!').then(
+      (isConfirmed) => {
+        if (isConfirmed) {
+          console.log('Venda finalizada:', saleData);
+          this.showSaleModal = true;
+          this.products = [];
+          this.subtotalValue = 0;
+          this.totalValueDiscount = 0;
+          this.client = { id: 1, name: 'Avista', phone: '0', adress: 'rua 0' };
+          this.product = { code: '', quantity: 1, price: 0 };
+          this.paymentMethod = 'Dinheiro';
+        }
+      }
+    );
+  }
+
+  closeSaleModal() {
+    this.showSaleModal = false;
   }
 
   findClientById(id: string) {

@@ -51,10 +51,7 @@
     </div>
   </div>
 
-  <div
-    class="w-full max-w-6xl bg-slate-800 rounded-xl p-6 flex gap-6"
-  >
-
+  <div class="w-full max-w-6xl bg-slate-800 rounded-xl p-6 flex gap-6">
     <div class="flex flex-col gap-4 basis-1/4">
       <div class="w-full">
         <label class="block text-white text-sm mb-1">
@@ -113,7 +110,7 @@
           <tbody>
             @for (item of products; track item.id) {
             <tr class="border-t">
-              <td class="px-4 py-2">{{ item.id }}</td>
+              <td class="px-4 py-2">{{ item.code }}</td>
               <td class="px-4 py-2">{{ item.name }}</td>
               <td class="px-4 py-2">R$ {{ item.price }}</td>
               <td class="px-4 py-2">{{ item.quantity }}</td>
@@ -141,9 +138,13 @@
     </div>
 
     <div class="basis-1/4">
-      <app-finish-sale [totalValue]="formatNumber(this.totalValueDiscount)" (calculateDiscount)="calculateDiscount($event)"/>
+      <app-finish-sale
+        [totalValue]="formatNumber(this.totalValueDiscount)"
+        (calculateDiscount)="calculateDiscount($event)"
+        [paymentMethod]="paymentMethod"
+        (paymentMethodChange)="onPaymentMethodChange($event)"
+      />
     </div>
-
   </div>
 
   <div class="flex justify-between items-center w-full max-w-6xl">
@@ -153,16 +154,20 @@
 
     <div class="flex gap-4">
       <button
+        (click)="finishSale()"
         class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition font-bold"
       >
         Finalizar Venda
       </button>
       <button
+        (click)="cancelSale()"
         class="bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700 transition font-bold"
       >
         Cancelar Venda
       </button>
     </div>
+    @if (showSaleModal) {
+      <app-modal-sales-note [saleData]="saleData" (closeModal)="closeSaleModal()"/>
+    }
   </div>
-
 </div>

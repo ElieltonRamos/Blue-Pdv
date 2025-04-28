@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { alertError } from '../alerts/custom-alerts';
 
 @Component({
   selector: 'app-finish-sale',
@@ -10,6 +9,10 @@ import { alertError } from '../alerts/custom-alerts';
 export class FinishSaleComponent {
   @Output() calculateDiscount = new EventEmitter<string>();
   @Input() totalValue: number = 0;
+  @Output() paymentMethodChange = new EventEmitter<string>();
+  // paymentMethod = 'Dinheiro';
+  @Input() paymentMethod!: string;
+
   valuePaid: number = 0;
 
   calculateChange() {
@@ -19,6 +22,11 @@ export class FinishSaleComponent {
 
   applyDiscount(value: string) {
     this.calculateDiscount.emit(value);
+  }
+
+  onPaymentMethodChange(paymentMethod: string): void {
+    this.paymentMethod = paymentMethod;
+    this.paymentMethodChange.emit(this.paymentMethod);
   }
 
 }
