@@ -43,7 +43,7 @@ async function create(sale: Sale): Promise<ServiceResponse<Sale>> {
     productId: product.id || 1,
     quantity: product.quantity || 1,
   }));
-  
+
   await SalesProductsModel.bulkCreate(saleProducts);
 
   return {

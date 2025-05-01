@@ -6,18 +6,18 @@ export default {
       'sales_products',
       [
         {
-          saleId: 1,
-          productId: 1,
+          sale_id: 1,
+          product_id: 1,
           quantity: 1,
         },
         {
-          saleId: 1,
-          productId: 2,
+          sale_id: 1,
+          product_id: 2,
           quantity: 2,
         },
         {
-          saleId: 2,
-          productId: 2,
+          sale_id: 2,
+          product_id: 2,
           quantity: 2,
         }
       ],
