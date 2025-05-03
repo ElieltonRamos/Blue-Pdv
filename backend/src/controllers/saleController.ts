@@ -78,6 +78,18 @@ async function getSalesByDay(req: Request, res: Response) {
   }
 }
 
+async function getSalesByMonth(req: Request, res: Response) {
+  try {
+    const { month } = req.params;
+    const { page, pagesize } = req.query;
+    const { status, data } = await salesService.getSalesByMonth(month, Number(page), Number(pagesize));
+    return res.status(mapHttpStatus(status)).json(data);
+  } catch (error) {
+    console.log('Error fetching sales by month:', error);
+    return res.status(mapHttpStatus('SERVER_ERROR')).json({ message: internalMsgError });
+  }
+}
+
 export default {
   create,
   getAll,
@@ -85,4 +97,5 @@ export default {
   getSalesByUser,
   getSalesByClient,
   getSalesByDay,
+  getSalesByMonth,
 };

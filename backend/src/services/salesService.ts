@@ -95,7 +95,7 @@ async function getById(id: number): Promise<ServiceResponse<Sale>> {
 }
 
 async function getSalesByUser(id: number, page: number, pageSize: number)
-  : Promise<ServiceResponse<AllSalesResponse>> {
+: Promise<ServiceResponse<AllSalesResponse>> {
   const validation = validationsParams(id, page, pageSize);
   if (validation) return validation;
 
@@ -129,19 +129,53 @@ async function getSalesByClient(
   };
 }
 
-async function getSalesByDay(date: string, page: number, pageSize: number, operatorId?: number)
-  : Promise<ServiceResponse<AllSalesResponse>> {
+async function getSalesByDay(
+  date: string,
+  page: number,
+  pageSize: number,
+  operatorId?: number
+): Promise<ServiceResponse<AllSalesResponse>> {
   const validation = validationsParams(1, page, pageSize);
   if (validation) return validation;
 
   const formattedDate = new Date(date);
 
-  const filters  = {
+  const filters = {
+    [Op.and]: [...(operatorId ? [{ userOperator: operatorId }] : []), { date: formattedDate }],
+  };
+  const res = await findSales(filters, page, pageSize);
+
+  const salesExists = validationFindSales(res.sales);
+  if (salesExists) return salesExists;
+
+  return {
+    status: 'OK',
+    data: res,
+  };
+}
+
+async function getSalesByMonth(
+  date: string,
+  page: number,
+  pageSize: number,
+  operatorId?: number
+): Promise<ServiceResponse<AllSalesResponse>> {
+  const validation = validationsParams(1, page, pageSize);
+  if (validation) return validation;
+
+  const formattedDate = new Date(date);
+  const startOfMonth = new Date(Date.UTC(formattedDate.getUTCFullYear(), formattedDate.getUTCMonth(), 1));
+  const endOfMonth = new Date(
+    Date.UTC(formattedDate.getUTCFullYear(), formattedDate.getUTCMonth() + 1, 0, 23, 59, 59, 999)
+  );
+
+  const filters = {
     [Op.and]: [
       ...(operatorId ? [{ userOperator: operatorId }] : []),
-      { date: formattedDate },
-    ]
-  };  
+      { date: { [Op.between]: [startOfMonth, endOfMonth] } },
+    ],
+  };
+
   const res = await findSales(filters, page, pageSize);
 
   const salesExists = validationFindSales(res.sales);
@@ -160,4 +194,5 @@ export default {
   getSalesByUser,
   getSalesByClient,
   getSalesByDay,
+  getSalesByMonth,
 };

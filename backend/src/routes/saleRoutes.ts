@@ -9,5 +9,6 @@ saleRouter.get('/:id', saleController.getById);
 saleRouter.get('/user/:id', saleController.getSalesByUser);
 saleRouter.get('/client/:id', saleController.getSalesByClient);
 saleRouter.get('/relatory/day/:date', saleController.getSalesByDay);
+saleRouter.get('/relatory/month/:month', saleController.getSalesByMonth);
 
 export default saleRouter;
