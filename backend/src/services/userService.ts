@@ -19,6 +19,7 @@ async function login( username: string, password: string ): Promise<ServiceRespo
   const token = {
     username: user.dataValues.username,
     function: user.dataValues.function,
+    id: user.dataValues.id,
   };
 
   return { status: 'OK', data: { token } };

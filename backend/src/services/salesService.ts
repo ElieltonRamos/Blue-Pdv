@@ -139,9 +139,17 @@ async function getSalesByDay(
   if (validation) return validation;
 
   const formattedDate = new Date(date);
+  const startOfDay = new Date(
+    Date.UTC(formattedDate.getUTCFullYear(), formattedDate.getUTCMonth(), formattedDate.getUTCDate()));
+  const endOfDay = new Date(
+    Date.UTC(formattedDate.getUTCFullYear(), formattedDate.getUTCMonth(), 
+      formattedDate.getUTCDate() + 1, 23, 59, 59, 999)
+  );
 
   const filters = {
-    [Op.and]: [...(operatorId ? [{ userOperator: operatorId }] : []), { date: formattedDate }],
+    [Op.and]: [
+      ...(operatorId ? [{ userOperator: operatorId }] : []),
+      { date: {[Op.between]: [startOfDay, endOfDay]} }],
   };
   const res = await findSales(filters, page, pageSize);
 

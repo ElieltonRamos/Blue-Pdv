@@ -8,7 +8,6 @@ async function create(req: Request, res: Response) {
   try {
     const { clientId, userOperator, paymentMethod, date, products, totalProducts, total } = req.body;
     const sale = { clientId, userOperator, paymentMethod, date, products, totalProducts, total };
-
     const { status, data } = await salesService.create(sale);
     return res.status(mapHttpStatus(status)).json(data);
   } catch (error) {
