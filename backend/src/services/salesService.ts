@@ -62,7 +62,7 @@ async function create(sale: Sale): Promise<ServiceResponse<Sale>> {
 
 async function getAll(page: number, pageSize: number): Promise<ServiceResponse<AllSalesResponse>> {
   const paramsValidation = isNaN(page) || isNaN(pageSize) || page < 1 || pageSize < 1;
-  
+
   if (paramsValidation) {
     return {
       status: 'BAD_REQUEST',
@@ -92,6 +92,94 @@ async function getAll(page: number, pageSize: number): Promise<ServiceResponse<A
     offset: offset,
   });
 
+  if (!sales || sales.length === 0) {
+    return {
+      status: 'UNPROCESSABLE_ENTITY',
+      data: { message: 'Erro ao buscar vendas, verique a paginação' },
+    };
+  }
+
+  return {
+    status: 'OK',
+    data: {
+      totalResults: count,
+      totalPages: Math.ceil(count / pageSize),
+      currentPage: page,
+      sales,
+    },
+  };
+}
+
+async function getById(id: number): Promise<ServiceResponse<Sale>> {
+  if (isNaN(id) || id < 1) {
+    return {
+      status: 'BAD_REQUEST',
+      data: { message: 'O parâmetro id deve ser um número' },
+    };
+  }
+  const sale = await SaleModel.findByPk(id, {
+    include: [
+      {
+        model: ProductModel,
+        as: 'products',
+        through: {
+          attributes: ['quantity'],
+        },
+      },
+      {
+        model: UserModel,
+        as: 'operator',
+        attributes: ['username'],
+      },
+    ],
+  });
+
+  if (!sale) {
+    return {
+      status: 'NOT_FOUND',
+      data: { message: 'Venda não encontrada' },
+    };
+  }
+
+  return {
+    status: 'OK',
+    data: sale.dataValues,
+  };
+}
+
+async function getSalesByUser(id: number, page: number, pageSize: number)
+  : Promise<ServiceResponse<AllSalesResponse>> {
+  const paramsValidation = isNaN(id) || isNaN(page) || isNaN(pageSize) || id < 1 || page < 1 || pageSize < 1;
+
+  if (paramsValidation) {
+    return {
+      status: 'BAD_REQUEST',
+      data: { message: 'Os parâmetros id, page e pagesize devem ser números' },
+    };
+  }
+
+  const offset = (page - 1) * pageSize;
+
+  const { count, rows: sales } = await SaleModel.findAndCountAll({
+    where: { userOperator: id },
+    distinct: true,
+    include: [
+      {
+        model: ProductModel,
+        as: 'products',
+        through: {
+          attributes: ['quantity'],
+        },
+      },
+      {
+        model: UserModel,
+        as: 'operator',
+        attributes: ['username'],
+      },
+    ],
+    limit: pageSize,
+    offset,
+  });
 
   if (!sales || sales.length === 0) {
     return {
@@ -111,7 +199,63 @@ async function getAll(page: number, pageSize: number): Promise<ServiceResponse<A
   };
 }
 
+async function getSalesByClient(id: number, page: number, pageSize: number)
+  : Promise<ServiceResponse<AllSalesResponse>> {
+  const paramsValidation = isNaN(id) || isNaN(page) || isNaN(pageSize) || id < 1 || page < 1 || pageSize < 1;
+
+  if (paramsValidation) {
+    return {
+      status: 'BAD_REQUEST',
+      data: { message: 'Os parâmetros id, page e pagesize devem ser números' },
+    };
+  }
+
+  const offset = (page - 1) * pageSize;
+
+  const { count, rows: sales } = await SaleModel.findAndCountAll({
+    where: { clientId: id },
+    distinct: true,
+    include: [
+      {
+        model: ProductModel,
+        as: 'products',
+        through: {
+          attributes: ['quantity'],
+        },
+      },
+      {
+        model: UserModel,
+        as: 'operator',
+        attributes: ['username'],
+      },
+    ],
+    limit: pageSize,
+    offset,
+  });
+
+  if (!sales || sales.length === 0) {
+    return {
+      status: 'UNPROCESSABLE_ENTITY',
+      data: { message: 'Erro ao buscar vendas, verique a paginação' },
+    };
+  }
+
+  return {
+    status: 'OK',
+    data: {
+      totalResults: count,
+      totalPages: Math.ceil(count / pageSize),
+      currentPage: page,
+      sales,
+    },
+  };
+}
+
+
 export default {
   create,
   getAll,
+  getById,
+  getSalesByUser,
+  getSalesByClient,
 };

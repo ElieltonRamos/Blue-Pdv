@@ -30,7 +30,45 @@ async function getAll(req: Request, res: Response) {
   }
 }
 
+async function getById(req: Request, res: Response) {
+  try {
+    const { id } = req.params;
+    const { status, data } = await salesService.getById(Number(id));
+    return res.status(mapHttpStatus(status)).json(data);
+  } catch (error) {
+    console.log('Error fetching sale by ID:', error);
+    return res.status(mapHttpStatus('SERVER_ERROR')).json({ message: internalMsgError });
+  }
+}
+
+async function getSalesByUser(req: Request, res: Response) {
+  try {
+    const { id } = req.params;
+    const { page, pagesize } = req.query;
+    const { status, data } = await salesService.getSalesByUser(Number(id), Number(page), Number(pagesize));
+    return res.status(mapHttpStatus(status)).json(data);
+  } catch (error) {
+    console.log('Error fetching sales by user:', error);
+    return res.status(mapHttpStatus('SERVER_ERROR')).json({ message: internalMsgError });
+  }
+}
+
+async function getSalesByClient(req: Request, res: Response) {
+  try {
+    const { id } = req.params;
+    const { page, pagesize } = req.query;
+    const { status, data } = await salesService.getSalesByClient(Number(id), Number(page), Number(pagesize));
+    return res.status(mapHttpStatus(status)).json(data);
+  } catch (error) {
+    console.log('Error fetching sales by client:', error);
+    return res.status(mapHttpStatus('SERVER_ERROR')).json({ message: internalMsgError });
+  }
+}
+
 export default {
   create,
   getAll,
+  getById,
+  getSalesByUser,
+  getSalesByClient,
 };
