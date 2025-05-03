@@ -135,6 +135,7 @@ async function getSalesByDay(date: string, page: number, pageSize: number, opera
   if (validation) return validation;
 
   const formattedDate = new Date(date);
+
   const filters  = {
     [Op.and]: [
       ...(operatorId ? [{ userOperator: operatorId }] : []),
