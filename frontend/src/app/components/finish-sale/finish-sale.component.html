@@ -11,8 +11,9 @@
     <label class="block text-sm text-white mb-1 font-bold">Desconto</label>
     <input
       type="number"
-      #discount
-      (input)="applyDiscount(discount.value)"
+      [(ngModel)]="discountValue"
+      (ngModelChange)="discountValueChange.emit($event)"
+      (input)="applyDiscount(discountValue)"
       placeholder="R$ 0,00"
       class="w-full p-1 rounded bg-gray-200 text-center font-bold"
     />

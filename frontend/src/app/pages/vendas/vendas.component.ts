@@ -35,6 +35,7 @@ export class VendasComponent {
   products: Product[] = [];
   subtotalValue: number = 0;
   totalValueDiscount: number = 0;
+  discountValue: number = 0;
   showEditModal = false;
   selectedItem!: Product;
   valuePaid = 0;
@@ -72,7 +73,7 @@ export class VendasComponent {
     this.totalValueDiscount = this.subtotalValue;
   }
 
-  calculateDiscount(value: string) {
+  calculateDiscount(value: number) {
     let discount = Number(value);
     if (isNaN(discount) || discount < 0) discount = 0;
 
@@ -193,6 +194,7 @@ export class VendasComponent {
             this.products = [];
             this.subtotalValue = 0;
             this.totalValueDiscount = 0;
+            this.discountValue = 0;
             this.client = {
               id: 1,
               name: 'Avista',
