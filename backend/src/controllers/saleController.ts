@@ -19,6 +19,18 @@ async function create(req: Request, res: Response) {
   }
 }
 
+async function getAll(req: Request, res: Response) {
+  try {
+    const { page, pagesize } = req.query;
+    const { status, data } = await salesService.getAll(Number(page), Number(pagesize));
+    return res.status(mapHttpStatus(status)).json(data);
+  } catch (error) {
+    console.log('Error fetching sales:', error);
+    return res.status(mapHttpStatus('SERVER_ERROR')).json({ message: internalMsgError });
+  }
+}
+
 export default {
   create,
+  getAll,
 };

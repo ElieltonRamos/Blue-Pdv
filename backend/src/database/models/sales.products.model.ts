@@ -1,5 +1,8 @@
 import { DataTypes, Model, ModelDefined } from 'sequelize';
 import db from './index';
+import SaleModel from './sale.model';
+import UserModel from './user.model';
+import ProductModel from './product.model';
 
 interface SalesProductsAttributes {
   saleId: number;
@@ -37,5 +40,23 @@ const SalesProductsModel: SalesProductsModelDefined = db.define('sales_products'
   timestamps: false,
   underscored: true,
 });
+
+SaleModel.belongsToMany(ProductModel, {
+  through: SalesProductsModel,
+  foreignKey: 'saleId',
+  otherKey: 'productId',
+  as: 'products',
+});
+
+ProductModel.belongsToMany(SaleModel, {
+  through: SalesProductsModel,
+  foreignKey: 'productId',
+  otherKey: 'saleId',
+  as: 'sales',
+});
+
+UserModel.hasMany(SaleModel, { foreignKey: 'userOperator'});
+
+SaleModel.belongsTo(UserModel, { foreignKey: 'userOperator', as: 'operator' });
 
 export default SalesProductsModel;

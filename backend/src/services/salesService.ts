@@ -1,12 +1,20 @@
 /* eslint-disable max-lines-per-function */
 import SaleModel from '../database/models/sale.model';
 import SalesProductsModel from '../database/models/sales.products.model';
-import { Sale } from '../interfaces/sale';
+import { AllSalesResponse, Sale } from '../interfaces/sale';
 import { ServiceResponse } from '../interfaces/services';
+import ProductModel from '../database/models/product.model';
+import UserModel from '../database/models/user.model';
 
 async function create(sale: Sale): Promise<ServiceResponse<Sale>> {
   const requiredFields: (keyof Sale)[] = [
-    'clientId', 'userOperator', 'paymentMethod', 'date', 'totalProducts', 'total', 'products'
+    'clientId',
+    'userOperator',
+    'paymentMethod',
+    'date',
+    'totalProducts',
+    'total',
+    'products',
   ];
 
   const missingFields = requiredFields.filter((field: keyof Sale) => !sale[field]);
@@ -39,7 +47,7 @@ async function create(sale: Sale): Promise<ServiceResponse<Sale>> {
   }
 
   const saleProducts = sale.products.map((product) => ({
-    saleId: newSale.dataValues.id || 1, 
+    saleId: newSale.dataValues.id || 1,
     productId: product.id || 1,
     quantity: product.quantity || 1,
   }));
@@ -52,6 +60,58 @@ async function create(sale: Sale): Promise<ServiceResponse<Sale>> {
   };
 }
 
+async function getAll(page: number, pageSize: number): Promise<ServiceResponse<AllSalesResponse>> {
+  const paramsValidation = isNaN(page) || isNaN(pageSize) || page < 1 || pageSize < 1;
+  
+  if (paramsValidation) {
+    return {
+      status: 'BAD_REQUEST',
+      data: { message: 'Os parâmetros page e pageSize devem ser números' },
+    };
+  }
+
+  const offset = (page - 1) * pageSize;
+
+  const { count, rows: sales } = await SaleModel.findAndCountAll({
+    distinct: true,
+    include: [
+      {
+        model: ProductModel,
+        as: 'products',
+        through: {
+          attributes: ['quantity'],
+        },
+      },
+      {
+        model: UserModel,
+        as: 'operator',
+        attributes: ['username'],
+      },
+    ],
+    limit: pageSize,
+    offset: offset,
+  });
+
+
+  if (!sales || sales.length === 0) {
+    return {
+      status: 'UNPROCESSABLE_ENTITY',
+      data: { message: 'Erro ao buscar vendas, verique a paginação' },
+    };
+  }
+
+  return {
+    status: 'OK',
+    data: {
+      totalResults: count,
+      totalPages: Math.ceil(count / pageSize),
+      currentPage: page,
+      sales,
+    },
+  };
+}
+
 export default {
   create,
+  getAll,
 };
