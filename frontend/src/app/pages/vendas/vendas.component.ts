@@ -13,6 +13,7 @@ import { FinishSaleComponent } from '../../components/finish-sale/finish-sale.co
 import { ModalSalesNoteComponent } from '../../components/modal-sales-note/modal-sales-note.component';
 import { Sale } from '../../interfaces/sale';
 import { Router } from '@angular/router';
+import { SalesService } from '../../services/sales.service';
 
 @Component({
   selector: 'app-vendas',
@@ -44,22 +45,23 @@ export class VendasComponent {
   constructor(
     private clientService: ClientService,
     private productService: ProductsService,
-    private router: Router
+    private router: Router,
+    private salesService: SalesService
   ) {}
 
   goToMenu() {
-    alertConfirm(
-      'Voltar para o menu ? A venda sera cancelada!',
-    ).then((isConfirmed) => {
-      if (isConfirmed) {
-        this.products = [];
-        this.subtotalValue = 0;
-        this.totalValueDiscount = 0;
-        this.client = { id: 1, name: 'Avista', phone: '0', adress: 'rua 0' };
-        this.product = { code: '', quantity: 1, price: 0, name: '' };
-        this.router.navigate(['menu']);
+    alertConfirm('Voltar para o menu ? A venda sera cancelada!').then(
+      (isConfirmed) => {
+        if (isConfirmed) {
+          this.products = [];
+          this.subtotalValue = 0;
+          this.totalValueDiscount = 0;
+          this.client = { id: 1, name: 'Avista', phone: '0', adress: 'rua 0' };
+          this.product = { code: '', quantity: 1, price: 0, name: '' };
+          this.router.navigate(['menu']);
+        }
       }
-    });
+    );
   }
 
   updateSubtotalValue() {
@@ -154,17 +156,15 @@ export class VendasComponent {
   }
 
   cancelSale() {
-    alertConfirm('Cancelar Venda').then(
-      (isConfirmed) => {
-        if (isConfirmed) {
-          this.products = [];
-          this.subtotalValue = 0;
-          this.totalValueDiscount = 0;
-          this.client = { id: 1, name: 'Avista', phone: '0', adress: 'rua 0' };
-          this.product = { code: '', quantity: 1, price: 0, name: '' };
-        }
+    alertConfirm('Cancelar Venda').then((isConfirmed) => {
+      if (isConfirmed) {
+        this.products = [];
+        this.subtotalValue = 0;
+        this.totalValueDiscount = 0;
+        this.client = { id: 1, name: 'Avista', phone: '0', adress: 'rua 0' };
+        this.product = { code: '', quantity: 1, price: 0, name: '' };
       }
-    );
+    });
   }
 
   finishSale() {
@@ -178,29 +178,37 @@ export class VendasComponent {
       clientName: this.client.name,
       paymentMethod: this.paymentMethod,
       products: this.products,
-      totalProduts: this.subtotalValue,
+      totalProducts: this.subtotalValue,
       total: this.totalValueDiscount,
-      userOperator: this.vendedorLogado,
+      userOperator: this.token.token.id,
     };
 
     this.saleData = saleData;
 
-    alertConfirm('Finalizar Venda ?').then(
-      (isConfirmed) => {
-        if (isConfirmed) {
-          console.log('Venda finalizada:', saleData);
-          // adicionar service para salvar venda
-          this.showSaleModal = true;
-          this.products = [];
-          this.subtotalValue = 0;
-          this.totalValueDiscount = 0;
-          this.client = { id: 1, name: 'Avista', phone: '0', adress: 'rua 0' };
-          this.product = { code: '', quantity: 1, price: 0, name: '' };
-          this.paymentMethod = 'Dinheiro';
-          this.valuePaid = 0;
-        }
+    alertConfirm('Finalizar Venda ?').then((isConfirmed) => {
+      if (isConfirmed) {
+        this.salesService.createSale(saleData).subscribe({
+          next: (_data) => {
+            this.showSaleModal = true;
+            this.products = [];
+            this.subtotalValue = 0;
+            this.totalValueDiscount = 0;
+            this.client = {
+              id: 1,
+              name: 'Avista',
+              phone: '0',
+              adress: 'rua 0',
+            };
+            this.product = { code: '', quantity: 1, price: 0, name: '' };
+            this.paymentMethod = 'Dinheiro';
+            this.valuePaid = 0;
+          },
+          error: (error) => {
+            alertError(error.error.message);
+          },
+        });
       }
-    );
+    });
   }
 
   closeSaleModal() {

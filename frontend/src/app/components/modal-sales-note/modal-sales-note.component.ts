@@ -11,7 +11,7 @@ export class ModalSalesNoteComponent {
   @Output() closeModal = new EventEmitter<void>();
 
   calculateDiscount(): number {
-    const discount = this.saleData.totalProduts - this.saleData.total;
+    const discount = this.saleData.totalProducts - this.saleData.total;
     if (discount > 0) {
       return this.formatNumber(discount);
     }

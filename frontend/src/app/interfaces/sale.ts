@@ -8,6 +8,6 @@ export interface Sale {
   paymentMethod: string;
   date: string;
   products: Product[];
-  totalProduts: number;
+  totalProducts: number;
   total: number;
 }
