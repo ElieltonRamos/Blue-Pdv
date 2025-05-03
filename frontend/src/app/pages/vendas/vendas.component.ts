@@ -28,8 +28,9 @@ export class VendasComponent {
   client: Client = { id: 1, name: 'Avista', phone: '0', adress: 'rua 0' };
   token = JSON.parse(localStorage.getItem('token') || '');
   vendedorLogado = this.token.token.username;
-  product = { code: '', quantity: 1, price: 0 };
+  product = { code: '', quantity: 1, price: 0, name: '' };
   searchClients: Client[] = [];
+  searchProducts: Product[] = [];
   products: Product[] = [];
   subtotalValue: number = 0;
   totalValueDiscount: number = 0;
@@ -55,7 +56,7 @@ export class VendasComponent {
         this.subtotalValue = 0;
         this.totalValueDiscount = 0;
         this.client = { id: 1, name: 'Avista', phone: '0', adress: 'rua 0' };
-        this.product = { code: '', quantity: 1, price: 0 };
+        this.product = { code: '', quantity: 1, price: 0, name: '' };
         this.router.navigate(['menu']);
       }
     });
@@ -108,7 +109,7 @@ export class VendasComponent {
           this.products.push(newProduct);
         }
         this.updateSubtotalValue();
-        this.product = { code: '', quantity: 1, price: 0 };
+        this.product = { code: '', quantity: 1, price: 0, name: '' };
       },
       error: (error) => alertError(error.error.message),
     });
@@ -160,7 +161,7 @@ export class VendasComponent {
           this.subtotalValue = 0;
           this.totalValueDiscount = 0;
           this.client = { id: 1, name: 'Avista', phone: '0', adress: 'rua 0' };
-          this.product = { code: '', quantity: 1, price: 0 };
+          this.product = { code: '', quantity: 1, price: 0, name: '' };
         }
       }
     );
@@ -188,12 +189,13 @@ export class VendasComponent {
       (isConfirmed) => {
         if (isConfirmed) {
           console.log('Venda finalizada:', saleData);
+          // adicionar service para salvar venda
           this.showSaleModal = true;
           this.products = [];
           this.subtotalValue = 0;
           this.totalValueDiscount = 0;
           this.client = { id: 1, name: 'Avista', phone: '0', adress: 'rua 0' };
-          this.product = { code: '', quantity: 1, price: 0 };
+          this.product = { code: '', quantity: 1, price: 0, name: '' };
           this.paymentMethod = 'Dinheiro';
         }
       }
@@ -219,6 +221,17 @@ export class VendasComponent {
     return this.clientService.findClientByName(name).subscribe({
       next: (data) => {
         this.searchClients = data;
+      },
+      error: (error) => {
+        alertError(error.error.message);
+      },
+    });
+  }
+
+  findProductByName(name: string) {
+    return this.productService.getProductByName(name).subscribe({
+      next: (data) => {
+        this.searchProducts = data;
       },
       error: (error) => {
         alertError(error.error.message);

@@ -14,4 +14,9 @@ export class ProductsService {
   getProductByCode(code: string): Observable<Product> {
     return this.client.get<Product>(`${this.apiUrl}/product/code/${code}`);
   }
+
+  getProductByName(name: string): Observable<Product[]> {
+    return this.client.get<Product[]>(`${this.apiUrl}/product/name/${name}`);
+  }
+
 }
