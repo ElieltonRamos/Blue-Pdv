@@ -8,5 +8,6 @@ saleRouter.get('/', saleController.getAll); // localhost:3001/api/sale?page=2&pa
 saleRouter.get('/:id', saleController.getById);
 saleRouter.get('/user/:id', saleController.getSalesByUser);
 saleRouter.get('/client/:id', saleController.getSalesByClient);
+saleRouter.get('/relatory/day/:date', saleController.getSalesByDay);
 
 export default saleRouter;

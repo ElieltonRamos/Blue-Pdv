@@ -6,7 +6,7 @@ export interface Sale {
   clientId: number;
   userOperator: string;
   paymentMethod: string;
-  date: string;
+  date: Date;
   products?: Product[];
   totalProducts: number;
   total: number;

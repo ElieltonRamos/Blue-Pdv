@@ -5,7 +5,7 @@ import { ServiceResponse } from '../interfaces/services';
 import ProductModel from '../database/models/product.model';
 import UserModel from '../database/models/user.model';
 import { validationCreateSale, validationFindSales, validationsParams } from '../utils/validations';
-import { WhereOptions } from 'sequelize';
+import { Op, WhereOptions } from 'sequelize';
 
 const include = [
   {
@@ -129,10 +129,34 @@ async function getSalesByClient(
   };
 }
 
+async function getSalesByDay(date: string, page: number, pageSize: number, operatorId?: number)
+  : Promise<ServiceResponse<AllSalesResponse>> {
+  const validation = validationsParams(1, page, pageSize);
+  if (validation) return validation;
+
+  const formattedDate = new Date(date);
+  const filters  = {
+    [Op.and]: [
+      ...(operatorId ? [{ userOperator: operatorId }] : []),
+      { date: formattedDate },
+    ]
+  };  
+  const res = await findSales(filters, page, pageSize);
+
+  const salesExists = validationFindSales(res.sales);
+  if (salesExists) return salesExists;
+
+  return {
+    status: 'OK',
+    data: res,
+  };
+}
+
 export default {
   create,
   getAll,
   getById,
   getSalesByUser,
   getSalesByClient,
+  getSalesByDay,
 };

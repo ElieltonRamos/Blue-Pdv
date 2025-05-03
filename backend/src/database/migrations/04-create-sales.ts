@@ -38,7 +38,7 @@ export default {
         allowNull: false,
       },
       date: {
-        type: DataTypes.STRING,
+        type: DataTypes.DATE,
         allowNull: false,
       },
       totalProducts: {

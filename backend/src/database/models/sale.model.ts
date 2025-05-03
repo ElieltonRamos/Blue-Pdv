@@ -28,7 +28,7 @@ const SaleModel: SaleSequelizeModelCreator = db.define('sales', {
     allowNull: false,
   },
   date: {
-    type: DataTypes.STRING,
+    type: DataTypes.DATE,
     allowNull: false,
   },
   totalProducts: {
