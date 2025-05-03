@@ -36,7 +36,7 @@ export class VendasComponent {
   totalValueDiscount: number = 0;
   showEditModal = false;
   selectedItem!: Product;
-
+  valuePaid = 0;
   showSaleModal = false;
   saleData!: Sale;
   paymentMethod = 'Dinheiro';
@@ -197,6 +197,7 @@ export class VendasComponent {
           this.client = { id: 1, name: 'Avista', phone: '0', adress: 'rua 0' };
           this.product = { code: '', quantity: 1, price: 0, name: '' };
           this.paymentMethod = 'Dinheiro';
+          this.valuePaid = 0;
         }
       }
     );

@@ -10,10 +10,9 @@ export class FinishSaleComponent {
   @Output() calculateDiscount = new EventEmitter<string>();
   @Input() totalValue: number = 0;
   @Output() paymentMethodChange = new EventEmitter<string>();
-  // paymentMethod = 'Dinheiro';
   @Input() paymentMethod!: string;
-
-  valuePaid: number = 0;
+  @Input() valuePaid!: number;
+  @Output() valuePaidChange = new EventEmitter<number>();
 
   calculateChange() {
     const changeReturn = this.valuePaid - this.totalValue;

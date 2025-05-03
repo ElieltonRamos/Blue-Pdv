@@ -67,7 +67,7 @@
         <input
           type="text"
           placeholder="Escaneie o produto"
-          [(ngModel)]="this.product.code"
+          [(ngModel)]="product.code"
           (keydown.enter)="searchProductByCode()"
           autofocus
           class="w-full p-2 rounded bg-gray-200 text-black font-semibold text-lg text-center focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -78,53 +78,56 @@
         <label class="block text-sm text-white mb-1">Quantidade</label>
         <input
           type="number"
-          [(ngModel)]="this.product.quantity"
+          [(ngModel)]="product.quantity"
           class="w-full p-2 rounded bg-gray-200 text-center font-bold"
         />
       </div>
 
-      <div>
-        <label class="block text-sm text-white mb-1">Valor Unitário</label>
-        <input
-          type="text"
-          [(value)]="this.product.price"
-          class="w-full p-2 rounded bg-gray-200 text-center font-bold"
-        />
-      </div>
+      <div class="flex items-center gap-2 mb-2">
+        <div class="flex-1">
+          <label class="block text-sm text-white mb-1">Valor Unitário</label>
+          <input
+            type="text"
+            [(value)]="product.price"
+            class="w-full p-2 rounded bg-gray-200 text-center font-bold"
+          />
+        </div>
 
-      <div>
-        <label class="block text-sm text-white mb-1">Valor Total</label>
-        <div class="w-full p-2 rounded bg-gray-200 text-center font-bold">
-          {{ formatNumber(this.product.price * this.product.quantity) }}
+        <div class="flex-1">
+          <label class="block text-sm text-white mb-1">Valor Total</label>
+          <div class="w-full p-2 rounded bg-gray-200 text-center font-bold">
+            {{ formatNumber(product.price * product.quantity) }}
+          </div>
         </div>
       </div>
 
       <div>
-        <input
-        type="text"
-        #inputProductName
-        placeholder="Buscar Produto"
-        [(ngModel)]="this.product.name"
-        class="w-34 p-2 rounded bg-gray-200 text-black focus:outline-none focus:ring-2 focus:ring-green-500"
-      />
-      <button
-        (click)="findProductByName(inputProductName.value)"
-        class="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded text-sm flex items-center justify-center"
-      >
-        Buscar
-      </button>
+        <div class="flex items-center gap-2 mb-2">
+          <input
+            type="text"
+            #inputProductName
+            placeholder="Buscar Produto"
+            [(ngModel)]="product.name"
+            class="w-34 p-2 rounded bg-gray-200 text-black focus:outline-none focus:ring-2 focus:ring-green-500"
+          />
+          <button
+            (click)="findProductByName(inputProductName.value)"
+            class="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded text-sm flex items-center justify-center"
+          >
+            Buscar
+          </button>
+        </div>
 
-      <label class="block text-sm text-white mb-1">Resultado da Busca</label>
-      <select
-        [(ngModel)]="product.code"
-        class="w-44 p-2 rounded bg-gray-200 text-black"
-      >
-        @for (item of searchProducts; track item.id) {
-        <option value="{{ item.code }}">{{ item.name }}</option>
-        }
-      </select>
+        <label class="block text-sm text-white mb-1">Resultado da Busca</label>
+        <select
+          [(ngModel)]="product.code"
+          class="w-44 p-2 rounded bg-gray-200 text-black"
+        >
+          @for (item of searchProducts; track item.id) {
+          <option value="{{ item.code }}">{{ item.name }}</option>
+          }
+        </select>
       </div>
-
     </div>
 
     <div class="flex flex-row justify-between h-full basis-2/4">
@@ -173,10 +176,11 @@
 
     <div class="basis-1/4">
       <app-finish-sale
-        [totalValue]="formatNumber(this.totalValueDiscount)"
+        [totalValue]="formatNumber(totalValueDiscount)"
         (calculateDiscount)="calculateDiscount($event)"
         [paymentMethod]="paymentMethod"
         (paymentMethodChange)="onPaymentMethodChange($event)"
+        [(valuePaid)]="valuePaid"
       />
     </div>
   </div>

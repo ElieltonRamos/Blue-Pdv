@@ -67,6 +67,7 @@
     <input
       type="number"
       [(ngModel)]="valuePaid"
+      (ngModelChange)="valuePaidChange.emit($event)"
       placeholder="R$ 0,00"
       class="w-full p-1 rounded bg-gray-200 text-center font-bold"
     />

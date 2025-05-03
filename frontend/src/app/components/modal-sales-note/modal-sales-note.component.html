@@ -38,9 +38,14 @@
     </table>
 
     <p class="mt-4">
-      <strong>Subtotal: R$</strong> {{ saleData.totalProduts }}
+      <strong>Subtotal: R$</strong> {{ formatNumber(saleData.totalProduts) }}
     </p>
-    <p><strong>Total: R$</strong> {{ saleData.total }}</p>
+    <p>
+      @if (calculateDiscount() > 0) {
+        <strong>Desconto: R$</strong> {{ calculateDiscount() }}
+      }
+    </p>
+    <p><strong>Total: R$</strong> {{ formatNumber(saleData.total) }}</p>
     <p><strong>Forma de Pagamento:</strong> {{ saleData.paymentMethod }}</p>
 
     <div class="mt-6 text-center text-sm text-gray-600 border-t pt-4">
