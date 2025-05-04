@@ -51,3 +51,11 @@ export function alertConfirm(title: string): Promise<boolean> {
     }
   });
 }
+
+export function alertSuccess(msg: string) {
+  Swal.fire({
+    title: "msg!",
+    icon: "success",
+    draggable: true
+  });
+}
