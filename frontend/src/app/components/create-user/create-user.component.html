@@ -1,0 +1,67 @@
+<!-- Formulário -->
+<form class="bg-[#1d2a3c] p-6 rounded-lg space-y-6">
+  <!-- Inputs lado a lado -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div>
+      <label for="username" class="block text-white font-bold mb-2"
+        >Nome do Usuário</label
+      >
+      <input
+        id="username"
+        name="username"
+        type="text"
+        required
+        placeholder="Digite o nome"
+        class="text-xl w-full p-2 rounded-md bg-white text-black font-semibold placeholder-gray-500"
+      />
+    </div>
+    <div>
+      <label for="password" class="block text-white font-bold mb-2"
+        >Senha de Acesso</label
+      >
+      <input
+        id="password"
+        name="password"
+        type="text"
+        required
+        placeholder="Crie uma senha"
+        class="text-xl w-full p-2 rounded-md bg-white text-black font-semibold placeholder-gray-500"
+      />
+    </div>
+  </div>
+
+  <!-- Tipo de Usuário -->
+  <div class="text-white font-bold">
+    <label class="block mb-2">Tipo de Usuário:</label>
+    <div class="flex gap-8">
+      <label class="flex items-center gap-3 text-base">
+        <input
+          type="radio"
+          name="tipoUsuario"
+          value="Operador"
+          class="w-8 h-8 accent-blue-500"
+        />
+        Operador
+      </label>
+      <label class="flex items-center gap-3 text-base">
+        <input
+          type="radio"
+          name="tipoUsuario"
+          value="Administrador"
+          class="w-8 h-8 accent-blue-500"
+        />
+        Administrador
+      </label>
+    </div>
+  </div>
+
+  <!-- Botão -->
+  <div class="flex justify-center pt-4">
+    <button
+      type="submit"
+      class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-bold"
+    >
+      Salvar
+    </button>
+  </div>
+</form>
