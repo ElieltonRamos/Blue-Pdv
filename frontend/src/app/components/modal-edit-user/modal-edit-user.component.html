@@ -1,0 +1,63 @@
+<!-- Background escuro (overlay) -->
+<div class="fixed inset-0 flex items-center justify-center z-50" style="background-color: rgba(0, 0, 0, 0.8)">
+  <!-- Modal -->
+  <div class="bg-[#182233] w-full max-w-lg rounded-2xl shadow-lg p-6 space-y-6">
+
+    <!-- Cabeçalho -->
+    <div class="flex justify-between items-center border-b border-gray-600 pb-4">
+      <h3 class="text-white text-xl font-bold">Editar Usuário</h3>
+      <button class="text-gray-400 hover:text-white text-2xl font-bold">X</button>
+    </div>
+
+    <!-- Formulário -->
+    <form class="space-y-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <!-- Nome -->
+        <div>
+          <label class="text-white font-semibold block mb-1">Usuario: </label>
+          <input
+            type="text"
+            [(ngModel)]="user.username"
+            class="text-lg w-full p-2 rounded-md bg-white text-black font-semibold placeholder-gray-500"
+          />
+        </div>
+
+        <!-- Senha -->
+        <div>
+          <label class="text-white font-semibold block mb-1">Senha: </label>
+          <input
+            type="text"
+            [(ngModel)]="user.password"
+            placeholder="Digite a nova senha"
+            class="text-lg w-full p-2 rounded-md bg-white text-black font-semibold placeholder-gray-500"
+          />
+        </div>
+      </div>
+
+      <!-- Tipo de Usuário -->
+      <div class="text-white font-bold">
+        <label class="block mb-2">Tipo de Usuário: </label>
+        <div class="flex gap-6">
+          <label class="flex items-center gap-2 text-base">
+            <input type="radio" name="tipo" value="Operador" class="w-6 h-6 accent-blue-500" />
+            Operador
+          </label>
+          <label class="flex items-center gap-2 text-base">
+            <input type="radio" name="tipo" value="Administrador" class="w-6 h-6 accent-blue-500" />
+            Administrador
+          </label>
+        </div>
+      </div>
+
+      <!-- Botões -->
+      <div class="flex justify-end gap-4 pt-4">
+        <button type="button" class="bg-gray-600 hover:bg-gray-700 text-white px-6 py-2 rounded-lg font-bold">
+          Cancelar
+        </button>
+        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-bold">
+          Salvar Alterações
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
