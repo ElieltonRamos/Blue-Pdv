@@ -12,13 +12,13 @@ export default {
           id: 1,
           username: 'Elielton',
           password: bcrypt.hashSync('123456', SALT_ROUNDS),
-          function: 'admin',
+          user_type: 'Administrador',
         },
         {
           id: 2,
           username: 'Lucas',
           password:bcrypt.hashSync('123456', SALT_ROUNDS),
-          function: 'user',
+          user_type: 'Operador',
         }
       ],
       {}

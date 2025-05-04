@@ -20,7 +20,8 @@ const UserModel: UserSequelizeModelCreator = db.define('User', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  function: {
+  userType: {
+    field: 'user_type',
     type: DataTypes.STRING,
     allowNull: false,
   }

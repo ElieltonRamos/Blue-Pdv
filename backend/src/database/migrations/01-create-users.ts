@@ -18,7 +18,8 @@ export default {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      function: {
+      userType: {
+        field: 'user_type',
         type: DataTypes.STRING,
         allowNull: false,
       }

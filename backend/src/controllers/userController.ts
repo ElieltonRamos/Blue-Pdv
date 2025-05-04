@@ -15,6 +15,18 @@ async function login (req: Request, res: Response) {
   }
 };
 
+async function create (req: Request, res: Response) {
+  try {
+    const { username, password, userType } = req.body;
+    const { status, data } = await userService.create({ username, password, userType });
+    return res.status(mapHttpStatus(status)).json(data);
+  } catch (error) {
+    console.log('Error in create controller:', error);
+    return res.status(mapHttpStatus('SERVER_ERROR')).json({ message: 'Internal server error' });
+  }
+};
+
 export default {
-  login
+  login,
+  create,
 };
