@@ -20,4 +20,8 @@ export class LoginService {
   createUser(user: User) {
     return this.client.post<User>(`${this.apiUrl}/user/create`, user);
   }
+
+  getUsers() {
+    return this.client.get<User[]>(`${this.apiUrl}/user`);
+  }
 }
