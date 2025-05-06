@@ -3,7 +3,7 @@ import UserModel from '../database/models/user.model';
 import { LoginResponse, ServiceResponse } from '../interfaces/services';
 import User from '../interfaces/user';
 
-async function login( username: string, password: string ): Promise<ServiceResponse<LoginResponse>> {
+async function login(username: string, password: string): Promise<ServiceResponse<LoginResponse>> {
   if (!username || !password) {
     return {
       status: 'BAD_REQUEST',
@@ -48,9 +48,39 @@ async function create(user: User): Promise<ServiceResponse<User>> {
   const newUser = await UserModel.create({ username, password: hashedPassword, userType });
 
   return { status: 'CREATED', data: newUser.dataValues };
-};
+}
+
+async function getAll(): Promise<ServiceResponse<User[]>> {
+  const users = await UserModel.findAll({
+    attributes: { exclude: ['password'] },
+  });
+  return { status: 'OK', data: users.map((user) => user.dataValues) };
+}
+
+async function updateUser(id: number, data: User): Promise<ServiceResponse<User>> {
+  const usernameInvalid = data.username === '' || data.username === undefined || data.username === null;
+  const passwordInvalid = data.password === '' || data.password === undefined || data.password === null;
+  
+  if (isNaN(id)) return { status: 'BAD_REQUEST', data: { message: 'Id Invalido'} };
+  
+  if (usernameInvalid || passwordInvalid) {
+    return { status: 'BAD_REQUEST', data: { message: 'Usuario e senha são necessarios' } };
+  }
+
+  const update = await UserModel.update(data, { where: { id } });
+  if (update[0] === 0) {
+    return {
+      status: 'SERVER_ERROR',
+      data: { message: 'Usuario não atualizado, tente novamente!' },
+    };
+  }
+  const updatedUser = { id: data.id, username: data.username, userType: data.userType };
+  return { status: 'OK', data: updatedUser };
+}
 
 export default {
   login,
   create,
+  getAll,
+  updateUser,
 };
