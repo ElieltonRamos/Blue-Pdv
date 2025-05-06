@@ -12,6 +12,7 @@ import { ModalEditUserComponent } from '../modal-edit-user/modal-edit-user.compo
 export class ListUsersComponent {
   listUsers: User[] = [];
   showModalEdit: boolean = false;
+  editUser: User = {id: 1, password: '', username: '', userType: '' }
   private loginService = inject(LoginService);
 
   ngOnInit() {
@@ -27,5 +28,15 @@ export class ListUsersComponent {
         alertError(`Error ao listar usuarios: ${e.error.message}`);
       },
     });
+  }
+
+  closeModalEdit() {
+    this.showModalEdit = false;
+    this.getUsers();
+  }
+
+  openModalEdit(user: User) {
+    this.editUser = user;
+    this.showModalEdit = true;
   }
 }

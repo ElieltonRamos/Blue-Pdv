@@ -24,4 +24,8 @@ export class LoginService {
   getUsers() {
     return this.client.get<User[]>(`${this.apiUrl}/user`);
   }
+
+  editUser(id: number, user:User) {
+    return this.client.put<User>(`${this.apiUrl}/user/edit/${id}`, user)
+  }
 }
