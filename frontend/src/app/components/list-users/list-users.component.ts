@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import User from '../../interfaces/user';
 import { LoginService } from '../../services/login.service';
-import { alertConfirm, alertError } from '../alerts/custom-alerts';
+import { alertConfirm, alertError, alertSuccess } from '../alerts/custom-alerts';
 import { ModalEditUserComponent } from '../modal-edit-user/modal-edit-user.component';
 
 @Component({
@@ -35,7 +35,7 @@ export class ListUsersComponent {
       if (result) {
         this.loginService.deleteUser(user.id!).subscribe({
           next: () => {
-            alertConfirm('Usuario excluido com sucesso');
+            alertSuccess('Usuario excluido com sucesso');
             this.getUsers();
           },
           error: (e) => {
