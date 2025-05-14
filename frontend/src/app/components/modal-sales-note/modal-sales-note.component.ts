@@ -9,6 +9,7 @@ import { Sale } from '../../interfaces/sale';
 export class ModalSalesNoteComponent {
   @Input() saleData!: Sale
   @Output() closeModal = new EventEmitter<void>();
+  date = new Date().toLocaleString()
 
   calculateDiscount(): number {
     const discount = this.saleData.totalProducts - this.saleData.total;

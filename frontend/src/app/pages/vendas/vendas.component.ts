@@ -174,7 +174,7 @@ export class VendasComponent {
     }
 
     const saleData = {
-      date: new Date().toLocaleString(),
+      date: new Date(),
       clientId: this.client.id || 1,
       clientName: this.client.name,
       paymentMethod: this.paymentMethod,
