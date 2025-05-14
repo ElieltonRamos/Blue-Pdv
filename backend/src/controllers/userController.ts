@@ -50,9 +50,21 @@ async function updateUser(req: Request, res: Response) {
   }
 }
 
+async function deleteUser(req: Request, res: Response) {
+  try {
+    const { id } = req.params;
+    const { status, data } = await userService.deleteUser(Number(id));
+    return res.status(mapHttpStatus(status)).json(data);
+  } catch (error) {
+    console.log('Error in deleteUser controller:', error);
+    return res.status(mapHttpStatus('SERVER_ERROR')).json({ message: internalMsgError });
+  }
+}
+
 export default {
   login,
   create,
   getAll,
   updateUser,
+  deleteUser,
 };

@@ -78,9 +78,23 @@ async function updateUser(id: number, data: User): Promise<ServiceResponse<User>
   return { status: 'OK', data: updatedUser };
 }
 
+async function deleteUser(id: number): Promise<ServiceResponse<User>> {
+  if (isNaN(id)) return { status: 'BAD_REQUEST', data: { message: 'Id Invalido'} };
+  
+  const deletedUser = await UserModel.destroy({ where: { id } });
+  if (deletedUser === 0) {
+    return {
+      status: 'SERVER_ERROR',
+      data: { message: 'Usuario não deletado, tente novamente!' },
+    };
+  }
+  return { status: 'OK', data: { message: 'Usuario deletado com sucesso!' } };
+}
+
 export default {
   login,
   create,
   getAll,
   updateUser,
+  deleteUser,
 };
