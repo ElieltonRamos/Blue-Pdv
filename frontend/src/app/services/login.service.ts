@@ -28,4 +28,9 @@ export class LoginService {
   editUser(id: number, user:User) {
     return this.client.put<User>(`${this.apiUrl}/user/edit/${id}`, user)
   }
+
+  deleteUser(id: number) {
+    return this.client.delete<User>(`${this.apiUrl}/user/delete/${id}`);
+  }
+
 }

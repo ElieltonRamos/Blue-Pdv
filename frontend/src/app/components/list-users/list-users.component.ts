@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import User from '../../interfaces/user';
 import { LoginService } from '../../services/login.service';
-import { alertError } from '../alerts/custom-alerts';
+import { alertConfirm, alertError } from '../alerts/custom-alerts';
 import { ModalEditUserComponent } from '../modal-edit-user/modal-edit-user.component';
 
 @Component({
@@ -28,6 +28,23 @@ export class ListUsersComponent {
         alertError(`Error ao listar usuarios: ${e.error.message}`);
       },
     });
+  }
+
+  deleteUser(user: User) {
+    alertConfirm('Excluir Usuario').then((result) => {
+      if (result) {
+        this.loginService.deleteUser(user.id!).subscribe({
+          next: () => {
+            alertConfirm('Usuario excluido com sucesso');
+            this.getUsers();
+          },
+          error: (e) => {
+            alertError(`Error ao excluir usuario: ${e.error.message}`);
+          },
+        });
+      }
+    }
+    );
   }
 
   closeModalEdit() {
