@@ -3,6 +3,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { MenuComponent } from './pages/menu/menu.component';
 import { VendasComponent } from './pages/vendas/vendas.component';
 import { RegisterUserComponent } from './pages/register-user/register-user.component';
+import { RegisterClientComponent } from './pages/register-client/register-client.component';
 
 export const routes: Routes = [
   {
@@ -20,5 +21,9 @@ export const routes: Routes = [
   {
     path: 'cadastro-usuario',
     component: RegisterUserComponent
+  },
+  {
+    path: 'cadastro-cliente',
+    component: RegisterClientComponent
   }
 ];
