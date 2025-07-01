@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { CreateClientComponent } from '../../components/create-client/create-client.component';
-import { ListUsersComponent } from '../../components/list-users/list-users.component';
+import { ListClientsComponent } from '../../components/list-clients/list-clients.component';
 
 @Component({
   selector: 'app-register-client',
-  imports: [CreateClientComponent, ListUsersComponent],
+  imports: [CreateClientComponent, ListClientsComponent],
   templateUrl: './register-client.component.html',
 })
 export class RegisterClientComponent {
