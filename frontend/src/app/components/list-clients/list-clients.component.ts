@@ -17,7 +17,7 @@ export class ListClientsComponent {
   totalPages: number = 0;
   totalItems: number = 0;
   showModalEdit: boolean = false;
-  editClient: Client = { name: '', phone: '', address: '' };
+  editClient: Client = { name: '', phone: '', address: '', cpf: '' };
   private clientService = inject(ClientService);
 
   ngOnInit() {

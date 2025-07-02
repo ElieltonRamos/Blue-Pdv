@@ -29,6 +29,10 @@ export class ClientService {
   }
 
   deleteClient(id: number) {
-    return this.client.delete(`${this.apiUrl}/client/${id}`);
+    return this.client.delete(`${this.apiUrl}/client/delete/${id}`);
+  }
+
+  updateClient(id: number, client: Client) {
+    return this.client.patch<Client>(`${this.apiUrl}/client/update/${id}`, client);
   }
 }

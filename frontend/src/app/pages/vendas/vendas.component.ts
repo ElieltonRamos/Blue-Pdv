@@ -26,7 +26,7 @@ import { SalesService } from '../../services/sales.service';
   templateUrl: './vendas.component.html',
 })
 export class VendasComponent {
-  client: Client = { id: 1, name: 'Avista', phone: '0', address: 'rua 0' };
+  client: Client = { id: 1, name: 'Avista', phone: '0', address: 'rua 0', cpf: '' };
   token = JSON.parse(localStorage.getItem('token') || '');
   vendedorLogado = this.token.token.username;
   product = { code: '', quantity: 1, price: 0, name: '' };
@@ -57,7 +57,7 @@ export class VendasComponent {
           this.products = [];
           this.subtotalValue = 0;
           this.totalValueDiscount = 0;
-          this.client = { id: 1, name: 'Avista', phone: '0', address: 'rua 0' };
+          this.client = { id: 1, name: 'Avista', phone: '0', address: 'rua 0', cpf: '' };
           this.product = { code: '', quantity: 1, price: 0, name: '' };
           this.router.navigate(['menu']);
         }
@@ -162,7 +162,7 @@ export class VendasComponent {
         this.products = [];
         this.subtotalValue = 0;
         this.totalValueDiscount = 0;
-        this.client = { id: 1, name: 'Avista', phone: '0', address: 'rua 0' };
+        this.client = { id: 1, name: 'Avista', phone: '0', address: 'rua 0', cpf: '' };
         this.product = { code: '', quantity: 1, price: 0, name: '' };
       }
     });
@@ -200,6 +200,7 @@ export class VendasComponent {
               name: 'Avista',
               phone: '0',
               address: 'rua 0',
+              cpf: '12345678989'
             };
             this.product = { code: '', quantity: 1, price: 0, name: '' };
             this.paymentMethod = 'Dinheiro';

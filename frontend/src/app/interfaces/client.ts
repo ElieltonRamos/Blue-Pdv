@@ -3,4 +3,5 @@ export default interface Client {
   name: string;
   phone: string;
   address: string;
+  cpf: string
 }
