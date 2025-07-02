@@ -8,14 +8,16 @@ export default {
         {
           id: 1,
           name: 'Avista',
-          adress: 'Clientes Avista',
+          address: 'Clientes Avista',
           phone: '00000000000',
+          cpf: '00000000000',
         },
         {
           id: 2,
           name: 'João',
-          adress: 'Rua dos bobos, n=0, centro',
+          address: 'Rua dos bobos, n=0, centro',
           phone: '38988776655',
+          cpf: '12345678901',
         }
       ],
       {}

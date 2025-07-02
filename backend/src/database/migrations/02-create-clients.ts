@@ -14,14 +14,18 @@ export default {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      adress: {
+      address: {
         type: DataTypes.STRING,
         allowNull: false,
       },
       phone: {
         type: DataTypes.STRING,
         allowNull: false,
-      }
+      },
+      cpf: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
     });
   },
   down(queryInterface: QueryInterface) {

@@ -4,11 +4,11 @@ import Client from '../interfaces/client';
 import { PaginatedResponse, ServiceResponse } from '../interfaces/services';
 
 async function register(clientData: Client): Promise<ServiceResponse<Client>> {
-  const { name, phone, adress } = clientData;
-  if (!name || !phone || !adress) {
+  const { name, phone, address, cpf } = clientData;
+  if (!name || !phone || !address || !cpf) {
     return {
       status: 'BAD_REQUEST',
-      data: { message: 'E necessario informar nome, telefone e endereço' },
+      data: { message: 'E necessario informar nome, telefone, endereço e cpf' },
     };
   }
   const newClient = await ClientModel.create(clientData);

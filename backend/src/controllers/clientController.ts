@@ -6,8 +6,8 @@ const internalMsgError = 'Internal server error';
 
 async function register(req: Request, res: Response) {
   try {
-    const { name, phone, adress } = req.body;
-    const { status, data } = await clientService.register({ name, phone, adress });
+    const { name, phone, address, cpf } = req.body;
+    const { status, data } = await clientService.register({ name, phone, address, cpf });
     return res.status(mapHttpStatus(status)).json(data);
   } catch (error) {
     console.log('Error registering client:', error);
