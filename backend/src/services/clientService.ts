@@ -67,9 +67,18 @@ async function getClientById(id: string): Promise<ServiceResponse<Client>> {
   return { status: 'OK', data: client.dataValues };
 }
 
+async function deleteClient(id: string): Promise<ServiceResponse<{ message: string }>> {
+  const client = await ClientModel.findByPk(id);
+  if (!client) return { status: 'NOT_FOUND', data: { message: 'Cliente não encontrado' } };
+
+  await ClientModel.destroy({ where: { id } });
+  return { status: 'OK', data: { message: 'Cliente deletado com sucesso' } };
+}
+
 export default {
   register,
   getAllClients,
   getClientById,
+  deleteClient,
   searchClients,
 };

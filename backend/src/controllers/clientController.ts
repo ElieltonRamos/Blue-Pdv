@@ -48,9 +48,21 @@ async function searchClients(req: Request, res: Response) {
   }
 };
 
+async function deleteClient(req: Request, res: Response) {
+  try {
+    const { id } = req.params;
+    const { status, data } = await clientService.deleteClient(id);
+    return res.status(mapHttpStatus(status)).json(data);
+  } catch (error) {
+    console.log('Error deleting client:', error);
+    return res.status(mapHttpStatus('SERVER_ERROR')).json({ message: internalMsgError });
+  }
+}
+
 export default {
   register,
   getAllClients,
   getClientById,
+  deleteClient,
   searchClients,
 };
