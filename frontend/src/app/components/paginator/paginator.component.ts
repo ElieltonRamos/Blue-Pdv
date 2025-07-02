@@ -6,20 +6,15 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   templateUrl: './paginator.component.html',
 })
 export class PaginatorComponent {
-  @Input() currentPage: number = 1;
+  @Input() page: number = 1;
   @Input() totalItems: number = 0;
   @Input() itemsPerPage: number = 10;
+  @Input() totalPages: number = 0;
 
   @Output() pageChanged = new EventEmitter<number>();
 
-  get totalPages(): number {
-    return Math.ceil(this.totalItems / this.itemsPerPage);
-  }
-
   changePage(page: number) {
-    if (page >= 1 && page <= this.totalPages) {
-      this.pageChanged.emit(page);
-    }
+    this.pageChanged.emit(page);
   }
 
   pages(): number[] {

@@ -1,27 +1,19 @@
 <div class="flex space-x-2 items-center text-sm text-white">
   <button
     class="px-3 py-1 bg-gray-700 rounded hover:bg-gray-600"
-    [disabled]="currentPage === 1"
-    (click)="changePage(currentPage - 1)"
+    [disabled]="page === 1"
+    (click)="changePage(page - 1)"
   >
     Anterior
   </button>
 
-  @for (page of pages(); track page) {
-    <button
-      class="px-3 py-1 rounded"
-      [class.bg-blue-600]="page === currentPage"
-      [class.bg-gray-700]="page !== currentPage"
-      (click)="changePage(page)"
-    >
-      {{ page }}
-    </button>
-  }
+  <span>
+    Página {{ page }} de {{ totalPages }}
+  </span>
 
   <button
     class="px-3 py-1 bg-gray-700 rounded hover:bg-gray-600"
-    [disabled]="currentPage === totalPages"
-    (click)="changePage(currentPage + 1)"
+    (click)="changePage(page + 1)"
   >
     Próxima
   </button>

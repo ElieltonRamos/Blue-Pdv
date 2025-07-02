@@ -13,7 +13,8 @@ import { PaginatorComponent } from '../paginator/paginator.component';
 export class ListClientsComponent {
   listClients: Client[] = [];
   page: number = 1;
-  limit: number = 10;
+  limit: number = 20;
+  totalPages: number = 0;
   totalItems: number = 0;
   showModalEdit: boolean = false;
   editClient: Client = { name: '', phone: '', adress: '' };
@@ -24,12 +25,14 @@ export class ListClientsComponent {
   }
 
   getClients(page: number, limit: number) {
+    console.log('Listando Clientes', page, limit);
     this.clientService.getClients(page, limit).subscribe({
       next: (response) => {
         this.listClients = response.data;
         this.totalItems = response.total;
         this.page = response.page;
         this.limit = response.limit;
+        this.totalPages = response.totalPages;
       },
       error: (e) => {
         alertError(`Error ao listar Clientes: ${e.error.message}`);

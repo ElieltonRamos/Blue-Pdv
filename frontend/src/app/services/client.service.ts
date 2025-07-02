@@ -19,8 +19,8 @@ export class ClientService {
     return this.client.get<Client[]>(`${this.apiUrl}/client/search/${name}`);
   }
 
-  getClients(page: number, limit: number) {
-    const params = { page: page.toString(), limit: limit.toString() };
+  getClients(page: number, pageLimit: number) {
+    const params = { page: page.toString(), pageLimit: pageLimit.toString() };
     return this.client.get<PaginatedResponse<Client>>(`${this.apiUrl}/client`, { params });
   }
 

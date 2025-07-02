@@ -1,10 +1,12 @@
 <!-- Tabela de Usuários -->
-<div class="overflow-x-auto">
+<div class="overflow-x-auto overflow-y-auto">
   <div class="flex justify-end mb-4">
   <app-paginator
     [totalItems]="totalItems"
     [itemsPerPage]="limit"
-    (pageChange)="getClients(page, limit)"
+    [totalPages]="totalPages"
+    [page]="page"
+    (pageChanged)="getClients($event, limit)"
   ></app-paginator>
   </div>
   <table class="min-w-full text-white text-left">
