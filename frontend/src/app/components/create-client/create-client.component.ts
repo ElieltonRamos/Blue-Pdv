@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { ClientService } from '../../services/client.service';
+import { alertError, alertSuccess } from '../alerts/custom-alerts';
 
 @Component({
   selector: 'app-create-client',
@@ -9,6 +11,8 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
   providers: [provideNgxMask()],
 })
 export class CreateClientComponent {
+
+  private clientService = inject(ClientService);
 
   formCreateClient = new FormGroup({
     name: new FormControl('', [
@@ -21,7 +25,7 @@ export class CreateClientComponent {
     ]),
     phone: new FormControl('', [
       Validators.required,
-      Validators.pattern(/^\d{11}$/) // 10 ou 11 dígitos (com DDD)
+      Validators.pattern(/^\d{11}$/) // 11 dígitos (com DDD)
     ]),
     address: new FormControl('', [
       Validators.required,
@@ -31,7 +35,21 @@ export class CreateClientComponent {
 
    onSubmit() {
     if (this.formCreateClient.valid) {
-      console.log('Cliente cadastrado:', this.formCreateClient.value);
+      const newClient = {
+        name: this.formCreateClient.value.name || '',
+        phone: this.formCreateClient.value.phone || '',
+        address: this.formCreateClient.value.address || '',
+        cpf: this.formCreateClient.value.cpf || ''
+      }
+      this.clientService.createClient(newClient).subscribe({
+        next: (response) => {
+          alertSuccess(`Cliente ${response.name} registrado com sucesso!`);
+          this.formCreateClient.reset(); // limpa o formulário após o envio
+        },
+        error: (error) => {
+          alertError(`Erro ao registrar cliente: ${error.error.message}`);
+        }
+      });
     } else {
       this.formCreateClient.markAllAsTouched(); // ativa os erros visuais
     }

@@ -25,7 +25,7 @@ export class ClientService {
   }
 
   createClient(client: Client) {
-    return this.client.post<Client>(`${this.apiUrl}/client`, client);
+    return this.client.post<Client>(`${this.apiUrl}/client/register`, client);
   }
 
   deleteClient(id: number) {
