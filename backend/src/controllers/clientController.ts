@@ -17,7 +17,8 @@ async function register(req: Request, res: Response) {
 
 async function getAllClients(req: Request, res: Response) {
   try {
-    const { status, data } = await clientService.getAllClients();
+    const { page = 1, pageLimit = 10 } = req.query;
+    const { status, data } = await clientService.getAllClients(Number(page), Number(pageLimit));
     return res.status(mapHttpStatus(status)).json(data);
   } catch (error) {
     console.log('Error fetching clients:', error);
