@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import Product from '../interfaces/product';
+import Product, { GetSugestionCode } from '../interfaces/product';
+import { PaginatedResponse } from '../interfaces/paginator';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,22 @@ export class ProductsService {
 
   getProductByName(name: string): Observable<Product[]> {
     return this.client.get<Product[]>(`${this.apiUrl}/product/name/${name}`);
+  }
+
+  getSugestionCode(): Observable<GetSugestionCode> {
+    return this.client.get<GetSugestionCode>(`${this.apiUrl}/product/sugestion/code`);
+  }
+
+  createProduct(product: Product): Observable<Product> {
+    return this.client.post<Product>(`${this.apiUrl}/product/register`, product);
+  }
+
+  getAllProducts(page: number, pageLimit: number): Observable<PaginatedResponse<Product>> {
+    return this.client.get<PaginatedResponse<Product>>(`${this.apiUrl}/product?page=${page}&pageLimit=${pageLimit}`);
+  }
+
+  deleteProduct(id: number): Observable<void> {
+    return this.client.delete<void>(`${this.apiUrl}/product/${id}`);
   }
 
 }
