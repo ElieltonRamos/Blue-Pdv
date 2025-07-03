@@ -1,6 +1,15 @@
 <!-- Tabela de Produtos -->
 <div class="overflow-x-auto overflow-y-auto">
-  <div class="flex justify-end mb-4">
+  <div class="flex justify-between mb-4">
+  <div>
+    <input
+      type="text"
+      placeholder="Pesquisar produto..."
+      class="px-4 py-2 rounded bg-gray-800 text-white focus:outline-none"
+      [(ngModel)]="searchTerm"
+      (ngModelChange)="getProductByName()"
+    />
+  </div>
   <app-paginator
     [totalItems]="totalItems"
     [itemsPerPage]="limit"
@@ -34,9 +43,9 @@
             Editar
           </button>
           @if (showModalEdit) {
-          <app-modal-edit-product
+          <app-modal-update-product
             (closeModal)="closeModalEdit()"
-            [item]="editProduct"
+            [product]="editProduct"
           />
           }
           <button
