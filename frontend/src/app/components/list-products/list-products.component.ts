@@ -3,11 +3,12 @@ import Product from '../../interfaces/product';
 import { ProductsService } from '../../services/products.service';
 import { alertConfirm, alertError, alertSuccess } from '../alerts/custom-alerts';
 import { PaginatorComponent } from '../paginator/paginator.component';
-import { ModalEditProductComponent } from '../modal-edit-product/modal-edit-product.component';
+import { ModalUpdateProductComponent } from '../modal-update-product/modal-update-product.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-list-products',
-  imports: [PaginatorComponent, ModalEditProductComponent],
+  imports: [FormsModule, PaginatorComponent, ModalUpdateProductComponent],
   templateUrl: './list-products.component.html',
 })
 export class ListProductsComponent {
@@ -18,10 +19,30 @@ export class ListProductsComponent {
   totalItems: number = 0;
   showModalEdit: boolean = false;
   editProduct: Product = { name: '', price: 0, quantity: 0, code: 0 };
+  searchTerm: string = '';
   private productService = inject(ProductsService);
 
   ngOnInit() {
     this.getAllProducts(this.page, this.limit);
+  }
+
+  getProductByName() {
+    if (this.searchTerm !== '') {
+      this.productService.getProductByName(this.searchTerm).subscribe({
+      next: (response) => {
+        this.listProducts = response;
+        this.totalItems = response.length;
+        this.page = 1; // Reset to first page
+        this.limit = response.length; // Show all results
+        this.totalPages = 1; // Only one page for search results
+      },
+      error: (e) => {
+        alertError(`Error ao buscar Produto: ${e.error.message}`);
+      }
+    });
+    } else {
+      this.getAllProducts(1, 20);
+    }
   }
 
   getAllProducts(page: number, limit: number) {
