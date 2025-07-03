@@ -1,7 +1,7 @@
 import { Op } from 'sequelize';
 import ProductModel from '../database/models/product.model';
 import Product from '../interfaces/product';
-import { ServiceResponse } from '../interfaces/services';
+import { PaginatedResponse, ServiceResponse } from '../interfaces/services';
 
 const productNotFound = 'Produto não encontrado';
 
@@ -33,16 +33,32 @@ async function register(product: Product): Promise<ServiceResponse<Product>> {
   return { status: 'CREATED', data: productRegistered.dataValues };
 }
 
-async function getAllProducts(): Promise<ServiceResponse<Product[]>> {
-  const products = await ProductModel.findAll();
-  if (!products) {
-    return {
-      status: 'SERVER_ERROR',
-      data: { message: 'Erro ao buscar produtos' },
-    };
+async function getAllProducts(page: number, pageLimit: number)
+  : Promise<ServiceResponse<PaginatedResponse<Product>>> {
+  if (page < 1 || pageLimit < 1 || isNaN(page) || isNaN(pageLimit)) {
+    const message = 'A pagina ou a quantidade de itens por pagina esta incorreto';
+    return { status: 'BAD_REQUEST', data: { message } };
   }
-  const allProducts = products.map((product) => product.dataValues);
-  return { status: 'OK', data: allProducts };
+  const offset = (page - 1) * pageLimit;
+
+  const { count, rows } = await ProductModel.findAndCountAll({
+    limit: pageLimit,
+    offset,
+  });
+
+  const allProducts = rows.map((client) => client.dataValues);
+  const totalPages = Math.ceil(count / pageLimit);
+
+  return {
+    status: 'OK',
+    data: {
+      data: allProducts,
+      total: count,
+      page,
+      limit: pageLimit,
+      totalPages,
+    },
+  };
 }
 
 async function getProductById(id: number): Promise<ServiceResponse<Product>> {

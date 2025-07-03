@@ -59,10 +59,24 @@ async function deleteClient(req: Request, res: Response) {
   }
 }
 
+async function updateClient(req: Request, res: Response) {
+  try {
+    const { id } = req.params;
+    const { name, phone, address, cpf } = req.body;
+    const { status, data } = await clientService.updateClient(id, { name, phone, address, cpf });
+    return res.status(mapHttpStatus(status)).json(data);
+  }
+  catch (error) {
+    console.log('Error updating client:', error);
+    return res.status(mapHttpStatus('SERVER_ERROR')).json({ message: internalMsgError });
+  }
+}
+
 export default {
   register,
   getAllClients,
   getClientById,
   deleteClient,
+  updateClient,
   searchClients,
 };

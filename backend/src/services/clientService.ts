@@ -3,6 +3,8 @@ import ClientModel from '../database/models/client.model';
 import Client from '../interfaces/client';
 import { PaginatedResponse, ServiceResponse } from '../interfaces/services';
 
+const clientNotFoundMessage = 'Cliente não encontrado';
+
 async function register(clientData: Client): Promise<ServiceResponse<Client>> {
   const { name, phone, address, cpf } = clientData;
   if (!name || !phone || !address || !cpf) {
@@ -63,16 +65,24 @@ async function searchClients(searchName: string): Promise<ServiceResponse<Client
 
 async function getClientById(id: string): Promise<ServiceResponse<Client>> {
   const client = await ClientModel.findByPk(id);
-  if (!client) return { status: 'NOT_FOUND', data: { message: 'Cliente não encontrado' } };
+  if (!client) return { status: 'NOT_FOUND', data: { message: clientNotFoundMessage } };
   return { status: 'OK', data: client.dataValues };
 }
 
 async function deleteClient(id: string): Promise<ServiceResponse<{ message: string }>> {
   const client = await ClientModel.findByPk(id);
-  if (!client) return { status: 'NOT_FOUND', data: { message: 'Cliente não encontrado' } };
+  if (!client) return { status: 'NOT_FOUND', data: { message: clientNotFoundMessage } };
 
   await ClientModel.destroy({ where: { id } });
   return { status: 'OK', data: { message: 'Cliente deletado com sucesso' } };
+}
+
+async function updateClient(id: string, clientData: Client): Promise<ServiceResponse<Client>> {
+  const client = await ClientModel.findByPk(id);
+  if (!client) return { status: 'NOT_FOUND', data: { message: clientNotFoundMessage } };
+
+  const updatedClient = await client.update(clientData);
+  return { status: 'OK', data: updatedClient.dataValues };
 }
 
 export default {
@@ -80,5 +90,6 @@ export default {
   getAllClients,
   getClientById,
   deleteClient,
+  updateClient,
   searchClients,
 };
