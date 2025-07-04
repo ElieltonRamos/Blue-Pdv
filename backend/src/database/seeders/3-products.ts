@@ -9,13 +9,13 @@ export default {
           id: 1,
           name: 'Carne Maca do Peito',
           code: '1010',
-          price: 10,
+          price: 31.99,
         },
         {
           id: 2,
           name: 'Carne Patinho',
           code: '1020',
-          price: 20,
+          price: 20.99,
         }
       ],
       {}

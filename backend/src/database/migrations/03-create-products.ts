@@ -19,7 +19,7 @@ export default {
         allowNull: false,
       },
       price: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.DECIMAL(10, 2), // até 10 dígitos no total, 2 após a vírgula
         allowNull: false,
       }
     });

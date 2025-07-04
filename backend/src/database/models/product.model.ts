@@ -21,7 +21,7 @@ const ProductModel: UserSequelizeModelCreator = db.define('Product', {
     allowNull: false,
   },
   price: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.DECIMAL(10, 2),
     allowNull: false,
   }
 }, {
