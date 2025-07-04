@@ -25,8 +25,8 @@ export class ModalUpdateProductComponent {
         alertSuccess('Produto atualizado com sucesso!');
         this.closeModal.emit();
       },
-      error: (error) => {
-        alertError(`Erro ao atualizar o produto: ${error.message}`);
+      error: (e) => {
+        alertError(`Erro ao atualizar o produto: ${e.error.message}`);
       }
     });
   }
