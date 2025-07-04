@@ -113,9 +113,12 @@ async function updateProduct( id: number, product: Product ): Promise<ServiceRes
   }
 
   const verifyCode = await ProductModel.findOne({ where: { code } });
-  const codeOK = verifyCode && verifyCode.dataValues.id !== id;
-  if (codeOK && verifyCode.dataValues.code === code) {
-    return { status: 'CONFLICT', data: { message: 'Codico informado já cadastrado' } };
+
+  if (verifyCode && verifyCode.dataValues.id !== id) {
+    return {
+      status: 'CONFLICT',
+      data: { message: 'Código informado já cadastrado' },
+    };
   }
 
   await ProductModel.update({ name, code, price }, { where: { id } });
