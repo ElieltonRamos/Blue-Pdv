@@ -1,0 +1,72 @@
+<div
+  class="min-h-screen flex flex-col items-center justify-start bg-gradient-to-b from-[#1a103d] to-[#2a204d] px-4 py-6"
+>
+  <!-- Botão de Voltar -->
+  <button
+    (click)="goToMenu()"
+    class="self-center mb-6 bg-indigo-600 text-white px-6 py-2 rounded shadow-md hover:bg-indigo-700 transition"
+  >
+    Voltar para menu
+  </button>
+
+  <!-- Container Principal -->
+  <div class="w-full max-w-6xl bg-[#182233] rounded-2xl shadow-lg p-6">
+    <!-- Cabeçalho -->
+    <div
+      class="flex items-center justify-between mb-6 border-b border-gray-500 pb-4"
+    >
+      <h2 class="text-2xl font-bold text-sky-400 flex items-center gap-2">
+        <i class="fas fa-receipt"></i> Vendas Realizadas
+      </h2>
+    </div>
+
+    <!-- Tabela -->
+    <div class="overflow-x-auto">
+      <table class="min-w-full text-white text-left">
+        <thead class="bg-[#1d2a3c] text-sky-400 uppercase text-sm">
+          <tr>
+            <th class="py-3 px-4">ID</th>
+            <th class="py-3 px-4">Data</th>
+            <th class="py-3 px-4">Cliente</th>
+            <th class="py-3 px-4">Metodo de Pagamento</th>
+            <th class="py-3 px-4">Operador</th>
+            <th class="py-3 px-4">Total</th>
+            <th class="py-3 px-4">Ações</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-700">
+          @for (sale of listSales; track sale.id) { @if (showSaleModal) { }
+          <tr class="hover:bg-[#243447] transition">
+            <td class="py-3 px-4">{{ sale.id }}</td>
+            <td class="py-3 px-4">{{ sale.formattedDate }}</td>
+            <td class="py-3 px-4">{{ sale.client?.name }}</td>
+            <td class="py-3 px-4">{{ sale.paymentMethod }}</td>
+            <td class="py-3 px-4">{{ sale.operator?.username }}</td>
+            <td class="py-3 px-4">{{ sale.total }}</td>
+            <td class="py-3 px-4 space-x-2">
+              <button (click)="openSaleModal(sale)">Ver Detalhes</button>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Paginação -->
+    <div class="flex justify-end mt-4">
+      <app-paginator
+        [totalItems]="totalItems"
+        [itemsPerPage]="limit"
+        [totalPages]="totalPages"
+        [page]="page"
+        (pageChanged)="getSales($event, limit)"
+      ></app-paginator>
+    </div>
+  </div>
+  @if (showSaleModal) {
+  <app-modal-sales-note
+    [saleData]="saleSelected!"
+    (closeModal)="closeSaleModal()"
+  />
+  }
+</div>

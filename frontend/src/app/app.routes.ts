@@ -5,6 +5,7 @@ import { VendasComponent } from './pages/vendas/vendas.component';
 import { RegisterUserComponent } from './pages/register-user/register-user.component';
 import { RegisterClientComponent } from './pages/register-client/register-client.component';
 import { RegisterProductComponent } from './pages/register-product/register-product.component';
+import { SalesHistoryComponent } from './pages/sales-history/sales-history.component';
 
 export const routes: Routes = [
   {
@@ -30,5 +31,9 @@ export const routes: Routes = [
   {
     path: 'cadastro-produto',
     component: RegisterProductComponent
+  },
+  {
+    path: 'historico-vendas',
+    component: SalesHistoryComponent
   }
 ];
