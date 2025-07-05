@@ -1,11 +1,14 @@
 import SaleModel from '../database/models/sale.model';
 import SalesProductsModel from '../database/models/sales.products.model';
-import { AllSalesResponse, Sale } from '../interfaces/sale';
-import { ServiceResponse } from '../interfaces/services';
+import { Sale } from '../interfaces/sale';
+import { PaginatedResponse, ServiceResponse } from '../interfaces/services';
 import ProductModel from '../database/models/product.model';
 import UserModel from '../database/models/user.model';
-import { validationCreateSale, validationFindSales, validationsParams } from '../utils/validations';
+import { validationCreateSale, validationsParams } from '../utils/validations';
 import { Op, WhereOptions } from 'sequelize';
+import ClientModel from '../database/models/client.model';
+import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 
 const include = [
   {
@@ -20,29 +23,46 @@ const include = [
     as: 'operator',
     attributes: ['username'],
   },
+  {
+    model: ClientModel,
+    as: 'client',
+    attributes: ['name'],
+  },
 ];
 
-async function findSales(where: WhereOptions = {}, page: number, pageSize: number) {
-  const offset = (page - 1) * pageSize;
+async function findSales(where: WhereOptions = {}, page: number, pageLimit: number)
+: Promise<PaginatedResponse<Sale>> {
+  const offset = (page - 1) * pageLimit;
   const { count, rows: sales } = await SaleModel.findAndCountAll({
     where,
     distinct: true,
     include,
-    limit: pageSize,
+    limit: pageLimit,
     offset,
   });
 
+  const formattedSales = sales.map((sale) => {
+    const data = sale.dataValues;
+
+    return {
+      ...data,
+      formattedDate: format(new Date(data.date), 'dd/MM/yyyy HH:mm', { locale: ptBR }),
+    };
+  });
+
   return {
-    totalResults: count,
-    totalPages: Math.ceil(count / pageSize),
-    currentPage: page,
-    sales,
+    data: formattedSales,
+    page,
+    limit: pageLimit,
+    total: count,
+    totalPages: Math.ceil(count / pageLimit),
   };
 }
 
 async function create(sale: Sale): Promise<ServiceResponse<Sale>> {
   const validationSale = validationCreateSale(sale);
   if (validationSale) return validationSale;
+  console.log('sale', sale);
 
   const newSale = await SaleModel.create(sale);
 
@@ -62,14 +82,12 @@ async function create(sale: Sale): Promise<ServiceResponse<Sale>> {
   };
 }
 
-async function getAll(page: number, pageSize: number): Promise<ServiceResponse<AllSalesResponse>> {
-  const validation = validationsParams(1, page, pageSize);
+async function getAll(page: number, pageLimit: number)
+  : Promise<ServiceResponse<PaginatedResponse<Sale>>> {
+  const validation = validationsParams(1, page, pageLimit);
   if (validation) return validation;
 
-  const res = await findSales({}, page, pageSize);
-
-  const salesExists = validationFindSales(res.sales);
-  if (salesExists) return salesExists;
+  const res = await findSales({}, page, pageLimit);
 
   return {
     status: 'OK',
@@ -94,15 +112,12 @@ async function getById(id: number): Promise<ServiceResponse<Sale>> {
   };
 }
 
-async function getSalesByUser(id: number, page: number, pageSize: number)
-: Promise<ServiceResponse<AllSalesResponse>> {
-  const validation = validationsParams(id, page, pageSize);
+async function getSalesByUser(id: number, page: number, pageLimit: number)
+: Promise<ServiceResponse<PaginatedResponse<Sale>>> {
+  const validation = validationsParams(id, page, pageLimit);
   if (validation) return validation;
 
-  const res = await findSales({ userOperator: id }, page, pageSize);
-
-  const salesExists = validationFindSales(res.sales);
-  if (salesExists) return salesExists;
+  const res = await findSales({ userOperator: id }, page, pageLimit);
 
   return {
     status: 'OK',
@@ -113,15 +128,12 @@ async function getSalesByUser(id: number, page: number, pageSize: number)
 async function getSalesByClient(
   id: number,
   page: number,
-  pageSize: number
-): Promise<ServiceResponse<AllSalesResponse>> {
-  const validation = validationsParams(id, page, pageSize);
+  pageLimit: number
+): Promise<ServiceResponse<PaginatedResponse<Sale>>> {
+  const validation = validationsParams(id, page, pageLimit);
   if (validation) return validation;
 
-  const res = await findSales({ clientId: id }, page, pageSize);
-
-  const salesExists = validationFindSales(res.sales);
-  if (salesExists) return salesExists;
+  const res = await findSales({ clientId: id }, page, pageLimit);
 
   return {
     status: 'OK',
@@ -132,10 +144,10 @@ async function getSalesByClient(
 async function getSalesByDay(
   date: string,
   page: number,
-  pageSize: number,
+  pageLimit: number,
   operatorId?: number
-): Promise<ServiceResponse<AllSalesResponse>> {
-  const validation = validationsParams(1, page, pageSize);
+): Promise<ServiceResponse<PaginatedResponse<Sale>>> {
+  const validation = validationsParams(1, page, pageLimit);
   if (validation) return validation;
 
   const formattedDate = new Date(date);
@@ -151,10 +163,7 @@ async function getSalesByDay(
       ...(operatorId ? [{ userOperator: operatorId }] : []),
       { date: {[Op.between]: [startOfDay, endOfDay]} }],
   };
-  const res = await findSales(filters, page, pageSize);
-
-  const salesExists = validationFindSales(res.sales);
-  if (salesExists) return salesExists;
+  const res = await findSales(filters, page, pageLimit);
 
   return {
     status: 'OK',
@@ -165,10 +174,10 @@ async function getSalesByDay(
 async function getSalesByMonth(
   date: string,
   page: number,
-  pageSize: number,
+  pageLimit: number,
   operatorId?: number
-): Promise<ServiceResponse<AllSalesResponse>> {
-  const validation = validationsParams(1, page, pageSize);
+): Promise<ServiceResponse<PaginatedResponse<Sale>>> {
+  const validation = validationsParams(1, page, pageLimit);
   if (validation) return validation;
 
   const formattedDate = new Date(date);
@@ -184,10 +193,7 @@ async function getSalesByMonth(
     ],
   };
 
-  const res = await findSales(filters, page, pageSize);
-
-  const salesExists = validationFindSales(res.sales);
-  if (salesExists) return salesExists;
+  const res = await findSales(filters, page, pageLimit);
 
   return {
     status: 'OK',

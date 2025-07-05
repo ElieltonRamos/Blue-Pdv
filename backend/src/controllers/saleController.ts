@@ -18,8 +18,8 @@ async function create(req: Request, res: Response) {
 
 async function getAll(req: Request, res: Response) {
   try {
-    const { page, pagesize } = req.query;
-    const { status, data } = await salesService.getAll(Number(page), Number(pagesize));
+    const { page = 1, pageLimit = 10 } = req.query;
+    const { status, data } = await salesService.getAll(Number(page), Number(pageLimit));
     return res.status(mapHttpStatus(status)).json(data);
   } catch (error) {
     console.log('Error fetching sales:', error);
@@ -41,8 +41,8 @@ async function getById(req: Request, res: Response) {
 async function getSalesByUser(req: Request, res: Response) {
   try {
     const { id } = req.params;
-    const { page, pagesize } = req.query;
-    const { status, data } = await salesService.getSalesByUser(Number(id), Number(page), Number(pagesize));
+    const { page = 1, pageLimit = 10 } = req.query;
+    const { status, data } = await salesService.getSalesByUser(Number(id), Number(page), Number(pageLimit));
     return res.status(mapHttpStatus(status)).json(data);
   } catch (error) {
     console.log('Error fetching sales by user:', error);
@@ -53,8 +53,8 @@ async function getSalesByUser(req: Request, res: Response) {
 async function getSalesByClient(req: Request, res: Response) {
   try {
     const { id } = req.params;
-    const { page, pagesize } = req.query;
-    const { status, data } = await salesService.getSalesByClient(Number(id), Number(page), Number(pagesize));
+    const { page = 1, pageLimit = 10 } = req.query;
+    const { status, data } = await salesService.getSalesByClient(Number(id), Number(page), Number(pageLimit));
     return res.status(mapHttpStatus(status)).json(data);
   } catch (error) {
     console.log('Error fetching sales by client:', error);
@@ -65,10 +65,10 @@ async function getSalesByClient(req: Request, res: Response) {
 async function getSalesByDay(req: Request, res: Response) {
   try {
     const { date } = req.params;
-    const { operatorId, page, pagesize } = req.query;
+    const { operatorId, page, pageLimit } = req.query;
     
     const { status, data } = await salesService
-      .getSalesByDay(date, Number(page), Number(pagesize), Number(operatorId),);
+      .getSalesByDay(date, Number(page), Number(pageLimit), Number(operatorId),);
 
     return res.status(mapHttpStatus(status)).json(data);
   } catch (error) {
@@ -80,8 +80,8 @@ async function getSalesByDay(req: Request, res: Response) {
 async function getSalesByMonth(req: Request, res: Response) {
   try {
     const { month } = req.params;
-    const { page, pagesize } = req.query;
-    const { status, data } = await salesService.getSalesByMonth(month, Number(page), Number(pagesize));
+    const { page = 1, pageLimit = 10 } = req.query;
+    const { status, data } = await salesService.getSalesByMonth(month, Number(page), Number(pageLimit));
     return res.status(mapHttpStatus(status)).json(data);
   } catch (error) {
     console.log('Error fetching sales by month:', error);

@@ -3,6 +3,7 @@ import db from './index';
 import SaleModel from './sale.model';
 import UserModel from './user.model';
 import ProductModel from './product.model';
+import ClientModel from './client.model';
 
 interface SalesProductsAttributes {
   saleId: number;
@@ -58,5 +59,14 @@ ProductModel.belongsToMany(SaleModel, {
 UserModel.hasMany(SaleModel, { foreignKey: 'userOperator'});
 
 SaleModel.belongsTo(UserModel, { foreignKey: 'userOperator', as: 'operator' });
+
+ClientModel.hasMany(SaleModel, {
+  foreignKey: 'clientId',
+});
+
+SaleModel.belongsTo(ClientModel, {
+  foreignKey: 'clientId',
+  as: 'client', // importante: esse 'as' será usado no include
+});
 
 export default SalesProductsModel;
