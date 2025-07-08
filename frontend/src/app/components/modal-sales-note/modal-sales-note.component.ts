@@ -11,6 +11,10 @@ export class ModalSalesNoteComponent {
   @Output() closeModal = new EventEmitter<void>();
   date = new Date().toLocaleString()
 
+  ngOnInit() {
+    console.log(this.saleData);
+  }
+
   calculateDiscount(): number {
     const discount = this.saleData.totalProducts - this.saleData.total;
     if (discount > 0) {

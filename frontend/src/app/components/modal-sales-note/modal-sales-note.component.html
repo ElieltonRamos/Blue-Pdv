@@ -10,7 +10,7 @@
       Resumo da Venda - Não tem Valor Fiscal
     </h2>
 
-    <p><strong>Cliente:</strong> {{ saleData.clientName }}</p>
+    <p><strong>Cliente:</strong> {{ saleData.clientName || saleData.client?.name }}</p>
     <p><strong>Data:</strong> {{ date }}</p>
     <p><strong>Vendedor:</strong> {{ saleData.userOperator }}</p>
 
