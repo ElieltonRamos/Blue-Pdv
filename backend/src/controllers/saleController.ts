@@ -15,14 +15,34 @@ async function create(req: Request, res: Response) {
     return res.status(mapHttpStatus('SERVER_ERROR')).json({ message: internalMsgError });
   }
 }
-
 async function getAll(req: Request, res: Response) {
   try {
-    const { page = 1, pageLimit = 10 } = req.query;
-    const { status, data } = await salesService.getAll(Number(page), Number(pageLimit));
+    const {
+      page = '1',
+      pageLimit = '10',
+      id,
+      startDate,
+      endDate,
+      client,
+      operator,
+      paymentMethod,
+    } = req.query;
+
+    console.log('Query parameters:', req.query);
+
+    const filters = {
+      id: id as string,
+      startDate: startDate as string,
+      endDate: endDate as string,
+      client: client as string,
+      operator: operator as string,
+      paymentMethod: paymentMethod as string,
+    };
+
+    const { status, data } = await salesService.getAll(Number(page), Number(pageLimit), filters);
     return res.status(mapHttpStatus(status)).json(data);
   } catch (error) {
-    console.log('Error fetching sales:', error);
+    console.error('Error fetching sales:', error);
     return res.status(mapHttpStatus('SERVER_ERROR')).json({ message: internalMsgError });
   }
 }
