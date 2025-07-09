@@ -10,9 +10,15 @@
       Resumo da Venda - Não tem Valor Fiscal
     </h2>
 
-    <p><strong>Cliente:</strong> {{ saleData.clientName || saleData.client?.name }}</p>
+    <p>
+      <strong>Cliente:</strong>
+      {{ saleData.clientName || saleData.client?.name }}
+    </p>
     <p><strong>Data:</strong> {{ date }}</p>
-    <p><strong>Vendedor:</strong> {{ saleData.userOperator }}</p>
+    <p>
+      <strong>Vendedor:</strong> {{ saleData.userOperator }} -
+      {{ saleData.operator?.username }}
+    </p>
 
     <table class="table-auto w-full mt-4">
       <thead>
@@ -42,7 +48,7 @@
     </p>
     <p>
       @if (calculateDiscount() > 0) {
-        <strong>Desconto: R$</strong> {{ calculateDiscount() }}
+      <strong>Desconto: R$</strong> {{ calculateDiscount() }}
       }
     </p>
     <p><strong>Total: R$</strong> {{ formatNumber(saleData.total) }}</p>

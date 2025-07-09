@@ -19,9 +19,11 @@
     <!-- Seção de Filtros -->
     <div class="bg-[#1d2a3c] rounded-xl p-4 mb-6">
       <h3 class="text-lg text-sky-400 font-semibold mb-4">Filtros</h3>
-      <div class="flex flex-wrap gap-4 items-end">
+
+      <!-- Primeira Linha: ID, Data Inicial, Data Final -->
+      <div class="flex flex-wrap gap-4 items-end mb-4">
         <!-- Filtro por ID -->
-        <div class="flex flex-col">
+        <div class="flex flex-col w-32">
           <label class="text-sm text-white mb-1">ID</label>
           <input
             type="text"
@@ -31,7 +33,7 @@
         </div>
 
         <!-- Filtro por Data Inicial -->
-        <div class="flex flex-col">
+        <div class="flex flex-col w-full sm:w-48">
           <label class="text-sm text-white mb-1">Data Inicial</label>
           <input
             type="date"
@@ -41,7 +43,7 @@
         </div>
 
         <!-- Filtro por Data Final -->
-        <div class="flex flex-col">
+        <div class="flex flex-col w-full sm:w-48">
           <label class="text-sm text-white mb-1">Data Final</label>
           <input
             type="date"
@@ -49,9 +51,12 @@
             [(ngModel)]="endDate"
           />
         </div>
+      </div>
 
+      <!-- Segunda Linha: Cliente, Operador, Método de Pagamento -->
+      <div class="flex flex-wrap gap-4 items-end mb-4">
         <!-- Filtro por Cliente -->
-        <div class="flex flex-col">
+        <div class="flex flex-col w-full sm:w-64">
           <label class="text-sm text-white mb-1">Cliente</label>
           <input
             type="text"
@@ -61,46 +66,52 @@
         </div>
 
         <!-- Filtro por Operador -->
-        <div class="flex flex-col">
+        <div class="flex flex-col w-full sm:w-64">
           <label class="text-sm text-white mb-1">Operador</label>
-          <input
-            type="text"
+          <select
             class="bg-[#2a3445] text-white px-3 py-2 rounded shadow focus:outline-none"
             [(ngModel)]="filterOperator"
-          />
+          >
+            <option value="">Todos</option>
+            @for (item of operators; track item.id) {
+            <option [value]="item.username">{{ item.username }}</option>
+            }
+          </select>
         </div>
 
         <!-- Filtro por Método de Pagamento -->
-        <div class="flex flex-col">
+        <div class="flex flex-col w-full sm:w-64">
           <label class="text-sm text-white mb-1">Método de Pagamento</label>
-          <input
-            type="text"
+          <select
             class="bg-[#2a3445] text-white px-3 py-2 rounded shadow focus:outline-none"
             [(ngModel)]="filterMethod"
-          />
-        </div>
-
-        <!-- Botões -->
-        <div class="flex gap-2">
-          <button
-            (click)="applyDateFilter()"
-            class="bg-sky-600 text-white px-4 py-2 rounded hover:bg-sky-700 transition"
           >
-            Filtrar
-          </button>
-
-          @if (
-            startDate || endDate || filterId || filterClient || filterOperator ||
-            filterMethod
-          ) {
-            <button
-              (click)="clearDateFilter()"
-              class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition"
-            >
-              Limpar Filtro
-            </button>
-          }
+            <option value="">Todos</option>
+            <option value="Pix">Pix</option>
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Cartão">Cartão</option>
+          </select>
         </div>
+      </div>
+
+      <!-- Botões -->
+      <div class="flex gap-2">
+        <button
+          (click)="applyDateFilter()"
+          class="bg-sky-600 text-white px-4 py-2 rounded hover:bg-sky-700 transition"
+        >
+          Filtrar
+        </button>
+
+        @if (startDate || endDate || filterId || filterClient || filterOperator
+        || filterMethod) {
+        <button
+          (click)="clearDateFilter()"
+          class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition"
+        >
+          Limpar Filtro
+        </button>
+        }
       </div>
     </div>
 
@@ -120,17 +131,17 @@
         </thead>
         <tbody class="divide-y divide-gray-700">
           @for (sale of listSales; track sale.id) {
-            <tr class="hover:bg-[#243447] transition">
-              <td class="py-3 px-4">{{ sale.id }}</td>
-              <td class="py-3 px-4">{{ sale.formattedDate }}</td>
-              <td class="py-3 px-4">{{ sale.client?.name }}</td>
-              <td class="py-3 px-4">{{ sale.paymentMethod }}</td>
-              <td class="py-3 px-4">{{ sale.operator?.username }}</td>
-              <td class="py-3 px-4">{{ sale.total }}</td>
-              <td class="py-3 px-4 space-x-2">
-                <button (click)="openSaleModal(sale)">Ver Detalhes</button>
-              </td>
-            </tr>
+          <tr class="hover:bg-[#243447] transition">
+            <td class="py-3 px-4">{{ sale.id }}</td>
+            <td class="py-3 px-4">{{ sale.formattedDate }}</td>
+            <td class="py-3 px-4">{{ sale.client?.name }}</td>
+            <td class="py-3 px-4">{{ sale.paymentMethod }}</td>
+            <td class="py-3 px-4">{{ sale.operator?.username }}</td>
+            <td class="py-3 px-4">{{ sale.total }}</td>
+            <td class="py-3 px-4 space-x-2">
+              <button (click)="openSaleModal(sale)">Ver Detalhes</button>
+            </td>
+          </tr>
           }
         </tbody>
       </table>
@@ -150,9 +161,9 @@
 
   <!-- Modal -->
   @if (showSaleModal) {
-    <app-modal-sales-note
-      [saleData]="saleSelected!"
-      (closeModal)="closeSaleModal()"
-    />
+  <app-modal-sales-note
+    [saleData]="saleSelected!"
+    (closeModal)="closeSaleModal()"
+  />
   }
 </div>

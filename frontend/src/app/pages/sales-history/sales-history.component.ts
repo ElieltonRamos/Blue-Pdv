@@ -6,6 +6,8 @@ import { ModalSalesNoteComponent } from '../../components/modal-sales-note/modal
 import { SalesService } from '../../services/sales.service';
 import { alertError } from '../../components/alerts/custom-alerts';
 import { FormsModule } from '@angular/forms';
+import User from '../../interfaces/user';
+import { LoginService } from '../../services/login.service';
 
 @Component({
   selector: 'app-sales-history',
@@ -27,18 +29,34 @@ export class SalesHistoryComponent {
   filterClient: string = '';
   filterOperator: string = '';
   filterMethod: string = '';
+  operators: User[] = [];
 
   private router = inject(Router);
+  private userService = inject(LoginService);
   private salesService = inject(SalesService);
 
   ngOnInit() {
-    const today = new Date();
-    const isoDate = today.toISOString().split('T')[0]; // yyyy-MM-dd
+    this.getOperators();
 
-    this.startDate = isoDate;
-    this.endDate = isoDate;
+    const today = new Date();
+    const localDate = today.toLocaleDateString('sv-SE');
+    this.startDate = localDate;
+    this.endDate = localDate;
 
     this.getSales(this.page, this.limit);
+  }
+
+  getOperators() {
+    this.userService.getUsers().subscribe({
+      next: (response) => {
+        this.operators = response;
+      },
+      error: (e) => {
+        alertError(
+          `Erro ao buscar operadores: ${e.error?.message || 'Erro inesperado.'}`
+        );
+      },
+    });
   }
 
   applyDateFilter(): void {
@@ -49,6 +67,10 @@ export class SalesHistoryComponent {
   clearDateFilter(): void {
     this.startDate = null;
     this.endDate = null;
+    this.filterId = '';
+    this.filterClient = '';
+    this.filterOperator = '';
+    this.filterMethod = '';
     this.page = 1;
     this.getSales(this.page, this.limit);
   }

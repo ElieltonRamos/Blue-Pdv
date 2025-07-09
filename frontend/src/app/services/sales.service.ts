@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Sale } from '../interfaces/sale';
 import { Observable } from 'rxjs';
@@ -16,26 +16,31 @@ export class SalesService {
     return this.client.post<Sale>(`${this.apiUrl}/sale`, sale);
   }
 
-  getSales(
-    page: number,
-    pageLimit: number,
-    filters: {
-      id?: string;
-      startDate?: string;
-      endDate?: string;
-      client?: string;
-      operator?: string;
-      paymentMethod?: string;
-    } = {}
-  ): Observable<PaginatedResponse<Sale>> {
-    const params: any = {
-      page,
-      pageLimit,
-      ...filters,
-    };
+getSales(
+  page: number,
+  pageLimit: number,
+  filters: {
+    id?: string;
+    startDate?: string;
+    endDate?: string;
+    client?: string;
+    operator?: string;
+    paymentMethod?: string;
+  } = {}
+): Observable<PaginatedResponse<Sale>> {
+  let params = new HttpParams()
+    .set('page', page.toString())
+    .set('pageLimit', pageLimit.toString());
 
-    return this.client.get<PaginatedResponse<Sale>>(`${this.apiUrl}/sale`, {
-      params,
-    });
-  }
+  Object.entries(filters).forEach(([key, value]) => {
+    if (value !== undefined && value !== null && value !== '') {
+      params = params.set(key, value);
+    }
+  });
+
+  return this.client.get<PaginatedResponse<Sale>>(`${this.apiUrl}/sale`, {
+    params,
+  });
+}
+
 }
