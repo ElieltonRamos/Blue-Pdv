@@ -6,6 +6,7 @@ import { RegisterUserComponent } from './pages/register-user/register-user.compo
 import { RegisterClientComponent } from './pages/register-client/register-client.component';
 import { RegisterProductComponent } from './pages/register-product/register-product.component';
 import { SalesHistoryComponent } from './pages/sales-history/sales-history.component';
+import { ReportsComponent } from './pages/reports/reports.component';
 
 export const routes: Routes = [
   {
@@ -35,5 +36,9 @@ export const routes: Routes = [
   {
     path: 'historico-vendas',
     component: SalesHistoryComponent
+  },
+  {
+    path: 'relatorios',
+    component: ReportsComponent
   }
 ];

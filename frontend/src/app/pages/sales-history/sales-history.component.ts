@@ -38,8 +38,9 @@ export class SalesHistoryComponent {
   ngOnInit() {
     this.getOperators();
 
-    const today = new Date();
-    const localDate = today.toLocaleDateString('sv-SE');
+    const now = new Date();
+    now.setHours(0, 0, 0, 0);
+    const localDate = now.toISOString().split('T')[0];
     this.startDate = localDate;
     this.endDate = localDate;
 
