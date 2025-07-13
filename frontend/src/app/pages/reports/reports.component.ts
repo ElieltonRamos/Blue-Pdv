@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { SalesService } from '../../services/sales.service';
 import { FormsModule } from '@angular/forms';
 import { SalesReportSummary } from '../../interfaces/reportsSales';
+import { alertError } from '../../components/alerts/custom-alerts';
 
 const summaryMock: SalesReportSummary = {
   totalSales: 0,
@@ -40,9 +41,8 @@ export class ReportsComponent {
   getFullDate(): string {
     if (!this.startDate || !this.endDate) return '';
 
-    const start = new Date(this.startDate);
-    const end = new Date(this.endDate);
-
+    const start = new Date(`${this.startDate}T00:00`);
+    const end = new Date(`${this.endDate}T00:00`);
     const formatter = new Intl.DateTimeFormat('pt-BR');
 
     return `${formatter.format(start)} - ${formatter.format(end)}`;
@@ -70,21 +70,17 @@ export class ReportsComponent {
   }
 
   generateReport() {
-    const filters = {
-      startDate: this.startDate,
-      endDate: this.endDate,
-    };
-
     // Chamar serviço que busca os dados e exibe ou exporta
-    this.salesService.getSales(1, 10).subscribe({
-      next: (reportData) => {
-        // Exibir relatório em tabela, gráfico, ou exportar para PDF/Excel
-        console.log('Relatório:', reportData);
-      },
-      error: (err) => {
-        console.error('Erro ao gerar relatório:', err);
-      },
-    });
+    this.salesService
+      .generateReportSales(this.startDate, this.endDate)
+      .subscribe({
+        next: (reportData) => {
+          this.report = reportData;
+        },
+        error: (err) => {
+          alertError(`Erro ao gerar relatório: ${err.error.message}`);
+        },
+      });
   }
 
   goToMenu() {
