@@ -1,6 +1,7 @@
 import { Model } from 'sequelize';
 import { Sale } from '../interfaces/sale';
 import { ServiceResponse } from '../interfaces/services';
+import { isValid, parseISO } from 'date-fns';
 
 type ErrorResponse = ServiceResponse<{ message: string }>;
 type ValidationResponse = false | ErrorResponse;
@@ -59,4 +60,44 @@ export function validationCreateSale(sale: Sale): ValidationResponse {
   }
 
   return false;
+}
+
+export function normalizePaymentMethod(value: string | null | undefined): 'pix' | 'cash' | 'card' | null {
+  if (!value) return null;
+
+  const normalized = value.toLowerCase();
+
+  if (normalized.includes('pix')) return 'pix';
+  if (normalized.includes('dinheiro') || normalized.includes('cash')) return 'cash';
+  if (normalized.includes('cartão') || normalized.includes('cartao') 
+    || normalized.includes('card')) return 'card';
+
+  return null;
+}
+
+export function validateDateFilters(filters: {
+  startDate: string;
+  endDate: string;
+}): ServiceResponse<string> {
+  if (!filters.startDate || !filters.endDate) {
+    return {
+      status: 'BAD_REQUEST',
+      data: { message: 'É necessário informar a data inicial e final para o relatório' },
+    };
+  }
+
+  const parsedStart = parseISO(filters.startDate);
+  const parsedEnd = parseISO(filters.endDate);
+
+  if (!isValid(parsedStart) || !isValid(parsedEnd)) {
+    return {
+      status: 'BAD_REQUEST',
+      data: { message: 'Formato de data inválido. Use o padrão ISO: YYYY-MM-DD.' },
+    };
+  }
+
+  return {
+    status: 'OK',
+    data: { message: 'null' },
+  };
 }

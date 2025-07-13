@@ -3,6 +3,6 @@ import reportSaleController from '../controllers/reportsSalesController';
 
 const reportSaleRouter = Router();
 
-reportSaleRouter.get('/', reportSaleController.generateReportByDate);
+reportSaleRouter.get('/sales', reportSaleController.generateReportByDate);
 
 export default reportSaleRouter;

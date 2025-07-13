@@ -43,11 +43,11 @@ export default {
       },
       totalProducts: {
         field: 'total_products',
-        type: DataTypes.INTEGER,
+        type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
       },
       total: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
       },
     });
