@@ -28,6 +28,7 @@ export class ReportsComponent {
 
   startDate: string = '';
   endDate: string = '';
+  isLoading = false;
 
   ngOnInit() {
     const now = new Date();
@@ -70,6 +71,7 @@ export class ReportsComponent {
   }
 
   generateReport() {
+    this.isLoading = true;
     // Chamar serviço que busca os dados e exibe ou exporta
     this.salesService
       .generateReportSales(this.startDate, this.endDate)
@@ -79,6 +81,9 @@ export class ReportsComponent {
         },
         error: (err) => {
           alertError(`Erro ao gerar relatório: ${err.error.message}`);
+        },
+        complete: () => {
+          this.isLoading = false;
         },
       });
   }

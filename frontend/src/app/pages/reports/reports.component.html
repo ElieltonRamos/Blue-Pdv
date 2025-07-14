@@ -135,3 +135,15 @@
     </div>
   </div>
 </div>
+
+@if (isLoading) {
+  <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
+    <div class="text-white text-lg font-semibold animate-pulse text-center px-4">
+      <p>Carregando relatório...</p>
+      <p class="mt-2">Isso pode demorar um pouco.</p>
+      <p class="mt-2 text-sm text-indigo-300">
+        ⚠️ Evite gerar relatórios com mais de <strong>30 dias</strong> de diferença.
+      </p>
+    </div>
+  </div>
+}
