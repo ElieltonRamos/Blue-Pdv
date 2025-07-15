@@ -4,6 +4,9 @@ export default interface Product {
   code: number;
   price: number;
   quantity?: number;
+  sales_products?: {
+    quantity: number;
+  };
 };
 
 export interface GetSugestionCode {

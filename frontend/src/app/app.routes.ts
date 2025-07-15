@@ -7,6 +7,7 @@ import { RegisterClientComponent } from './pages/register-client/register-client
 import { RegisterProductComponent } from './pages/register-product/register-product.component';
 import { SalesHistoryComponent } from './pages/sales-history/sales-history.component';
 import { ReportsComponent } from './pages/reports/reports.component';
+import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -16,29 +17,40 @@ export const routes: Routes = [
   {
     path: 'menu',
     component: MenuComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'vendas',
-    component: VendasComponent
+    component: VendasComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'cadastro-usuario',
-    component: RegisterUserComponent
+    component: RegisterUserComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'cadastro-cliente',
-    component: RegisterClientComponent
+    component: RegisterClientComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'cadastro-produto',
-    component: RegisterProductComponent
+    component: RegisterProductComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'historico-vendas',
-    component: SalesHistoryComponent
+    component: SalesHistoryComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'relatorios',
-    component: ReportsComponent
-  }
+    component: ReportsComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: '**',
+    redirectTo: '',
+  },
 ];
