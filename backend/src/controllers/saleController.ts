@@ -28,7 +28,6 @@ async function getAll(req: Request, res: Response) {
       paymentMethod,
     } = req.query;
 
-    console.log('Query parameters:', req.query);
 
     const filters = {
       id: id as string,

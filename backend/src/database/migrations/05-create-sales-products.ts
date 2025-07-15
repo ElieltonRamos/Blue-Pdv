@@ -34,7 +34,7 @@ export default {
         onUpdate: 'CASCADE',
       },
       quantity: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.DECIMAL(10, 3),
         allowNull: false,
       },
     });

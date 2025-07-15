@@ -8,17 +8,17 @@ export default {
         {
           sale_id: 1,
           product_id: 1,
-          quantity: 1,
+          quantity: 1.568,
         },
         {
           sale_id: 1,
           product_id: 2,
-          quantity: 2,
+          quantity: 2.687,
         },
         {
           sale_id: 2,
           product_id: 2,
-          quantity: 2,
+          quantity: 2.549,
         }
       ],
       {}
