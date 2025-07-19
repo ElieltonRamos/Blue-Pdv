@@ -39,15 +39,19 @@
         Buscar
       </button>
 
-      <select
-        [(ngModel)]="client.name"
-        class="w-44 p-2 rounded bg-gray-200 text-black"
-      >
-        <option disabled>Resultado da busca</option>
-        @for (item of searchClients; track item.id) {
-        <option value="{{ item.name }}">{{ item.name }}</option>
-        }
-      </select>
+      <!-- Coluna separada para o label e select -->
+      <div class="flex flex-col mb-5">
+        <p class="text-sm mb-1 text-white">Resultado da busca</p>
+        <select
+          [(ngModel)]="client.name"
+          class="w-44 p-2 rounded bg-gray-200 text-black"
+        >
+          <option disabled selected>Selecione um cliente</option>
+          @for (item of searchClients; track item.id) {
+          <option value="{{ item.name }}">{{ item.name }}</option>
+          }
+        </select>
+      </div>
     </div>
 
     <div
