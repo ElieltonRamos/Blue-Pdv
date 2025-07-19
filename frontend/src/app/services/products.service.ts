@@ -3,12 +3,13 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import Product, { GetSugestionCode } from '../interfaces/product';
 import { PaginatedResponse } from '../interfaces/paginator';
+import { environment } from '../environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductsService {
-  private apiUrl = 'http://localhost:3001/api';
+  private apiUrl = environment.apiUrl;
 
   constructor( private client: HttpClient) { }
 

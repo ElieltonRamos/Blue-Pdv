@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import Client from '../interfaces/client';
 import { PaginatedResponse } from '../interfaces/paginator';
+import { environment } from '../environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClientService {
-  private apiUrl = 'http://localhost:3001/api';
+  private apiUrl = environment.apiUrl;
 
   constructor(private client: HttpClient) { }
 

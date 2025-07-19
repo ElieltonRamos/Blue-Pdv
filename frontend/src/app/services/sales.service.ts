@@ -4,12 +4,13 @@ import { Sale } from '../interfaces/sale';
 import { Observable } from 'rxjs';
 import { PaginatedResponse } from '../interfaces/paginator';
 import { SalesReportSummary } from '../interfaces/reportsSales';
+import { environment } from '../environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SalesService {
-  private apiUrl = 'http://localhost:3001/api';
+  private apiUrl = environment.apiUrl;
 
   constructor(private client: HttpClient) {}
 
