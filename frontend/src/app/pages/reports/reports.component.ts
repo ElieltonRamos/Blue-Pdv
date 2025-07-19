@@ -12,6 +12,7 @@ const summaryMock: SalesReportSummary = {
     pix: 0,
     cash: 0,
     card: 0,
+    promissoryNote: 0,
   },
   salesByOperator: [],
 };

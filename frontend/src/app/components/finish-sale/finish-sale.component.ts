@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -15,6 +21,21 @@ export class FinishSaleComponent {
   @Output() valuePaidChange = new EventEmitter<number>();
   @Input() discountValue: number = 0;
   @Output() discountValueChange = new EventEmitter<number>();
+  @Input() clientId: number = 1;
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['clientId']) {
+      const newId = changes['clientId'].currentValue;
+
+      if (newId === 1) {
+        this.paymentMethod = 'Dinheiro';
+        this.paymentMethodChange.emit('Dinheiro');
+      } else {
+        this.paymentMethod = 'Notinha';
+        this.paymentMethodChange.emit('Notinha');
+      }
+    }
+  }
 
   calculateChange() {
     const changeReturn = this.valuePaid - this.totalValue;
@@ -26,8 +47,14 @@ export class FinishSaleComponent {
   }
 
   onPaymentMethodChange(paymentMethod: string): void {
+    if (this.clientId === 1 && paymentMethod === 'Notinha') {
+      // Bloqueia a seleção e limpa a escolha
+      this.paymentMethod = 'Dinheiro';
+      this.paymentMethodChange.emit('');
+      return;
+    }
+
     this.paymentMethod = paymentMethod;
     this.paymentMethodChange.emit(this.paymentMethod);
   }
-
 }

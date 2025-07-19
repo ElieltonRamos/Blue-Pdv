@@ -58,6 +58,19 @@
           class="w-6 h-6 rounded bg-gray-200 text-center font-bold"
         />
       </div>
+
+      <div class="flex flex-col items-center">
+        <label class="block text-sm text-white mb-1">Notinha</label>
+        <input
+          name="paymentMethod"
+          type="radio"
+          value="Notinha"
+          [disabled]="clientId === 1"
+          (change)="onPaymentMethodChange(paymentMethod)"
+          [(ngModel)]="paymentMethod"
+          class="w-6 h-6 rounded bg-gray-200 text-center font-bold"
+        />
+      </div>
     </div>
   </div>
 

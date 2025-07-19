@@ -6,6 +6,7 @@ export interface SalesReportSummary {
     pix: number;
     cash: number;
     card: number;
+    promissoryNote: number;
   };
 
   salesByOperator: {
@@ -16,6 +17,7 @@ export interface SalesReportSummary {
       pix: number;
       cash: number;
       card: number;
+      promissoryNote: number;
     };
   }[];
 }
