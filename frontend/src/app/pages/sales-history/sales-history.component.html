@@ -139,7 +139,12 @@
             <td class="py-3 px-4">{{ sale.operator?.username }}</td>
             <td class="py-3 px-4">{{ sale.total }}</td>
             <td class="py-3 px-4 space-x-2">
-              <button (click)="openSaleModal(sale)">Ver Detalhes</button>
+              <button
+                (click)="openSaleModal(sale)"
+                class="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors cursor-pointer"
+              >
+                Ver Detalhes
+              </button>
             </td>
           </tr>
           }

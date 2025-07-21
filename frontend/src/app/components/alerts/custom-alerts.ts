@@ -9,29 +9,17 @@ export function alertError(msg: string) {
 }
 
 export function alertLoading() {
-  let timerInterval: ReturnType<typeof setTimeout> | number | undefined;
   Swal.fire({
     title: 'Carregando...',
-    html: 'I will close in <b></b> milliseconds.',
-    timer: 500,
-    timerProgressBar: true,
+    allowOutsideClick: false,
     didOpen: () => {
       Swal.showLoading();
-      const timer = Swal.getPopup()?.querySelector('b');
-      if (!timer) return;
-      timerInterval = setInterval(() => {
-        timer.textContent = `${Swal.getTimerLeft()}`;
-      }, 100);
     },
-    willClose: () => {
-      clearInterval(timerInterval);
-    },
-  }).then((result) => {
-    /* Read more about handling dismissals below */
-    // if (result.dismiss === Swal.DismissReason.timer) {
-    //   console.log('I was closed by the timer');
-    // }
   });
+}
+
+export function closeLoading() {
+  Swal.close();
 }
 
 export function alertConfirm(title: string): Promise<boolean> {

@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { LoginService } from '../../services/login.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { alertError, alertLoading } from '../../components/alerts/custom-alerts';
+import { alertError, alertLoading, closeLoading } from '../../components/alerts/custom-alerts';
 
 @Component({
   selector: 'app-login',
@@ -32,8 +32,10 @@ export class LoginComponent {
       next: (data) => {
         localStorage.setItem('token', JSON.stringify(data));
         this.route.navigate(['/menu']);
+        closeLoading();
       },
       error: (err) => {
+        closeLoading();
         alertError(`Não foi possivel fazer login! ${err.error.message}`);
       },
     });
