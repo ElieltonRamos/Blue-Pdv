@@ -14,7 +14,7 @@
         <strong>Cliente:</strong>
         {{ saleData.clientName || saleData.client?.name }}
       </p>
-      <p><strong>Data:</strong> {{ date }}</p>
+      <p><strong>Data:</strong> {{ getDateSale()  }}</p>
       <p>
         <strong>Vendedor:</strong> {{ saleData.userOperator }} -
         {{ saleData.operator?.username }}

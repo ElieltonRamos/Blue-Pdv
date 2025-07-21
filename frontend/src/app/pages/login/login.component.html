@@ -1,35 +1,47 @@
 <main class="bg-indigo-950 h-screen w-screen flex items-center justify-center">
-  <form
-    [formGroup]="form"
-    (ngSubmit)="onSubmit()"
-    class="bg-gray-300 p-4 w-96 h-64 rounded-md flex justify-center items-center flex-col shadow-lg mt-4"
-  >
-    <h1 class="text-indigo-950 font-bold text-3xl mb-10">
-      Bem Vindo ao Blue PDV
-    </h1>
-    <input
-      type="text"
-      placeholder="Usuario"
-      formControlName="username"
-      class="rounded-sm border-1 w-full h-14 mt-2.5 pl-2"
-    />
-    @if (form.get('username')?.touched && form.get('username')?.invalid) {
-    <p class="msg-error">O usuario é invalido</p>
-    }
-    <input
-      type="password"
-      placeholder="Senha"
-      formControlName="password"
-      class="rounded-sm border-1 w-full h-14 mt-2.5 pl-2"
-    />
-    @if (form.get('password')?.touched && form.get('password')?.invalid) {
-    <p class="msg-error">Digite sua senha</p>
-    }
-    <button
-      type="submit"
-      class="h-12 w-full bg-blue-600 rounded-md text-white cursor-pointer mt-2"
+  <div class="flex rounded-md  ">
+    <!-- Imagem do lado -->
+    <div class="w-96 h-64 flex pr-5">
+      <img
+        src="logo-alicio.png"
+        alt="Logo Blue PDV"
+        class="w-full h-full object-contain"
+      />
+    </div>
+
+    <!-- Seu form sem alterações -->
+    <form
+      [formGroup]="form"
+      (ngSubmit)="onSubmit()"
+      class="bg-gray-300 p-4 w-96 h-64 rounded-md flex justify-center items-center flex-col mt-4"
     >
-      Entrar
-    </button>
-  </form>
+      <h1 class="text-indigo-950 font-bold text-3xl mb-10">
+        Bem Vindo ao Blue PDV
+      </h1>
+      <input
+        type="text"
+        placeholder="Usuario"
+        formControlName="username"
+        class="rounded-sm border-1 w-full h-14 mt-2.5 pl-2"
+      />
+      @if (form.get('username')?.touched && form.get('username')?.invalid) {
+      <p class="msg-error">O usuario é invalido</p>
+      }
+      <input
+        type="password"
+        placeholder="Senha"
+        formControlName="password"
+        class="rounded-sm border-1 w-full h-14 mt-2.5 pl-2"
+      />
+      @if (form.get('password')?.touched && form.get('password')?.invalid) {
+      <p class="msg-error">Digite sua senha</p>
+      }
+      <button
+        type="submit"
+        class="h-12 w-full bg-blue-600 rounded-md text-white cursor-pointer mt-2"
+      >
+        Entrar
+      </button>
+    </form>
+  </div>
 </main>

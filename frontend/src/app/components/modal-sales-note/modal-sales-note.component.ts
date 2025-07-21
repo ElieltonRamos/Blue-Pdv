@@ -9,10 +9,10 @@ import { Sale } from '../../interfaces/sale';
 export class ModalSalesNoteComponent {
   @Input() saleData!: Sale;
   @Output() closeModal = new EventEmitter<void>();
-  date = new Date().toLocaleString();
 
-  ngOnInit() {
-    console.log(this.saleData);
+  getDateSale() {
+    const data = new Date(this.saleData.date).toLocaleString()
+    return data;
   }
 
   getQuantity(item: any): number {
