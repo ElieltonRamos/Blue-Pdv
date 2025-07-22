@@ -8,6 +8,7 @@ import { RegisterProductComponent } from './pages/register-product/register-prod
 import { SalesHistoryComponent } from './pages/sales-history/sales-history.component';
 import { ReportsComponent } from './pages/reports/reports.component';
 import { AuthGuard } from './guards/auth.guard';
+import { FinancialComponent } from './pages/financial/financial.component';
 
 export const routes: Routes = [
   {
@@ -47,6 +48,11 @@ export const routes: Routes = [
   {
     path: 'relatorios',
     component: ReportsComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'financeiro',
+    component: FinancialComponent,
     canActivate: [AuthGuard],
   },
   {
