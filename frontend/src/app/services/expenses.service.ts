@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../environment';
 import { PaginatedResponse } from '../interfaces/paginator';
-import Expense from '../interfaces/Expense';
+import Expense, { ExpenseFilters } from '../interfaces/Expense';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +16,7 @@ export class ExpensesService {
   getAllExpenses(
     page: number,
     limit: number,
-    filters: any = {},
+    filters: ExpenseFilters = {},
     sortBy: string = '',
     sortOrder: 'asc' | 'desc' = 'asc'
   ): Observable<PaginatedResponse<Expense>> {
@@ -25,12 +25,14 @@ export class ExpensesService {
       limit,
       sortBy,
       sortOrder,
-      ...filters,
+      supplier: filters.supplier || undefined,
+      status: filters.status || undefined,
+      startDate: filters.startDate || undefined,
+      endDate: filters.endDate || undefined,
     };
 
-    return this.client.get<PaginatedResponse<Expense>>('/expenses', { params });
+    return this.client.get<PaginatedResponse<Expense>>(`${this.apiUrl}/expenses`, { params });
   }
-
   deleteExpense(id: number): Observable<void> {
     return this.client.delete<void>(`${this.apiUrl}/expenses/${id}`);
   }

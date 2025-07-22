@@ -114,9 +114,9 @@
         </th>
         <th
           class="py-3 px-4 cursor-pointer select-none"
-          (click)="sortBy('datePay')"
+          (click)="sortBy('datePayment')"
         >
-          Data Vencimento @if(sortKey === 'datePay') {
+          Data Vencimento @if(sortKey === 'datePayment') {
           {{ sortAsc ? "▲" : "▼" }}
           }
         </th>
@@ -143,7 +143,7 @@
             {{ expense.status }}
           </span>
         </td>
-        <td class="py-3 px-4">{{ expense.datePay | date : "dd/MM/yyyy" }}</td>
+        <td class="py-3 px-4">{{ expense.datePayment | date : "dd/MM/yyyy" }}</td>
         <td class="py-3 px-4">
           <div class="flex flex-col space-y-2">
             <button

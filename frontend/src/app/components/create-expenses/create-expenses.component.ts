@@ -15,18 +15,18 @@ export class CreateExpensesComponent {
     description: new FormControl(''),
     value: new FormControl(0, [Validators.required, Validators.min(0.01)]),
     status: new FormControl('Pendente', [Validators.required]),
-    datePay: new FormControl('', [Validators.required]),
+    datePayment: new FormControl('', [Validators.required]),
   });
   private expenseService = inject(ExpensesService);
 
   onSubmit() {
-    const { supplier, description, status, value, datePay } = this.formCreateExpense.value;
+    const { supplier, description, status, value, datePayment } = this.formCreateExpense.value;
     const newExpense: Expense = {
       supplier: supplier || '',
       description: description || '',
       value: value ? parseFloat(value.toString()) : 0,
       status: 'Pendente',
-      datePay: datePay || new Date().toISOString(),
+      datePayment: datePayment || new Date().toISOString(),
     };
 
     if (this.formCreateExpense.valid) {

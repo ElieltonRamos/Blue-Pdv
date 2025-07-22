@@ -3,6 +3,14 @@ export default interface Expense {
   supplier: string;
   description: string;
   value: number;
-  datePay: string;
+  datePayment: string;
   status: 'Pago' | 'Pendente' | 'Atrasado';
+}
+
+// interfaces/ExpenseFilters.ts
+export interface ExpenseFilters {
+  supplier?: string;
+  status?: 'Pago' | 'Pendente' | 'Atrasado' | '';
+  startDate?: string;
+  endDate?: string;
 }

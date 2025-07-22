@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { PaginatorComponent } from '../paginator/paginator.component';
-import Expense from '../../interfaces/Expense';
+import Expense, { ExpenseFilters } from '../../interfaces/Expense';
 import {
   alertConfirm,
   alertError,
@@ -10,57 +10,13 @@ import {
 import { ExpensesService } from '../../services/expenses.service';
 import { CommonModule } from '@angular/common';
 
-const mockExpenses: Expense[] = [
-  {
-    id: 1,
-    supplier: 'Amazon',
-    description: 'Office supplies purchase',
-    value: 150.75,
-    datePay: '2025-07-01',
-    status: 'Pago',
-  },
-  {
-    id: 2,
-    supplier: 'Walmart',
-    description: 'Snacks for staff meeting',
-    value: 45.2,
-    datePay: '2025-07-05',
-    status: 'Pendente',
-  },
-  {
-    id: 3,
-    supplier: 'Adobe',
-    description: 'Monthly software subscription',
-    value: 29.99,
-    datePay: '2025-07-10',
-    status: 'Atrasado',
-  },
-  {
-    id: 4,
-    supplier: 'Local Print Shop',
-    description: 'Flyers and marketing materials',
-    value: 210.0,
-    datePay: '2025-07-15',
-    status: 'Pago',
-  },
-  {
-    id: 5,
-    supplier: 'Uber',
-    description: 'Client transportation reimbursement',
-    value: 63.5,
-    datePay: '2025-07-18',
-    status: 'Pendente',
-  },
-];
-
 @Component({
   selector: 'app-list-expenses',
   imports: [FormsModule, PaginatorComponent, CommonModule],
   templateUrl: './list-expenses.component.html',
 })
 export class ListExpensesComponent {
-  listExpenses: Expense[] = mockExpenses;
-  allExpenses: Expense[] = mockExpenses;
+  listExpenses: Expense[] = [];
   page: number = 1;
   limit: number = 20;
   totalPages: number = 0;
@@ -73,10 +29,10 @@ export class ListExpensesComponent {
     supplier: '',
     description: '',
     value: 0,
-    datePay: '',
+    datePayment: '',
     status: 'Pendente',
   };
-  filter = {
+  filter: ExpenseFilters = {
     supplier: '',
     status: '',
     startDate: '',
@@ -86,9 +42,9 @@ export class ListExpensesComponent {
   sortOption: string = '';
   private expenseService = inject(ExpensesService);
 
-  // ngOnInit() {
-  //   this.getAllExpenses(this.page, this.limit);
-  // }
+  ngOnInit() {
+    this.getAllExpenses(this.page, this.limit);
+  }
 
   applyFilters() {
     this.getAllExpenses(this.page, this.limit);
@@ -118,9 +74,16 @@ export class ListExpensesComponent {
     const sortOrder = this.sortAsc ? 'asc' : 'desc';
 
     this.expenseService
-      .getAllExpenses(page, limit, this.filter, this.sortKey, sortOrder)
+      .getAllExpenses(
+        page,
+        limit,
+        this.filter,
+        this.sortKey,
+        sortOrder
+      )
       .subscribe({
         next: (response) => {
+          console.log(response);
           this.listExpenses = response.data;
           this.totalItems = response.total;
           this.page = response.page;
