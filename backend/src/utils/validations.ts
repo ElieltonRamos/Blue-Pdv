@@ -62,12 +62,16 @@ export function validationCreateSale(sale: Sale): ValidationResponse {
   return false;
 }
 
-export function normalizePaymentMethod(value: string | null | undefined): 'pix' | 'cash' | 'card' | null {
+export function normalizePaymentMethod(
+  value: string | null | undefined
+): 'pix' | 'cash' | 'card' | 'promissoryNote' | null {
   if (!value) return null;
 
   const normalized = value.toLowerCase();
+  console.log(`Normalizing payment method: ${normalized}`, '********************');
 
   if (normalized.includes('pix')) return 'pix';
+  if (normalized.includes('notinha')) return 'promissoryNote';
   if (normalized.includes('dinheiro') || normalized.includes('cash')) return 'cash';
   if (normalized.includes('cartão') || normalized.includes('cartao') 
     || normalized.includes('card')) return 'card';
@@ -75,10 +79,8 @@ export function normalizePaymentMethod(value: string | null | undefined): 'pix' 
   return null;
 }
 
-export function validateDateFilters(filters: {
-  startDate: string;
-  endDate: string;
-}): ServiceResponse<string> {
+export function validateDateFilters(filters: { startDate: string; endDate: string })
+  : ServiceResponse<string> {
   if (!filters.startDate || !filters.endDate) {
     return {
       status: 'BAD_REQUEST',

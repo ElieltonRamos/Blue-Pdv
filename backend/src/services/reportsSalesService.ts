@@ -41,7 +41,7 @@ function initializeAggregators() {
   return {
     totalSales: 0,
     grossRevenue: 0,
-    salesByPaymentMethod: { pix: 0, cash: 0, card: 0 },
+    salesByPaymentMethod: { pix: 0, cash: 0, card: 0, promissoryNote: 0 },
     salesByOperator: {},
     productSales: {},
   };
@@ -51,6 +51,7 @@ function processSale(sale: any, aggregators: any) {
   const { salesByPaymentMethod, salesByOperator, productSales } = aggregators;
   const saleData = sale.dataValues;
   const operatorName = saleData.operator?.username || 'Desconhecido';
+  console.log('saleData***************', saleData);
   const method = normalizePaymentMethod(saleData.paymentMethod);
   const total = Number(saleData.total);
 
@@ -70,6 +71,7 @@ function buildResponse(aggregators: any): SalesReportSummary {
       pix: Number(aggregators.salesByPaymentMethod.pix.toFixed(2)),
       cash: Number(aggregators.salesByPaymentMethod.cash.toFixed(2)),
       card: Number(aggregators.salesByPaymentMethod.card.toFixed(2)),
+      promissoryNote: Number(aggregators.salesByPaymentMethod.promissoryNote.toFixed(2)),
     },
     salesByOperator: Object.values(aggregators.salesByOperator).map((op: any) => ({
       operator: op.operator,
@@ -79,6 +81,7 @@ function buildResponse(aggregators: any): SalesReportSummary {
         pix: Number(op.paymentBreakdown.pix.toFixed(2)),
         cash: Number(op.paymentBreakdown.cash.toFixed(2)),
         card: Number(op.paymentBreakdown.card.toFixed(2)),
+        promissoryNote: Number(op.paymentBreakdown.promissoryNote.toFixed(2)),
       },
     })),
   };

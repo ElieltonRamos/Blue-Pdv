@@ -4,7 +4,7 @@ export function processOperatorAggregation(operatorName: string, total: number, 
       operator: operatorName,
       totalSales: 0,
       revenue: 0,
-      paymentBreakdown: { pix: 0, cash: 0, card: 0 },
+      paymentBreakdown: { pix: 0, cash: 0, card: 0, promissoryNote: 0 },
     };
   }
 
