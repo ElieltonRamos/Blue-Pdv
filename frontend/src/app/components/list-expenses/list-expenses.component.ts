@@ -9,10 +9,11 @@ import {
 } from '../alerts/custom-alerts';
 import { ExpensesService } from '../../services/expenses.service';
 import { CommonModule } from '@angular/common';
+import { ModalEditExpenseComponent } from '../modal-edit-expense/modal-edit-expense.component';
 
 @Component({
   selector: 'app-list-expenses',
-  imports: [FormsModule, PaginatorComponent, CommonModule],
+  imports: [FormsModule, PaginatorComponent, CommonModule, ModalEditExpenseComponent],
   templateUrl: './list-expenses.component.html',
 })
 export class ListExpensesComponent {

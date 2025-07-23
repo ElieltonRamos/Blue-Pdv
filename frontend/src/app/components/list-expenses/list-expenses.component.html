@@ -155,6 +155,12 @@
             >
               ✏️ <span>Editar</span>
             </button>
+            @if(showModalEdit) {
+            <app-modal-edit-expense
+              [expense]="editExpense"
+              (closeModal)="closeModalEdit()"
+            />
+            }
             <button
               (click)="markAsPaid(expense)"
               [disabled]="expense.status === 'Pago'"
