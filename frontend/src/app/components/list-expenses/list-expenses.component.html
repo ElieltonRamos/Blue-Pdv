@@ -143,7 +143,9 @@
             {{ expense.status }}
           </span>
         </td>
-        <td class="py-3 px-4">{{ expense.datePayment | date : "dd/MM/yyyy" }}</td>
+        <td class="py-3 px-4">
+          {{ expense.datePayment | date : "dd/MM/yyyy" : "UTC" }}
+        </td>
         <td class="py-3 px-4">
           <div class="flex flex-col space-y-2">
             <button
@@ -155,11 +157,19 @@
             </button>
             <button
               (click)="markAsPaid(expense)"
-              class="flex items-center gap-2 text-green-400 hover:text-green-300"
+              [disabled]="expense.status === 'Pago'"
+              [ngClass]="{
+                'text-green-400 hover:text-green-300':
+                  expense.status !== 'Pago',
+                'text-gray-400 cursor-not-allowed opacity-50':
+                  expense.status === 'Pago'
+              }"
+              class="flex items-center gap-2"
               title="Marcar como Pago"
             >
               ✅ <span>Pagar</span>
             </button>
+
             <button
               (click)="deleteExpense(expense)"
               class="flex items-center gap-2 text-red-400 hover:text-red-300"

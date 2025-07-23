@@ -34,10 +34,14 @@ export class ExpensesService {
     return this.client.get<PaginatedResponse<Expense>>(`${this.apiUrl}/expenses`, { params });
   }
   deleteExpense(id: number): Observable<void> {
-    return this.client.delete<void>(`${this.apiUrl}/expenses/${id}`);
+    return this.client.delete<void>(`${this.apiUrl}/expenses/delete/${id}`);
   }
 
   createExpense(expense: Expense): Observable<Expense> {
     return this.client.post<Expense>(`${this.apiUrl}/expenses`, expense);
+  }
+
+  updateExpense(expense: Expense): Observable<Expense> {
+    return this.client.patch<Expense>(`${this.apiUrl}/expenses/update/${expense.id}`, expense);
   }
 }

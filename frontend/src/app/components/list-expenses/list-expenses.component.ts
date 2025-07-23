@@ -119,7 +119,15 @@ export class ListExpensesComponent {
 
   markAsPaid(expense: Expense): void {
     expense.status = 'Pago';
-    // Atualiza no backend
+    this.expenseService.updateExpense(expense).subscribe({
+      next: () => {
+        alertSuccess('Despesa marcada como paga');
+        this.getAllExpenses(this.page, this.limit);
+      },
+      error: (e) => {
+        alertError(`Erro ao marcar despesa como paga: ${e.error.message}`);
+      },
+    });
   }
 
   openModalEdit(expense: Expense) {

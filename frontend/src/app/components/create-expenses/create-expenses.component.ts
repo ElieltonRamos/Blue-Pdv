@@ -20,7 +20,7 @@ export class CreateExpensesComponent {
   private expenseService = inject(ExpensesService);
 
   onSubmit() {
-    const { supplier, description, status, value, datePayment } = this.formCreateExpense.value;
+    const { supplier, description, value, datePayment } = this.formCreateExpense.value;
     const newExpense: Expense = {
       supplier: supplier || '',
       description: description || '',
