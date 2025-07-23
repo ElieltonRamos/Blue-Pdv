@@ -66,9 +66,27 @@ async function createExpense(req: Request, res: Response) {
   }
 }
 
+async function getExpensesReport(req: Request, res: Response) {
+  try {
+    const { startDate, endDate } = req.query;
+    if (!startDate || !endDate) {
+      return res.status(400).json({ message: 'E necessario informar a data para o relatorio' });
+    }
+    const { status, data } = await expensesService.getExpensesReport(
+      startDate as string,
+      endDate as string
+    );
+    return res.status(mapHttpStatus(status)).json(data);
+  } catch (error) {
+    console.log('Error generating expenses report:', error);
+    return res.status(mapHttpStatus('SERVER_ERROR')).json({ message: internalMsgError });
+  }
+}
+
 export default {
   getAllExpenses,
   updateExpense,
   deleteExpense,
   createExpense,
+  getExpensesReport,
 };

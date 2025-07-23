@@ -1,5 +1,6 @@
+/* eslint-disable max-lines-per-function */
 import ExpenseModel, { ExpenseSequelizeModel } from '../database/models/expense.model';
-import Expense, { ExpenseFilters } from '../interfaces/Expense';
+import Expense, { ExpenseFilters, ReportExpense } from '../interfaces/Expense';
 import { PaginatedResponse, ServiceResponse } from '../interfaces/services';
 import { Op, WhereOptions } from 'sequelize';
 
@@ -128,7 +129,8 @@ async function updateExpense(
 }
 
 async function updateDelayedExpenses() {
-  const hoje = new Date();
+  const now = new Date();
+  const hoje = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
   await ExpenseModel.update(
     { status: 'Atrasado' },
@@ -141,9 +143,71 @@ async function updateDelayedExpenses() {
   );
 }
 
+async function getExpensesReport(startDate: string, endDate: string)
+  : Promise<ServiceResponse<ReportExpense>> {
+  if (!startDate || !endDate) {
+    return {
+      status: 'BAD_REQUEST',
+      data: { message: 'É necessário informar a data para o relatório' },
+    };
+  }
+
+  const where: WhereOptions = {
+    datePayment: {
+      [Op.between]: [new Date(startDate), new Date(endDate)],
+    },
+  };
+
+  const expenses = await ExpenseModel.findAll({ where });
+
+  const totalValue = expenses.reduce((sum, e) => sum + Number(e.dataValues.value), 0);
+
+  const totalByStatus = {
+    pago: 0,
+    pendente: 0,
+    atrasado: 0,
+  };
+
+  const supplierMap: Record<string, number> = {};
+
+  for (const expense of expenses) {
+    const { status, value, supplier } = expense.dataValues;
+    const amount = Number(value);
+
+    // Agrupar por status
+    const key = status?.toLowerCase() as keyof typeof totalByStatus;
+    if (key in totalByStatus) {
+      totalByStatus[key] += amount;
+    }
+
+    // Agrupar por fornecedor
+    if (supplier) {
+      supplierMap[supplier] = (supplierMap[supplier] || 0) + amount;
+    }
+  }
+
+  const totalBySupplier = Object.entries(supplierMap).map(([supplier, total]) => ({
+    supplier,
+    total,
+  }));
+
+  const report: ReportExpense = {
+    totalValue,
+    totalByStatus,
+    totalBySupplier,
+  };
+
+  return {
+    status: 'OK',
+    data: report,
+  };
+}
+
+
 export default {
   getAllExpenses,
   createExpense,
   deleteExpense,
   updateExpense,
+  getExpensesReport,
 };

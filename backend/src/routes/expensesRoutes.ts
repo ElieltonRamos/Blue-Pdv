@@ -7,6 +7,6 @@ expensesRoutes.get('/', expensesController.getAllExpenses);
 expensesRoutes.post('/', expensesController.createExpense);
 expensesRoutes.patch('/update/:id', expensesController.updateExpense);
 expensesRoutes.delete('/delete/:id', expensesController.deleteExpense);
-// expensesRoutes.get('/reports', expensesController.getExpensesReport);
+expensesRoutes.get('/reports', expensesController.getExpensesReport);
 
 export default expensesRoutes;
