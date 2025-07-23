@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../environment';
 import { PaginatedResponse } from '../interfaces/paginator';
-import Expense, { ExpenseFilters } from '../interfaces/Expense';
+import Expense, { ExpenseFilters, ReportExpense } from '../interfaces/Expense';
 
 @Injectable({
   providedIn: 'root',
@@ -45,8 +45,8 @@ export class ExpensesService {
     return this.client.patch<Expense>(`${this.apiUrl}/expenses/update/${expense.id}`, expense);
   }
 
-  getExpensesReport(startDate: string, endDate: string): Observable<any> {
+  getExpensesReport(startDate: string, endDate: string): Observable<ReportExpense> {
     const params = { startDate, endDate };
-    return this.client.get<any>(`${this.apiUrl}/expenses/report`, { params });
+    return this.client.get<ReportExpense>(`${this.apiUrl}/expenses/reports`, { params });
   }
 }

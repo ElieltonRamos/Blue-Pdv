@@ -19,9 +19,9 @@ export class ReportsExpensesComponent {
   report = {
     totalValue: 0,
     totalByStatus: {
-      Pago: 0,
-      Pendente: 0,
-      Atrasado: 0,
+      pago: 0,
+      pendente: 0,
+      atrasado: 0,
     },
     totalBySupplier: [] as { supplier: string; total: number }[],
   };
