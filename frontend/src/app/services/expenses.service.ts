@@ -44,4 +44,9 @@ export class ExpensesService {
   updateExpense(expense: Expense): Observable<Expense> {
     return this.client.patch<Expense>(`${this.apiUrl}/expenses/update/${expense.id}`, expense);
   }
+
+  getExpensesReport(startDate: string, endDate: string): Observable<any> {
+    const params = { startDate, endDate };
+    return this.client.get<any>(`${this.apiUrl}/expenses/report`, { params });
+  }
 }
