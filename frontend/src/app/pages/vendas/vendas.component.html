@@ -61,107 +61,102 @@
       <span>{{ client.name }}</span>
     </div>
   </div>
+  <!-- CORPO PRINCIPAL -->
+  <div
+    class="w-full max-w-6xl bg-slate-800 rounded-xl p-4 flex gap-4 overflow-hidden"
+  >
+    <!-- COLUNA PRODUTO -->
+    <div class="flex flex-col gap-4 basis-[22%] min-w-[240px]">
+      <label class="block text-white text-sm">Leitor de Código de Barras</label>
+      <input
+        type="text"
+        placeholder="Escaneie o produto"
+        [(ngModel)]="product.code"
+        (keydown.enter)="searchProductByCode()"
+        autofocus
+        class="p-2 rounded bg-gray-200 text-black font-semibold text-center"
+      />
 
-  <div class="w-full max-w-6xl bg-slate-800 rounded-xl p-6 flex gap-6">
-    <div class="flex flex-col gap-4 basis-1/4">
-      <div class="w-full">
-        <label class="block text-white text-sm mb-1">
-          Leitor de Código de Barras
-        </label>
-        <input
-          type="text"
-          placeholder="Escaneie o produto"
-          [(ngModel)]="product.code"
-          (keydown.enter)="searchProductByCode()"
-          autofocus
-          class="w-full p-2 rounded bg-gray-200 text-black font-semibold text-lg text-center focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-      </div>
+      <label class="block text-white text-sm">Quantidade</label>
+      <input
+        type="number"
+        [(ngModel)]="product.quantity"
+        class="p-2 rounded bg-gray-200 text-center font-bold"
+      />
 
-      <div>
-        <label class="block text-sm text-white mb-1">Quantidade</label>
-        <input
-          type="number"
-          [(ngModel)]="product.quantity"
-          class="w-full p-2 rounded bg-gray-200 text-center font-bold"
-        />
-      </div>
-
-      <div class="flex items-center gap-2 mb-2">
+      <div class="flex gap-2">
         <div class="flex-1">
-          <label class="block text-sm text-white mb-1">Valor Unitário</label>
+          <label class="block text-white text-sm">Valor Unitário</label>
           <input
             type="text"
-            [(value)]="product.price"
-            class="w-full p-2 rounded bg-gray-200 text-center font-bold"
+            [(ngModel)]="product.price"
+            class="p-2 rounded bg-gray-200 text-center font-bold w-full"
           />
         </div>
-
         <div class="flex-1">
-          <label class="block text-sm text-white mb-1">Valor Total</label>
-          <div class="w-full p-2 rounded bg-gray-200 text-center font-bold">
+          <label class="block text-white text-sm">Valor Total</label>
+          <div class="p-2 rounded bg-gray-200 text-center font-bold">
             {{ formatNumber(product.price * product.quantity) }}
           </div>
         </div>
       </div>
 
-      <div>
-        <div class="flex items-center gap-2 mb-2">
-          <input
-            type="text"
-            #inputProductName
-            placeholder="Buscar Produto"
-            [(ngModel)]="product.name"
-            class="w-34 p-2 rounded bg-gray-200 text-black focus:outline-none focus:ring-2 focus:ring-green-500"
-          />
-          <button
-            (click)="findProductByName(inputProductName.value)"
-            class="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded text-sm flex items-center justify-center"
-          >
-            Buscar
-          </button>
-        </div>
-
-        <label class="block text-sm text-white mb-1">Resultado da Busca</label>
-        <select
-          [(ngModel)]="product.code"
-          class="w-44 p-2 rounded bg-gray-200 text-black"
+      <label class="block text-white text-sm">Buscar Produto</label>
+      <div class="flex gap-2">
+        <input
+          type="text"
+          #inputProductName
+          placeholder="Nome"
+          [(ngModel)]="product.name"
+          class="p-2 rounded bg-gray-200 text-black w-full"
+        />
+        <button
+          (click)="findProductByName(inputProductName.value)"
+          class="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded text-sm"
         >
-          @for (item of searchProducts; track item.id) {
-          <option value="{{ item.code }}">{{ item.name }}</option>
-          }
-        </select>
+          Buscar
+        </button>
       </div>
+
+      <select
+        [(ngModel)]="product.code"
+        class="p-2 rounded bg-gray-200 text-black"
+      >
+        @for (item of searchProducts; track item.id) {
+        <option [value]="item.code">{{ item.name }}</option>
+        }
+      </select>
     </div>
 
-    <div class="flex flex-row justify-between h-full basis-2/4">
-      <div class="bg-white rounded-lg shadow overflow-y-auto max-h-64">
+    <!-- TABELA PRODUTOS -->
+    <div class="basis-[46%] min-w-[300px] max-w-[700px] overflow-x-auto">
+      <div class="bg-white rounded-lg shadow max-h-64 overflow-y-auto">
         <table class="w-full text-sm text-left">
-          <thead class="bg-gray-100">
+          <thead class="bg-gray-100 sticky top-0">
             <tr>
-              <th class="px-4 py-2">CÓDIGO</th>
-              <th class="px-4 py-2">PRODUTO</th>
-              <th class="px-4 py-2">VLR. UN.</th>
-              <th class="px-4 py-2">QTD</th>
-              <th class="px-4 py-2">VLR. TOTAL</th>
-              <th class="px-4 py-2 text-center">Excluir</th>
-              <th class="px-4 py-2 text-center">Editar</th>
+              <th class="px-2 py-2">CÓDIGO</th>
+              <th class="px-2 py-2">PRODUTO</th>
+              <th class="px-2 py-2">VLR. UN.</th>
+              <th class="px-2 py-2">QTD</th>
+              <th class="px-2 py-2">TOTAL</th>
+              <th class="px-2 py-2 text-center">Excluir</th>
+              <th class="px-2 py-2 text-center">Editar</th>
             </tr>
           </thead>
           <tbody>
             @for (item of products; track item.id) {
             <tr class="border-t">
-              <td class="px-4 py-2">{{ item.code }}</td>
-              <td class="px-4 py-2">{{ item.name }}</td>
-              <td class="px-4 py-2">R$ {{ item.price }}</td>
-              <td class="px-4 py-2">{{ item.quantity }}</td>
-              <td class="px-4 py-2">
+              <td class="px-2 py-2">{{ item.code }}</td>
+              <td class="px-2 py-2">{{ item.name }}</td>
+              <td class="px-2 py-2">R$ {{ item.price }}</td>
+              <td class="px-2 py-2">{{ item.quantity }}</td>
+              <td class="px-2 py-2">
                 R$ {{ formatNumber(item.price * (item.quantity ?? 0)) }}
               </td>
-              <td class="px-4 py-2 text-center">
+              <td class="px-2 py-2 text-center">
                 <button (click)="removeItem(item)">🗑️</button>
               </td>
-              <td class="px-4 py-2 text-center">
+              <td class="px-2 py-2 text-center">
                 <button (click)="editItem(item)">📝</button>
               </td>
             </tr>
@@ -178,7 +173,8 @@
       </div>
     </div>
 
-    <div class="basis-1/4">
+    <!-- FINALIZAR VENDA -->
+    <div class="basis-[28%] min-w-[240px]">
       <app-finish-sale
         [totalValue]="formatNumber(totalValueDiscount)"
         (calculateDiscount)="calculateDiscount($event)"
