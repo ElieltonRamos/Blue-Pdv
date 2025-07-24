@@ -14,6 +14,7 @@ formCreateProduct = new FormGroup({
     name: new FormControl('', [Validators.required]),
     code: new FormControl(0, [Validators.required, Validators.min(1)]),
     price: new FormControl(0, [Validators.required, Validators.min(0.01)]),
+    costPrice: new FormControl(0, [Validators.required, Validators.min(0.01)]),
     quantity: new FormControl(0, [Validators.required]),
   });
   private productService = inject(ProductsService);
@@ -28,6 +29,7 @@ formCreateProduct = new FormGroup({
       name: name || '',
       code: code || 0,
       price: price ? parseFloat(price.toString()) : 0,
+      costPrice: this.formCreateProduct.value.costPrice ? parseFloat(this.formCreateProduct.value.costPrice.toString()) : 0,
       quantity: quantity ? parseInt(quantity.toString(), 10) : 0,
     };
 

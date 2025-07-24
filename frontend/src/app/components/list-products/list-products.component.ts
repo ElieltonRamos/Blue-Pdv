@@ -18,7 +18,7 @@ export class ListProductsComponent {
   totalPages: number = 0;
   totalItems: number = 0;
   showModalEdit: boolean = false;
-  editProduct: Product = { name: '', price: 0, quantity: 0, code: 0 };
+  editProduct: Product = { name: '', price: 0, quantity: 0, code: 0, costPrice: 0 };
   searchTerm: string = '';
   private productService = inject(ProductsService);
 

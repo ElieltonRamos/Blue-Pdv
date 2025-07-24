@@ -3,6 +3,7 @@ export default interface Product {
   name: string;
   code: number;
   price: number;
+  costPrice: number;
   quantity?: number;
   sales_products?: {
     quantity: number;

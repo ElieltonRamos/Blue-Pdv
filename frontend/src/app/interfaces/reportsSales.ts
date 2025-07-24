@@ -1,6 +1,7 @@
 export interface SalesReportSummary {
-  totalSales: number;                    // Total number of sales
-  grossRevenue: number;                 // Total revenue from all sales
+  totalSales: number;
+  grossRevenue: number;
+  grossProfit: number;
 
   salesByPaymentMethod: {
     pix: number;

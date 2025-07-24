@@ -58,21 +58,21 @@
       }
     </div>
 
-    <!-- <div>
-      <label for="quantity" class="block text-white font-bold mb-2">Quantidade</label>
+    <div>
+      <label for="cost-price" class="block text-white font-bold mb-2">Preço de Custo:</label>
       <input
-        id="quantity"
-        formControlName="quantity"
+        id="cost-price"
+        formControlName="costPrice"
         type="number"
         required
-        placeholder="Digite a Quantidade"
+        placeholder="Digite o preço de custo"
         class="text-xl w-full p-2 rounded-md bg-white text-black font-semibold placeholder-gray-500"
       />
       @if (formCreateProduct.get('quantity')?.touched &&
       formCreateProduct.get('quantity')?.invalid) {
-      <p class="msg-error">Digite a quantidade!</p>
+      <p class="msg-error">Digite o Preço de custo!</p>
       }
-    </div> -->
+    </div>
   </div>
 
   <!-- Botão -->
