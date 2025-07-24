@@ -26,7 +26,13 @@ import { SalesService } from '../../services/sales.service';
   templateUrl: './vendas.component.html',
 })
 export class VendasComponent {
-  client: Client = { id: 1, name: 'Avista', phone: '0', address: 'rua 0', cpf: '' };
+  client: Client = {
+    id: 1,
+    name: 'Avista',
+    phone: '0',
+    address: 'rua 0',
+    cpf: '',
+  };
   token = JSON.parse(localStorage.getItem('token') || '');
   vendedorLogado = this.token.token.username;
   product = { code: '', quantity: 1, price: 0, name: '' };
@@ -57,7 +63,13 @@ export class VendasComponent {
           this.products = [];
           this.subtotalValue = 0;
           this.totalValueDiscount = 0;
-          this.client = { id: 1, name: 'Avista', phone: '0', address: 'rua 0', cpf: '' };
+          this.client = {
+            id: 1,
+            name: 'Avista',
+            phone: '0',
+            address: 'rua 0',
+            cpf: '',
+          };
           this.product = { code: '', quantity: 1, price: 0, name: '' };
           this.router.navigate(['menu']);
         }
@@ -93,7 +105,7 @@ export class VendasComponent {
     const productHeavy = this.extractProductCodeAndWeight(this.product.code);
     if (productHeavy) {
       this.product.code = productHeavy.productCode;
-      this.product.quantity = productHeavy.weightInGrams / 1000;
+      this.product.quantity = productHeavy.weightKg;
     }
 
     this.productService.getProductByCode(this.product.code).subscribe({
@@ -162,7 +174,13 @@ export class VendasComponent {
         this.products = [];
         this.subtotalValue = 0;
         this.totalValueDiscount = 0;
-        this.client = { id: 1, name: 'Avista', phone: '0', address: 'rua 0', cpf: '' };
+        this.client = {
+          id: 1,
+          name: 'Avista',
+          phone: '0',
+          address: 'rua 0',
+          cpf: '',
+        };
         this.product = { code: '', quantity: 1, price: 0, name: '' };
       }
     });
@@ -202,7 +220,7 @@ export class VendasComponent {
               name: 'Avista',
               phone: '0',
               address: 'rua 0',
-              cpf: '12345678989'
+              cpf: '12345678989',
             };
             this.product = { code: '', quantity: 1, price: 0, name: '' };
             this.paymentMethod = 'Dinheiro';
@@ -253,17 +271,28 @@ export class VendasComponent {
     });
   }
 
-  extractProductCodeAndWeight(
-    ean13: string
-  ): { productCode: string; weightInGrams: number } | false {
-    if (!/^02\d{11}$/.test(ean13)) {
-      return false;
-    }
-    const productCode = ean13.substring(2, 6);
-    const weightInGrams = parseInt(ean13.substring(6, 11));
-    return {
-      productCode,
-      weightInGrams,
-    };
+  extractProductCodeAndWeight(ean13: string): {
+  productCode: string;
+  weightKg: number;
+} | false {
+  if (!/^\d{13}$/.test(ean13) || !ean13.startsWith('20')) {
+    return false;
   }
+
+  const productCode = parseInt(ean13.substring(2, 6), 10); // Ex: '0018' → 18
+  const weightRaw = parseInt(ean13.substring(6, 12), 10);  // Ex: '014550' → 14550 gramas
+
+  if (isNaN(productCode) || isNaN(weightRaw)) {
+    return false;
+  }
+
+  // Peso em kg: divide por 1000
+  const weightKg = weightRaw / 1000;
+
+  return {
+    productCode: productCode.toString(),
+    weightKg,
+  };
+}
+
 }
