@@ -6,8 +6,11 @@ const internalMsgError = 'Internal server error';
 
 async function create(req: Request, res: Response) {
   try {
-    const { clientId, userOperator, paymentMethod, date, products, totalProducts, total, isPaid } = req.body;
-    const sale = { clientId, userOperator, paymentMethod, date, products, totalProducts, total, isPaid };
+    const { clientId, userOperator, paymentMethod, date, products, 
+      totalProductsWithoutDiscount, total, isPaid, discount } =
+      req.body;
+    const sale = { clientId, userOperator, paymentMethod, date, products, 
+      totalProductsWithoutDiscount, total, isPaid, discount };
     const { status, data } = await salesService.create(sale);
     return res.status(mapHttpStatus(status)).json(data);
   } catch (error) {
@@ -17,17 +20,8 @@ async function create(req: Request, res: Response) {
 }
 async function getAll(req: Request, res: Response) {
   try {
-    const {
-      page = '1',
-      pageLimit = '10',
-      id,
-      startDate,
-      endDate,
-      client,
-      operator,
-      paymentMethod,
-    } = req.query;
-
+    const { page = '1', pageLimit = '10', id, startDate, endDate, client, operator, 
+      paymentMethod } = req.query;
 
     const filters = {
       id: id as string,
@@ -96,9 +90,13 @@ async function getSalesByDay(req: Request, res: Response) {
   try {
     const { date } = req.params;
     const { operatorId, page, pageLimit } = req.query;
-    
-    const { status, data } = await salesService
-      .getSalesByDay(date, Number(page), Number(pageLimit), Number(operatorId),);
+
+    const { status, data } = await salesService.getSalesByDay(
+      date,
+      Number(page),
+      Number(pageLimit),
+      Number(operatorId)
+    );
 
     return res.status(mapHttpStatus(status)).json(data);
   } catch (error) {

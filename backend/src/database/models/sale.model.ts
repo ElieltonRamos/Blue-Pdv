@@ -31,14 +31,19 @@ const SaleModel: SaleSequelizeModelCreator = db.define('sales', {
     type: DataTypes.DATE,
     allowNull: false,
   },
-  totalProducts: {
-    field: 'total_products',
+  totalProductsWithoutDiscount: {
+    field: 'total_products_without_discount',
     type: DataTypes.INTEGER,
     allowNull: false,
   },
   total: {
     type: DataTypes.INTEGER,
     allowNull: false,
+  },
+  discount: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    defaultValue: 0,
   },
   isPaid: {
     field: 'is_paid',

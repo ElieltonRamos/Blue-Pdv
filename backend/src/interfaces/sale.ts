@@ -8,9 +8,10 @@ export interface Sale {
   paymentMethod: string;
   date: Date;
   products?: Product[];
-  totalProducts: number;
+  totalProductsWithoutDiscount: number;
   total: number;
   isPaid: boolean;
+  discount: number;
   client?: { name: string };
   formattedDate?: string;
   operator?: { username: string };

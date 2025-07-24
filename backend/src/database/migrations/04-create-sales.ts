@@ -41,14 +41,19 @@ export default {
         type: DataTypes.DATE,
         allowNull: false,
       },
-      totalProducts: {
-        field: 'total_products',
+      totalProductsWithoutDiscount: {
+        field: 'total_products_without_discount',
         type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
       },
       total: {
         type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
+      },
+      discount: {
+        type: DataTypes.DECIMAL(10, 2),
+        allowNull: true,
+        defaultValue: 0,
       },
       isPaid: {
         field: 'is_paid',

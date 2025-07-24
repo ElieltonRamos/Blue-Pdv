@@ -43,6 +43,7 @@ function initializeAggregators() {
     totalSales: 0,
     grossRevenue: 0,
     grossProfit: 0,
+    totalDiscounts: 0,
     salesByPaymentMethod: { pix: 0, cash: 0, card: 0, promissoryNote: 0 },
     salesByOperator: {},
     productSales: {},
@@ -70,11 +71,11 @@ function processSale(sale: any, aggregators: any) {
   const operatorName = saleData.operator?.username || 'Desconhecido';
   const method = normalizePaymentMethod(saleData.paymentMethod);
   const total = Number(saleData.total);
+  const discount = Number(saleData.discount ?? 0);
 
   aggregators.totalSales++;
   aggregators.grossRevenue += total;
-
-  // Calcular lucro bruto da venda
+  aggregators.totalDiscounts += discount;
   const saleProfit = calculateSaleProfit(saleData.products || []);
   aggregators.grossProfit += saleProfit;
 
@@ -88,6 +89,7 @@ function buildResponse(aggregators: any): SalesReportSummary {
     totalSales: aggregators.totalSales,
     grossRevenue: Number(aggregators.grossRevenue.toFixed(2)),
     grossProfit: Number(aggregators.grossProfit.toFixed(2)),
+    totalDiscounts: Number(aggregators.totalDiscounts.toFixed(2)),
 
     salesByPaymentMethod: {
       pix: Number(aggregators.salesByPaymentMethod.pix.toFixed(2)),
