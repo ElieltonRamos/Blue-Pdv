@@ -6,8 +6,8 @@ const internalMsgError = 'Internal server error';
 
 async function create(req: Request, res: Response) {
   try {
-    const { clientId, userOperator, paymentMethod, date, products, totalProducts, total } = req.body;
-    const sale = { clientId, userOperator, paymentMethod, date, products, totalProducts, total };
+    const { clientId, userOperator, paymentMethod, date, products, totalProducts, total, isPaid } = req.body;
+    const sale = { clientId, userOperator, paymentMethod, date, products, totalProducts, total, isPaid };
     const { status, data } = await salesService.create(sale);
     return res.status(mapHttpStatus(status)).json(data);
   } catch (error) {
@@ -42,6 +42,17 @@ async function getAll(req: Request, res: Response) {
     return res.status(mapHttpStatus(status)).json(data);
   } catch (error) {
     console.error('Error fetching sales:', error);
+    return res.status(mapHttpStatus('SERVER_ERROR')).json({ message: internalMsgError });
+  }
+}
+
+async function markAsReceived(req: Request, res: Response) {
+  try {
+    const { salesId } = req.body;
+    const { status, data } = await salesService.markAsReceived(salesId);
+    return res.status(mapHttpStatus(status)).json(data);
+  } catch (error) {
+    console.error('Error marking sale as received:', error);
     return res.status(mapHttpStatus('SERVER_ERROR')).json({ message: internalMsgError });
   }
 }
@@ -111,6 +122,7 @@ async function getSalesByMonth(req: Request, res: Response) {
 export default {
   create,
   getAll,
+  markAsReceived,
   getById,
   getSalesByUser,
   getSalesByClient,

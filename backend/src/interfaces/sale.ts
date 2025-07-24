@@ -10,7 +10,8 @@ export interface Sale {
   products?: Product[];
   totalProducts: number;
   total: number;
-  client?: { name: string }
+  isPaid: boolean;
+  client?: { name: string };
   formattedDate?: string;
   operator?: { username: string };
 }

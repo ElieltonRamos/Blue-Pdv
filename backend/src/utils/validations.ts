@@ -37,6 +37,7 @@ export function validationCreateSale(sale: Sale): ValidationResponse {
     'totalProducts',
     'total',
     'products',
+    'isPaid',
   ];
 
   const missingFields = requiredFields.filter((field: keyof Sale) => !sale[field]);

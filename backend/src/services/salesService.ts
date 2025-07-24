@@ -184,7 +184,6 @@ async function getAll(
 async function create(sale: Sale): Promise<ServiceResponse<Sale>> {
   const validationSale = validationCreateSale(sale);
   if (validationSale) return validationSale;
-  console.log('sale', sale);
 
   const newSale = await SaleModel.create(sale);
 
@@ -201,6 +200,26 @@ async function create(sale: Sale): Promise<ServiceResponse<Sale>> {
   return {
     status: 'CREATED',
     data: newSale.dataValues,
+  };
+}
+
+async function markAsReceived(salesId: number[]): Promise<ServiceResponse<Sale>> {
+  if (!salesId || !Array.isArray(salesId) || salesId.length === 0) {
+    return {
+      status: 'BAD_REQUEST',
+      data: { message: 'E necessario enviar uma lista de ID das vendas a serem recebidas' },
+    };
+  }
+
+  const updatedSales = await SaleModel.update({ isPaid: true }, { where: { id: salesId } });
+
+  if (updatedSales[0] === 0) {
+    return { status: 'NOT_FOUND', data: { message: 'Nenhuma venda encontrada para atualizar' } };
+  }
+
+  return {
+    status: 'OK',
+    data: { message: 'Vendas atualizadas com sucesso' },
   };
 }
 
@@ -325,6 +344,7 @@ async function getSalesByMonth(
 export default {
   create,
   getAll,
+  markAsReceived,
   getById,
   getSalesByUser,
   getSalesByClient,

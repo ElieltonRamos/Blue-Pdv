@@ -13,6 +13,7 @@ export default {
           date: new Date('2025-05-01'),
           total_products: 60.99,
           total: 60.99,
+          is_paid: true,
         },
         {
           id: 2,
@@ -22,6 +23,7 @@ export default {
           date: new Date('2025-05-02'),
           total_products: 40.99,
           total: 40.99,
+          is_paid: true,
         }
       ],
       {}

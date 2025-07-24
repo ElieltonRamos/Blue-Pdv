@@ -50,6 +50,11 @@ export default {
         type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
       },
+      isPaid: {
+        field: 'is_paid',
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+      },
     });
   },
 

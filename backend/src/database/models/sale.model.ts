@@ -40,6 +40,11 @@ const SaleModel: SaleSequelizeModelCreator = db.define('sales', {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
+  isPaid: {
+    field: 'is_paid',
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+  },
 }, {
   tableName: 'sales',
   timestamps: false,
