@@ -189,6 +189,7 @@ export class VendasComponent {
 
     alertConfirm('Finalizar Venda ?').then((isConfirmed) => {
       if (isConfirmed) {
+        console.log('Finalizando venda:', saleData);
         this.salesService.createSale(saleData).subscribe({
           next: (_data) => {
             this.showSaleModal = true;

@@ -7,10 +7,11 @@ import { alertError, alertSuccess } from '../alerts/custom-alerts';
 import { PaginatorComponent } from '../paginator/paginator.component';
 import { ModalSalesNoteComponent } from '../modal-sales-note/modal-sales-note.component';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-promissory-note-receivable',
-  imports: [PaginatorComponent, ModalSalesNoteComponent, FormsModule],
+  imports: [PaginatorComponent, ModalSalesNoteComponent, FormsModule, CommonModule],
   templateUrl: './promissory-note-receivable.component.html',
 })
 export class PromissoryNoteReceivableComponent {
@@ -110,8 +111,7 @@ export class PromissoryNoteReceivableComponent {
     this.filterId = '';
     this.filterClient = '';
     this.filterOperator = '';
-    this.filterMethod = '';
-    // this.filterMethod = 'Notinha';
+    this.filterMethod = 'Notinha';
     this.page = 1;
     this.getSales(this.page, this.limit);
   }

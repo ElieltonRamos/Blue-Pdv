@@ -92,6 +92,7 @@
             />
           </th>
           <th class="py-3 px-4">ID</th>
+          <th class="py-3 px-4">Status</th>
           <th class="py-3 px-4">Data</th>
           <th class="py-3 px-4">Cliente</th>
           <th class="py-3 px-4">Método de Pagamento</th>
@@ -111,6 +112,18 @@
             />
           </td>
           <td class="py-3 px-4">{{ sale.id }}</td>
+          <td>
+            <span
+              class="text-sm"
+              [ngClass]="{
+                'text-green-500': sale.isPaid,
+                'text-red-500': !sale.isPaid
+              }"
+            >
+              {{ sale.isPaid ? "PAGO" : "PENDENTE" }}
+            </span>
+          </td>
+
           <td class="py-3 px-4">{{ sale.formattedDate }}</td>
           <td class="py-3 px-4">{{ sale.client?.name }}</td>
           <td class="py-3 px-4">{{ sale.paymentMethod }}</td>
