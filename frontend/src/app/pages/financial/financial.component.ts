@@ -3,10 +3,11 @@ import { Router } from '@angular/router';
 import { CreateExpensesComponent } from '../../components/create-expenses/create-expenses.component';
 import { ListExpensesComponent } from '../../components/list-expenses/list-expenses.component';
 import { ReportsExpensesComponent } from '../../components/reports-expenses/reports-expenses.component';
+import { PromissoryNoteReceivableComponent } from "../../components/promissory-note-receivable/promissory-note-receivable.component";
 
 @Component({
   selector: 'app-financial',
-  imports: [CreateExpensesComponent, ListExpensesComponent, ReportsExpensesComponent],
+  imports: [CreateExpensesComponent, ListExpensesComponent, ReportsExpensesComponent, PromissoryNoteReceivableComponent],
   templateUrl: './financial.component.html',
 })
 export class FinancialComponent {

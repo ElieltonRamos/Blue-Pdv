@@ -182,6 +182,7 @@ export class VendasComponent {
       totalProducts: this.subtotalValue,
       total: this.totalValueDiscount,
       userOperator: this.token.token.id,
+      isPaid: this.paymentMethod === 'Notinha' ? false : true,
     };
 
     this.saleData = saleData;

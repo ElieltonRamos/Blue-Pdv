@@ -14,11 +14,17 @@
         <strong>Cliente:</strong>
         {{ saleData.clientName || saleData.client?.name }}
       </p>
-      <p><strong>Data:</strong> {{ getDateSale()  }}</p>
+      <p><strong>Data:</strong> {{ getDateSale() }}</p>
       <p>
         <strong>Vendedor:</strong> {{ saleData.userOperator }} -
         {{ saleData.operator?.username }}
       </p>
+      @if( saleData.paymentMethod === 'Notinha') {
+      <p>
+        <strong>Status do Pagamento:</strong>
+        {{ saleData.isPaid ? "Recebido" : "Pendente" }}
+      </p>
+      }
 
       <table class="table-auto w-full mt-4">
         <thead>

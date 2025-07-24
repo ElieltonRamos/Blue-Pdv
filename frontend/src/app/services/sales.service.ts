@@ -45,6 +45,10 @@ export class SalesService {
     });
   }
 
+  markSaleReceived(salesId: number[]): Observable<any> {
+    return this.client.patch(`${this.apiUrl}/sale/received`, { salesId });
+  }
+
   generateReportSales(
     startDate: string,
     endDate: string
