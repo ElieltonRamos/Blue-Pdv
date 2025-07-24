@@ -19,11 +19,17 @@ const ProductModel: UserSequelizeModelCreator = db.define('Product', {
   code: {
     type: DataTypes.STRING,
     allowNull: false,
+    unique: true,
   },
   price: {
     type: DataTypes.DECIMAL(10, 2),
     allowNull: false,
-  }
+  },
+  costPrice: {
+    field: 'cost_price',
+    type: DataTypes.DECIMAL(10, 2),
+    allowNull: false,
+  },
 }, {
   tableName: 'products',
   timestamps: false,

@@ -6,7 +6,7 @@ import { PaginatedResponse, ServiceResponse } from '../interfaces/services';
 const productNotFound = 'Produto não encontrado';
 
 async function register(product: Product): Promise<ServiceResponse<Product>> {
-  const { name, code, price } = product;
+  const { name, code, price, costPrice } = product;
   if (!name || !code || !price) {
     return {
       status: 'BAD_REQUEST',
@@ -23,7 +23,7 @@ async function register(product: Product): Promise<ServiceResponse<Product>> {
       data: { message: 'Codico informado já cadastrado' },
     };
   }
-  const productRegistered = await ProductModel.create({ name, code, price });
+  const productRegistered = await ProductModel.create({ name, code, price, costPrice });
   if (!productRegistered) {
     return {
       status: 'SERVER_ERROR',

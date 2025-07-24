@@ -29,18 +29,14 @@ export function validationFindSales(sales: Model<Sale>[]): ValidationResponse {
 }
 
 export function validationCreateSale(sale: Sale): ValidationResponse {
-  const requiredFields: (keyof Sale)[] = [
-    'clientId',
-    'userOperator',
-    'paymentMethod',
-    'date',
-    'totalProducts',
-    'total',
-    'products',
-    'isPaid',
-  ];
+  const requiredFields: (keyof Sale)[] = ['clientId', 'userOperator', 'paymentMethod',
+    'date', 'totalProducts', 'total', 'products', 'isPaid'];
 
-  const missingFields = requiredFields.filter((field: keyof Sale) => !sale[field]);
+  const missingFields = requiredFields.filter((field: keyof Sale) => {
+    const value = sale[field];
+    if (typeof value === 'boolean') return false;
+    return value === undefined || value === null || value === '';
+  });
 
   if (missingFields.length > 0) {
     return {
@@ -69,7 +65,6 @@ export function normalizePaymentMethod(
   if (!value) return null;
 
   const normalized = value.toLowerCase();
-  console.log(`Normalizing payment method: ${normalized}`, '********************');
 
   if (normalized.includes('pix')) return 'pix';
   if (normalized.includes('notinha')) return 'promissoryNote';

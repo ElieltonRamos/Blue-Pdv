@@ -17,11 +17,17 @@ export default {
       code: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
       },
       price: {
         type: DataTypes.DECIMAL(10, 2), // até 10 dígitos no total, 2 após a vírgula
         allowNull: false,
-      }
+      },
+      costPrice: {
+        field: 'cost_price',
+        type: DataTypes.DECIMAL(10, 2), // até 10 dígitos no total, 2 após a vírgula
+        allowNull: false,
+      },
     });
   },
   down(queryInterface: QueryInterface) {

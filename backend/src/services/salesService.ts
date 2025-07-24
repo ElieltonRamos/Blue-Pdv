@@ -214,7 +214,7 @@ async function markAsReceived(salesId: number[]): Promise<ServiceResponse<Sale>>
   const updatedSales = await SaleModel.update({ isPaid: true }, { where: { id: salesId } });
 
   if (updatedSales[0] === 0) {
-    return { status: 'NOT_FOUND', data: { message: 'Nenhuma venda encontrada para atualizar' } };
+    return { status: 'NOT_FOUND', data: { message: 'Nenhuma venda encontrada para dar baixa' } };
   }
 
   return {

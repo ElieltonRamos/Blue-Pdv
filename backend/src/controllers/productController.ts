@@ -6,8 +6,8 @@ const msgInternalError = 'Internal server error';
 
 async function register(req: Request, res: Response) {
   try {
-    const { name, code, price } = req.body;
-    const { status, data } = await productService.register({name, code, price});
+    const { name, code, price, costPrice } = req.body;
+    const { status, data } = await productService.register({name, code, price, costPrice});
     return res.status(mapHttpStatus(status)).json(data);
   } catch (error) {
     console.log('Error in register controller:', error);
@@ -62,8 +62,8 @@ async function getProductByName(req: Request, res: Response) {
 async function updateProduct(req: Request, res: Response) {
   try {
     const { id } = req.params;
-    const { name, code, price } = req.body;
-    const { status, data } = await productService.updateProduct(Number(id), {name, code, price});
+    const { name, code, price, costPrice } = req.body;
+    const { status, data } = await productService.updateProduct(Number(id), {name, code, price, costPrice});
     return res.status(mapHttpStatus(status)).json(data);
   } catch (error) {
     console.log('Error in updateProduct controller:', error);

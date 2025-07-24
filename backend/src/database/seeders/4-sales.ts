@@ -11,8 +11,8 @@ export default {
           user_operator: 1,
           payment_method: 'Cartão',
           date: new Date('2025-05-01'),
-          total_products: 60.99,
-          total: 60.99,
+          total_products: 106.56,
+          total: 106.56,
           is_paid: true,
         },
         {
@@ -21,8 +21,8 @@ export default {
           user_operator: 2,
           payment_method: 'Dinheiro',
           date: new Date('2025-05-02'),
-          total_products: 40.99,
-          total: 40.99,
+          total_products: 53.50,
+          total: 53.50,
           is_paid: true,
         }
       ],
