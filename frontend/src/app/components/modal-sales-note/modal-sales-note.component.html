@@ -16,7 +16,7 @@
       </p>
       <p><strong>Data:</strong> {{ getDateSale() }}</p>
       <p>
-        <strong>Vendedor:</strong> {{ saleData.userOperator }} -
+        <strong>Vendedor:</strong> {{ saleData.userOperator }} 
         {{ saleData.operator?.username }}
       </p>
       @if( saleData.paymentMethod === 'Notinha') {
@@ -50,7 +50,7 @@
       </table>
 
       <p class="mt-4">
-        <strong>Subtotal: R$</strong> {{ formatNumber(saleData.totalProducts) }}
+        <strong>Subtotal: R$</strong> {{ formatNumber(saleData.totalProductsWithoutDiscount) }}
       </p>
       <p>
         @if (calculateDiscount() > 0) {

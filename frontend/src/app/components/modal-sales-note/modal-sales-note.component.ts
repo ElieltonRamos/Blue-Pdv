@@ -20,7 +20,7 @@ export class ModalSalesNoteComponent {
   }
 
   calculateDiscount(): number {
-    const discount = this.saleData.totalProducts - this.saleData.total;
+    const discount = this.saleData.totalProductsWithoutDiscount - this.saleData.total;
     if (discount > 0) {
       return this.formatNumber(discount);
     }

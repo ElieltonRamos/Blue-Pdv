@@ -9,6 +9,7 @@ const summaryMock: SalesReportSummary = {
   totalSales: 0,
   grossRevenue: 0,
   grossProfit: 0,
+  totalDiscounts: 0,
   salesByPaymentMethod: {
     pix: 0,
     cash: 0,

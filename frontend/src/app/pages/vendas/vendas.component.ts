@@ -173,13 +173,14 @@ export class VendasComponent {
       return alertError('Adicione produtos à venda!');
     }
 
-    const saleData = {
+    const saleData: Sale = {
       date: new Date(),
       clientId: this.client.id || 1,
       clientName: this.client.name,
       paymentMethod: this.paymentMethod,
       products: this.products,
-      totalProducts: this.subtotalValue,
+      totalProductsWithoutDiscount: this.subtotalValue,
+      discount: this.discountValue,
       total: this.totalValueDiscount,
       userOperator: this.token.token.id,
       isPaid: this.paymentMethod === 'Notinha' ? false : true,
@@ -189,7 +190,6 @@ export class VendasComponent {
 
     alertConfirm('Finalizar Venda ?').then((isConfirmed) => {
       if (isConfirmed) {
-        console.log('Finalizando venda:', saleData);
         this.salesService.createSale(saleData).subscribe({
           next: (_data) => {
             this.showSaleModal = true;
