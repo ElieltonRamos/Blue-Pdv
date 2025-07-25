@@ -1,11 +1,26 @@
 @echo off
-set DIR=%~dp0
+:: Verifica se está rodando como admin
+net session >nul 2>&1
+if %errorlevel% neq 0 (
+    echo Solicitando permissão de administrador...
+    powershell -Command "Start-Process '%~f0' -Verb runAs"
+    exit /b
+)
 
-rem Instala o serviço chamado "blue-pdv-server"
-%DIR%nssm.exe install blue-pdv-server "%DIR%blue-pdv-server.exe"
+setlocal
 
-rem Define diretório de trabalho
-%DIR%nssm.exe set blue-pdv-server AppDirectory "%DIR%"
+set SERVICE_NAME=BluePDVServer
+set EXE_PATH=%~dp0blue-pdv-server.exe
+set NSSM_PATH=%~dp0nssm.exe
 
-rem Inicia o serviço
-%DIR%nssm.exe start blue-pdv-server
+echo Instalando serviço %SERVICE_NAME% com NSSM...
+"%NSSM_PATH%" install %SERVICE_NAME% "%EXE_PATH%"
+
+echo Configurando reinício automático...
+"%NSSM_PATH%" set %SERVICE_NAME% Start SERVICE_AUTO_START
+"%NSSM_PATH%" set %SERVICE_NAME% AppRestartDelay 5000
+
+echo Iniciando o serviço...
+net start %SERVICE_NAME%
+
+endlocal
