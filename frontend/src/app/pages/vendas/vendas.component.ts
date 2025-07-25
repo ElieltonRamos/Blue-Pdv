@@ -271,28 +271,26 @@ export class VendasComponent {
     });
   }
 
-  extractProductCodeAndWeight(ean13: string): {
-  productCode: string;
-  weightKg: number;
-} | false {
-  if (!/^\d{13}$/.test(ean13) || !ean13.startsWith('20')) {
-    return false;
+  extractProductCodeAndWeight(ean13: string):
+    | {
+        productCode: string;
+        weightKg: number;
+      }
+    | false {
+    if (!/^\d{13}$/.test(ean13) || !ean13.startsWith('20')) {
+      return false;
+    }
+
+    const productCode = parseInt(ean13.substring(2, 5), 10); // indices 2,3,4
+
+    const weightStr = ean13.substring(5, 12);
+    const weightInGrams = parseInt(weightStr, 10);
+
+    if (isNaN(productCode) || isNaN(weightInGrams)) return false;
+
+    return {
+      productCode: productCode.toString(),
+      weightKg: weightInGrams / 1000,
+    };
   }
-
-  const productCode = parseInt(ean13.substring(2, 6), 10); // Ex: '0018' → 18
-  const weightRaw = parseInt(ean13.substring(6, 12), 10);  // Ex: '014550' → 14550 gramas
-
-  if (isNaN(productCode) || isNaN(weightRaw)) {
-    return false;
-  }
-
-  // Peso em kg: divide por 1000
-  const weightKg = weightRaw / 1000;
-
-  return {
-    productCode: productCode.toString(),
-    weightKg,
-  };
-}
-
 }

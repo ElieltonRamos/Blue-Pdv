@@ -2,65 +2,73 @@
   class="min-h-screen bg-gradient-to-b from-purple-900 to-purple-950 p-6 flex flex-col items-center gap-6"
 >
   <div class="flex flex-col md:flex-row gap-4 items-center">
+  <!-- Imagem no canto esquerdo -->
+  <img
+    src="logo-alicio.png"
+    alt="Logo ou Cliente"
+    class="h-22 object-cover shadow-md"
+  />
+
+  <button
+    (click)="goToMenu()"
+    class="bg-indigo-600 text-white py-2 rounded shadow-md hover:bg-indigo-700 transition"
+  >
+    Voltar para menu
+  </button>
+
+  <div class="flex items-center gap-2">
+    <input
+      type="number"
+      #inputClienteId
+      placeholder="ID do cliente"
+      value="{{ client.id }}"
+      class="w-24 p-2 rounded bg-gray-200 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
     <button
-      (click)="goToMenu()"
-      class="bg-indigo-600 text-white px-6 py-2 rounded mr-10 shadow-md hover:bg-indigo-700 transition"
+      (click)="findClientById(inputClienteId.value)"
+      class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded text-sm flex items-center justify-center"
     >
-      Voltar para menu
+      Buscar
+    </button>
+  </div>
+
+  <div class="flex items-center gap-2">
+    <input
+      type="text"
+      #inputClientName
+      placeholder="Nome do cliente"
+      class="w-34 p-2 rounded bg-gray-200 text-black focus:outline-none focus:ring-2 focus:ring-green-500"
+    />
+    <button
+      (click)="findClientByName(inputClientName.value)"
+      class="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded text-sm flex items-center justify-center"
+    >
+      Buscar
     </button>
 
-    <div class="flex items-center gap-2">
-      <input
-        type="number"
-        #inputClienteId
-        placeholder="ID do cliente"
-        value="{{ client.id }}"
-        class="w-24 p-2 rounded bg-gray-200 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
-      <button
-        (click)="findClientById(inputClienteId.value)"
-        class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded text-sm flex items-center justify-center"
+    <!-- Coluna separada para o label e select -->
+    <div class="flex flex-col mb-5">
+      <p class="text-sm mb-1 text-white">Resultado da busca</p>
+      <select
+        [(ngModel)]="client.name"
+        class="w-44 p-2 rounded bg-gray-200 text-black"
       >
-        Buscar
-      </button>
-    </div>
-
-    <div class="flex items-center gap-2">
-      <input
-        type="text"
-        #inputClientName
-        placeholder="Nome do cliente"
-        class="w-34 p-2 rounded bg-gray-200 text-black focus:outline-none focus:ring-2 focus:ring-green-500"
-      />
-      <button
-        (click)="findClientByName(inputClientName.value)"
-        class="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded text-sm flex items-center justify-center"
-      >
-        Buscar
-      </button>
-
-      <!-- Coluna separada para o label e select -->
-      <div class="flex flex-col mb-5">
-        <p class="text-sm mb-1 text-white">Resultado da busca</p>
-        <select
-          [(ngModel)]="client.name"
-          class="w-44 p-2 rounded bg-gray-200 text-black"
-        >
-          <option disabled selected>Selecione um cliente</option>
-          @for (item of searchClients; track item.id) {
-          <option value="{{ item.name }}">{{ item.name }}</option>
-          }
-        </select>
-      </div>
-    </div>
-
-    <div
-      class="flex items-center bg-gray-200 text-black px-3 py-2 rounded text-sm"
-    >
-      <span class="font-medium mr-1">Cliente:</span>
-      <span>{{ client.name }}</span>
+        <option disabled selected>Selecione um cliente</option>
+        @for (item of searchClients; track item.id) {
+        <option value="{{ item.name }}">{{ item.name }}</option>
+        }
+      </select>
     </div>
   </div>
+
+  <div
+    class="flex items-center bg-gray-200 text-black px-3 py-2 rounded text-sm"
+  >
+    <span class="font-medium mr-1">Cliente:</span>
+    <span>{{ client.name }}</span>
+  </div>
+</div>
+
   <!-- CORPO PRINCIPAL -->
   <div
     class="w-full max-w-6xl bg-slate-800 rounded-xl p-4 flex gap-4 overflow-hidden"
