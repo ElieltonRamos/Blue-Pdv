@@ -15,6 +15,10 @@ export class ModalUpdateProductComponent {
 
   private productService = inject(ProductsService);
 
+  ngOnInit() {
+    console.log('ModalUpdateProductComponent initialized with product:', this.product);
+  }
+
   onSave() {
     this.productService.updateProduct(this.product).subscribe({
       next: () => {

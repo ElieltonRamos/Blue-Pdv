@@ -56,6 +56,42 @@
             min="0"
           />
         </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-1"
+            >Carne bovina?</label
+          >
+          <div class="flex items-center gap-6 bg-gray-100 p-3 rounded-md">
+            <label
+              class="inline-flex items-center text-gray-800 text-sm font-medium"
+            >
+              <input
+                type="radio"
+                name="isMeatBovine"
+                [(ngModel)]="product.isMeatBovine"
+                [ngModelOptions]="{ standalone: true }"
+                [value]="true"
+                class="appearance-none h-5 w-5 border-2 border-gray-400 rounded-full"
+              />
+
+              <span class="ml-2">Sim</span>
+            </label>
+
+            <label
+              class="inline-flex items-center text-gray-800 text-sm font-medium"
+            >
+              <input
+                type="radio"
+                name="isMeatBovine"
+                [(ngModel)]="product.isMeatBovine"
+                [ngModelOptions]="{ standalone: true }"
+                [value]="false"
+                class="appearance-none h-5 w-5 border-2 border-gray-400 rounded-full"
+              />
+
+              <span class="ml-2">Não</span>
+            </label>
+          </div>
+        </div>
       </div>
     </div>
 

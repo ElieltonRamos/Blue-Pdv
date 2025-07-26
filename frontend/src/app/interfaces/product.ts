@@ -4,6 +4,7 @@ export default interface Product {
   code: number;
   price: number;
   costPrice: number;
+  isMeatBovine: boolean;
   quantity?: number;
   sales_products?: {
     quantity: number;

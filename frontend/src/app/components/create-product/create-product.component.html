@@ -60,7 +60,9 @@
     </div>
 
     <div>
-      <label for="cost-price" class="block text-white font-bold mb-2">Preço de Custo:</label>
+      <label for="cost-price" class="block text-white font-bold mb-2"
+        >Preço de Custo:</label
+      >
       <input
         id="cost-price"
         formControlName="costPrice"
@@ -72,6 +74,37 @@
       @if (formCreateProduct.get('quantity')?.touched &&
       formCreateProduct.get('quantity')?.invalid) {
       <p class="msg-error">Digite o Preço de custo!</p>
+      }
+    </div>
+    <div class="col-span-1">
+      <label class="block text-white font-bold mb-2">Selecione se o produto e carne bovina:</label>
+      <div class="flex items-center gap-6 bg-white p-3 rounded-md shadow-md">
+        <label class="inline-flex items-center text-black text-lg font-medium">
+          <input
+            type="radio"
+            formControlName="isMeatBovine"
+            [value]="true"
+            class="form-radio h-5 w-5 text-green-600"
+          />
+          <span class="ml-2">Sim</span>
+        </label>
+
+        <label class="inline-flex items-center text-black text-lg font-medium">
+          <input
+            type="radio"
+            formControlName="isMeatBovine"
+            [value]="false"
+            class="form-radio h-5 w-5 text-red-600"
+          />
+          <span class="ml-2">Não</span>
+        </label>
+      </div>
+
+      @if ( formCreateProduct.get('isMeatBovine')?.touched &&
+      formCreateProduct.get('isMeatBovine')?.invalid ) {
+      <p class="msg-error text-red-400 text-sm mt-1">
+        Selecione se o produto é carne bovina!
+      </p>
       }
     </div>
   </div>

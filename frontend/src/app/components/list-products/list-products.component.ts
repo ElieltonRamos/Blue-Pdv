@@ -18,7 +18,7 @@ export class ListProductsComponent {
   totalPages: number = 0;
   totalItems: number = 0;
   showModalEdit: boolean = false;
-  editProduct: Product = { name: '', price: 0, quantity: 0, code: 0, costPrice: 0 };
+  editProduct: Product = { name: '', price: 0, quantity: 0, code: 0, costPrice: 0, isMeatBovine: true };
   searchTerm: string = '';
   private productService = inject(ProductsService);
 
@@ -48,6 +48,7 @@ export class ListProductsComponent {
   getAllProducts(page: number, limit: number) {
     this.productService.getAllProducts(page, limit).subscribe({
       next: (response) => {
+        console.log('Products fetched:', response);
         this.listProducts = response.data;
         this.totalItems = response.total;
         this.page = response.page;

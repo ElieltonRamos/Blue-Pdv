@@ -15,6 +15,7 @@ formCreateProduct = new FormGroup({
     code: new FormControl(0, [Validators.required, Validators.min(1)]),
     price: new FormControl(0, [Validators.required, Validators.min(0.01)]),
     costPrice: new FormControl(0, [Validators.required, Validators.min(0.01)]),
+    isMeatBovine: new FormControl(true, [Validators.required]),
     quantity: new FormControl(0, [Validators.required]),
   });
   private productService = inject(ProductsService);
@@ -24,12 +25,13 @@ formCreateProduct = new FormGroup({
   }
 
   onSubmit() {
-    const { name, code, price, quantity } = this.formCreateProduct.value;
+    const { name, code, price, quantity, isMeatBovine } = this.formCreateProduct.value;
     const newProduct: Product = {
       name: name || '',
       code: code || 0,
       price: price ? parseFloat(price.toString()) : 0,
       costPrice: this.formCreateProduct.value.costPrice ? parseFloat(this.formCreateProduct.value.costPrice.toString()) : 0,
+      isMeatBovine: isMeatBovine || true,
       quantity: quantity ? parseInt(quantity.toString(), 10) : 0,
     };
 
