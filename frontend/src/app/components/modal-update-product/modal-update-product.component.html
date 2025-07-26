@@ -67,10 +67,10 @@
               <input
                 type="radio"
                 name="isMeatBovine"
-                [(ngModel)]="product.isMeatBovine"
-                [ngModelOptions]="{ standalone: true }"
+                [checked]="product.isMeatBovine === true"
+                (change)="product.isMeatBovine = true"
                 [value]="true"
-                class="appearance-none h-5 w-5 border-2 border-gray-400 rounded-full"
+                class="form-radio h-5 w-5 text-green-600"
               />
 
               <span class="ml-2">Sim</span>
@@ -82,10 +82,10 @@
               <input
                 type="radio"
                 name="isMeatBovine"
-                [(ngModel)]="product.isMeatBovine"
-                [ngModelOptions]="{ standalone: true }"
+                [checked]="product.isMeatBovine === false"
+                (change)="product.isMeatBovine = false"
                 [value]="false"
-                class="appearance-none h-5 w-5 border-2 border-gray-400 rounded-full"
+                class="form-radio h-5 w-5 text-red-600"
               />
 
               <span class="ml-2">Não</span>

@@ -48,6 +48,7 @@ export class VendasComponent {
   showSaleModal = false;
   saleData!: Sale;
   paymentMethod = 'Dinheiro';
+  profitSale = 0;
 
   constructor(
     private clientService: ClientService,
@@ -186,13 +187,27 @@ export class VendasComponent {
     });
   }
 
+  calculateTotalProfit(products: Product[]): number {
+    return products.reduce((totalProfit, product) => {
+      const salePrice = product.price;
+      const purchasePrice = product.costPrice;
+      const profitPerUnit = salePrice - purchasePrice;
+      const quantity = product.quantity || 1;
+      const totalProductProfit = profitPerUnit * quantity;
+      return totalProfit + totalProductProfit;
+    }, 0);
+  }
+
   finishSale() {
     if (this.products.length === 0) {
       return alertError('Adicione produtos à venda!');
     }
 
+    const totalProfit = this.calculateTotalProfit(this.products);
+
     const saleData: Sale = {
       date: new Date(),
+      profitSale: totalProfit - this.discountValue,
       clientId: this.client.id || 1,
       clientName: this.client.name,
       paymentMethod: this.paymentMethod,
@@ -205,6 +220,7 @@ export class VendasComponent {
     };
 
     this.saleData = saleData;
+    console.log('saleData', saleData);
 
     alertConfirm('Finalizar Venda ?').then((isConfirmed) => {
       if (isConfirmed) {
