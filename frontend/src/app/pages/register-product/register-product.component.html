@@ -33,6 +33,15 @@
         >
           <i class="fas fa-users"></i> Produtos Cadastrados
         </button>
+        <button
+          (click)="changeMenuContext('updateCostPriceMeats')"
+          [attr.class]="
+            menuContext === 'updateCostPriceMeats' ? classBtnSelected : classBtnUnselected
+          "
+          class="text-white flex items-center gap-2 hover:underline"
+        >
+          <i class="fas fa-users"></i> Preço de Custo das Carnes
+        </button>
       </div>
     </div>
 
@@ -41,6 +50,8 @@
       <app-create-product />
     } @else if (menuContext === 'listProducts') {
       <app-list-products />
+    } @else if (menuContext === 'updateCostPriceMeats') {
+      <app-update-cost-price-meats />
     }
   </div>
 </div>

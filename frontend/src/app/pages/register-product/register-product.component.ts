@@ -2,10 +2,11 @@ import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ListProductsComponent } from '../../components/list-products/list-products.component';
 import { CreateProductComponent } from '../../components/create-product/create-product.component';
+import { UpdateCostPriceMeatsComponent } from '../../components/update-cost-price-meats/update-cost-price-meats.component';
 
 @Component({
   selector: 'app-register-product',
-  imports: [ListProductsComponent, CreateProductComponent],
+  imports: [ListProductsComponent, CreateProductComponent, UpdateCostPriceMeatsComponent],
   templateUrl: './register-product.component.html',
 })
 export class RegisterProductComponent {

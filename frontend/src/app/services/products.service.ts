@@ -41,4 +41,8 @@ export class ProductsService {
     return this.client.patch<Product>(`${this.apiUrl}/product/update/${product.id}`, product);
   }
 
+  updateCostPriceMeats(costPrice: Number): Observable<void> {
+    return this.client.patch<void>(`${this.apiUrl}/product/update/cost-price-meats`, { costPrice });
+  }
+
 }

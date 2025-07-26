@@ -1,0 +1,37 @@
+<!-- Formulário -->
+<form
+  (ngSubmit)="onSubmit()"
+  [formGroup]="formUpdateCostPrice"
+  class="bg-[#1d2a3c] p-6 rounded-lg space-y-6"
+>
+  <!-- Inputs lado a lado -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div>
+      <label for="cost-price" class="block text-white font-bold mb-2"
+        >Preço de Custo:</label
+      >
+      <input
+        id="cost-price"
+        formControlName="costPrice"
+        type="number"
+        required
+        placeholder="Digite o preço de custo"
+        class="text-xl w-full p-2 rounded-md bg-white text-black font-semibold placeholder-gray-500"
+      />
+      @if (formUpdateCostPrice.get('quantity')?.touched &&
+      formUpdateCostPrice.get('quantity')?.invalid) {
+      <p class="msg-error">Digite o Preço de custo!</p>
+      }
+    </div>
+  </div>
+
+  <!-- Botão -->
+  <div class="flex justify-center pt-4">
+    <button
+      type="submit"
+      class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-bold"
+    >
+      Salvar
+    </button>
+  </div>
+</form>
