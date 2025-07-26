@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+@layer components {
+  .msg-error {
+    @apply text-red-500 font-light text-sm;
+  }
+}
+
+@layer components {
+  button {
+    @apply cursor-pointer;
+  }
+}
+
+body {
+  user-select: none;
+}

@@ -1,0 +1,62 @@
+<!-- Tabela de Produtos -->
+<div class="overflow-x-auto overflow-y-auto">
+  <div class="flex justify-between mb-4">
+  <div>
+    <input
+      type="text"
+      placeholder="Pesquisar produto..."
+      class="px-4 py-2 rounded bg-gray-800 text-white focus:outline-none"
+      [(ngModel)]="searchTerm"
+      (ngModelChange)="getProductByName()"
+    />
+  </div>
+  <app-paginator
+    [totalItems]="totalItems"
+    [itemsPerPage]="limit"
+    [totalPages]="totalPages"
+    [page]="page"
+    (pageChanged)="getAllProducts($event, limit)"
+  ></app-paginator>
+  </div>
+  <table class="min-w-full text-white text-left">
+    <thead class="bg-[#1d2a3c] text-sky-400 uppercase text-sm">
+      <tr>
+        <th class="py-3 px-4">ID</th>
+        <th class="py-3 px-4">Nome</th>
+        <th class="py-3 px-4">Codico</th>
+        <th class="py-3 px-4">Preço</th>
+        <th class="py-3 px-4">Ações</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-700">
+      @for (product of listProducts; track product.id) {
+      <tr class="hover:bg-[#243447] transition">
+        <td class="py-3 px-4">{{ product.id }}</td>
+        <td class="py-3 px-4">{{ product.name }}</td>
+        <td class="py-3 px-4">{{ product.code }}</td>
+        <td class="py-3 px-4">{{ product.price }}</td>
+        <td class="py-3 px-4 space-x-2">
+          <button
+            (click)="openModalEdit(product)"
+            class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-sm"
+          >
+            Editar
+          </button>
+          @if (showModalEdit) {
+          <app-modal-update-product
+            (closeModal)="closeModalEdit()"
+            [product]="editProduct"
+          />
+          }
+          <button
+            (click)="deleteProduct(product)"
+            class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm"
+          >
+            Excluir
+          </button>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>

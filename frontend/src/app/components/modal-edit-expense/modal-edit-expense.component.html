@@ -1,0 +1,107 @@
+<!-- Background escuro (overlay) -->
+<div
+  class="fixed inset-0 flex items-center justify-center z-50"
+  style="background-color: rgba(0, 0, 0, 0.63)"
+>
+  <!-- Modal -->
+  <div class="bg-[#182233] w-full max-w-lg rounded-2xl shadow-lg p-6 space-y-6">
+    <!-- Cabeçalho -->
+    <div
+      class="flex justify-between items-center border-b border-gray-600 pb-4"
+    >
+      <h3 class="text-white text-xl font-bold">Editar Despesa</h3>
+      <button
+        (click)="close()"
+        class="text-gray-400 hover:text-white text-2xl font-bold"
+        title="Fechar"
+      >
+        ✕
+      </button>
+    </div>
+
+    <!-- Formulário -->
+    <form (ngSubmit)="save()" class="space-y-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label class="text-white font-semibold block mb-1">Fornecedor:</label>
+          <input
+            type="text"
+            [(ngModel)]="expense.supplier"
+            name="supplier"
+            required
+            class="text-lg w-full p-2 rounded-md bg-white text-black font-semibold placeholder-gray-500"
+          />
+        </div>
+
+        <div>
+          <label class="text-white font-semibold block mb-1">Descrição:</label>
+          <textarea
+            [(ngModel)]="expense.description"
+            name="description"
+            required
+            rows="3"
+            class="text-lg w-full p-2 rounded-md bg-white text-black font-semibold placeholder-gray-500 resize-none overflow-auto"
+          ></textarea>
+        </div>
+
+        <div>
+          <label class="text-white font-semibold block mb-1">Valor (R$):</label>
+          <input
+            type="number"
+            [(ngModel)]="expense.value"
+            name="value"
+            required
+            min="0"
+            step="0.01"
+            class="text-lg w-full p-2 rounded-md bg-white text-black font-semibold placeholder-gray-500"
+          />
+        </div>
+
+        <!-- Data de Pagamento -->
+        <div>
+          <label class="text-white font-semibold block mb-1"
+            >Data de Pagamento:</label
+          >
+          <input
+            type="date"
+            [ngModel]="formatDateToInput(expense.datePayment)"
+            (ngModelChange)="expense.datePayment = $event"
+            [ngModelOptions]="{ standalone: true }"
+            class="text-lg w-full p-2 rounded-md bg-white text-black font-semibold"
+          />
+        </div>
+
+        <div class="sm:col-span-2">
+          <label class="text-white font-semibold block mb-1">Status:</label>
+          <select
+            [(ngModel)]="expense.status"
+            name="status"
+            required
+            class="text-lg w-full p-2 rounded-md bg-white text-black font-semibold"
+          >
+            <option value="Pendente">Pendente</option>
+            <option value="Pago">Pago</option>
+            <option value="Atrasado">Atrasado</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Botões -->
+      <div class="flex justify-end gap-4 pt-4">
+        <button
+          type="button"
+          (click)="close()"
+          class="bg-gray-600 hover:bg-gray-700 text-white px-6 py-2 rounded-lg font-bold"
+        >
+          Cancelar
+        </button>
+        <button
+          type="submit"
+          class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-bold"
+        >
+          Salvar Alterações
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,88 @@
+<!-- Formulário -->
+<form
+  (ngSubmit)="onSubmit()"
+  [formGroup]="formCreateProduct"
+  class="bg-[#1d2a3c] p-6 rounded-lg space-y-6"
+>
+  <!-- Inputs lado a lado -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div>
+      <label for="username" class="block text-white font-bold mb-2"
+        >Nome do Produto</label
+      >
+      <input
+        id="name"
+        formControlName="name"
+        type="text"
+        required
+        placeholder="Digite o nome"
+        class="text-xl w-full p-2 rounded-md bg-white text-black font-semibold placeholder-gray-500"
+      />
+      @if (formCreateProduct.get('name')?.touched &&
+      formCreateProduct.get('name')?.invalid) {
+      <p class="msg-error">Digite o nome do Produto!</p>
+      }
+    </div>
+
+    <div>
+      <label for="price" class="block text-white font-bold mb-2">Preço</label>
+      <input
+        id="price"
+        formControlName="price"
+        type="number"
+        required
+        placeholder="Digite o preço"
+        class="text-xl w-full p-2 rounded-md bg-white text-black font-semibold placeholder-gray-500"
+      />
+      @if (formCreateProduct.get('price')?.touched &&
+      formCreateProduct.get('price')?.invalid) {
+      <p class="msg-error">Digite o preço!</p>
+      }
+    </div>
+
+    <div>
+      <label for="code" class="block text-white font-bold mb-2"
+        >Codico de referencia</label
+      >
+      <input
+        id="code"
+        formControlName="code"
+        type="number"
+        required
+        autofocus
+        placeholder="Digite o codico"
+        class="text-xl w-full p-2 rounded-md bg-white text-black font-semibold placeholder-gray-500"
+      />
+      @if (formCreateProduct.get('code')?.touched &&
+      formCreateProduct.get('code')?.invalid) {
+      <p class="msg-error">Digite o codico!</p>
+      }
+    </div>
+
+    <div>
+      <label for="cost-price" class="block text-white font-bold mb-2">Preço de Custo:</label>
+      <input
+        id="cost-price"
+        formControlName="costPrice"
+        type="number"
+        required
+        placeholder="Digite o preço de custo"
+        class="text-xl w-full p-2 rounded-md bg-white text-black font-semibold placeholder-gray-500"
+      />
+      @if (formCreateProduct.get('quantity')?.touched &&
+      formCreateProduct.get('quantity')?.invalid) {
+      <p class="msg-error">Digite o Preço de custo!</p>
+      }
+    </div>
+  </div>
+
+  <!-- Botão -->
+  <div class="flex justify-center pt-4">
+    <button
+      type="submit"
+      class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-bold"
+    >
+      Salvar
+    </button>
+  </div>
+</form>
