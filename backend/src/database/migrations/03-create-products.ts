@@ -28,6 +28,11 @@ export default {
         type: DataTypes.DECIMAL(10, 2), // até 10 dígitos no total, 2 após a vírgula
         allowNull: false,
       },
+      isMeatBovine: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false, // Valor padrão para isMeatBovine
+      },
     });
   },
   down(queryInterface: QueryInterface) {
