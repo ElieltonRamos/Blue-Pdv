@@ -5,5 +5,6 @@ export default interface Product {
   code: string;
   price: number;
   costPrice: number;
+  isMeatBovine: boolean;
   quantity?: number;
 };
