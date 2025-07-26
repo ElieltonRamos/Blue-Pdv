@@ -30,6 +30,12 @@ const ProductModel: UserSequelizeModelCreator = db.define('Product', {
     type: DataTypes.DECIMAL(10, 2),
     allowNull: false,
   },
+  isMeatBovine: {
+    field: 'is_meat_bovine',
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: true,
+  },
 }, {
   tableName: 'products',
   timestamps: false,

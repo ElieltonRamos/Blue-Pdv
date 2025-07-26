@@ -2,7 +2,7 @@ import { DataTypes, QueryInterface } from 'sequelize';
 
 export default {
   up(queryInterface: QueryInterface) {
-    return queryInterface.addColumn('products', 'isMeatBovine', {
+    return queryInterface.addColumn('products', 'is_meat_bovine', {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: true,
@@ -10,6 +10,6 @@ export default {
   },
 
   down(queryInterface: QueryInterface) {
-    return queryInterface.removeColumn('products', 'isMeatBovine');
+    return queryInterface.removeColumn('products', 'is_meat_bovine');
   }
 };

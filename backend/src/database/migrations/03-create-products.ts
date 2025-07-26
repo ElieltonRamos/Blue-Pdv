@@ -29,6 +29,7 @@ export default {
         allowNull: false,
       },
       isMeatBovine: {
+        field: 'is_meat_bovine',
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false, // Valor padrão para isMeatBovine

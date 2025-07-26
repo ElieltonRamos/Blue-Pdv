@@ -11,6 +11,7 @@ export default {
           code: '1',
           cost_price: 36.99,
           price: 36.99,
+          is_meat_bovine: true,
         },
         {
           id: 2,
@@ -18,6 +19,7 @@ export default {
           code: '2',
           cost_price: 39.99,
           price: 39.99,
+          is_meat_bovine: true,
         },
         {
           id: 3,
@@ -25,6 +27,7 @@ export default {
           code: '3',
           cost_price: 54.99,
           price: 54.99,
+          is_meat_bovine: true,
         },
         {
           id: 4,
@@ -32,11 +35,13 @@ export default {
           code: '4',
           cost_price: 32.99,
           price: 32.99,
+          is_meat_bovine: true,
         },
         {
           id: 5,
           name: 'File',
           code: '5',
+          is_meat_bovine: true,
           cost_price: 33.99,
           price: 33.99,
         },
@@ -44,6 +49,7 @@ export default {
           id: 6,
           name: 'Contra File',
           code: '6',
+          is_meat_bovine: true,
           cost_price: 39.99,
           price: 39.99,
         },
@@ -51,6 +57,7 @@ export default {
           id: 7,
           name: 'Maminha',
           code: '7',
+          is_meat_bovine: true,
           cost_price: 37.99,
           price: 37.99,
         },
@@ -58,6 +65,7 @@ export default {
           id: 8,
           name: 'Coxao Mole',
           code: '8',
+          is_meat_bovine: true,
           cost_price: 36.99,
           price: 36.99,
         },
@@ -65,6 +73,7 @@ export default {
           id: 9,
           name: 'Coxao Duro',
           code: '9',
+          is_meat_bovine: true,
           cost_price: 36.99,
           price: 36.99,
         },
@@ -73,6 +82,7 @@ export default {
           name: 'Carne Moida',
           code: '10',
           cost_price: 24.99,
+          is_meat_bovine: true,
           price: 24.99,
         },
         {
@@ -80,6 +90,7 @@ export default {
           name: 'Fraldinha',
           code: '11',
           cost_price: 31.99,
+          is_meat_bovine: true,
           price: 31.99,
         },
         {
@@ -87,6 +98,7 @@ export default {
           name: 'Acem Bovino',
           code: '12',
           cost_price: 24.99,
+          is_meat_bovine: true,
           price: 24.99,
         },
         {
@@ -94,6 +106,7 @@ export default {
           name: 'Miolo da Acem',
           code: '13',
           cost_price: 29.99,
+          is_meat_bovine: true,
           price: 29.99,
         },
         {
@@ -101,6 +114,7 @@ export default {
           name: 'Carne Peixinho Bovino',
           code: '14',
           cost_price: 29.99,
+          is_meat_bovine: true,
           price: 29.99,
         },
         {
@@ -108,6 +122,7 @@ export default {
           name: 'Carne Lombo Bovino',
           code: '15',
           cost_price: 29.99,
+          is_meat_bovine: true,
           price: 29.99,
         },
         {
@@ -115,6 +130,7 @@ export default {
           name: 'Paleta Bovina',
           code: '16',
           cost_price: 31.99,
+          is_meat_bovine: true,
           price: 31.99,
         },
         {
@@ -122,6 +138,7 @@ export default {
           name: 'Costela Bovina',
           code: '17',
           cost_price: 14.99,
+          is_meat_bovine: true,
           price: 14.99,
         },
         {
@@ -129,6 +146,7 @@ export default {
           name: 'Figado Bovino',
           code: '18',
           cost_price: 21.99,
+          is_meat_bovine: true,
           price: 21.99,
         },
         {
@@ -136,6 +154,7 @@ export default {
           name: 'Musculo',
           code: '19',
           cost_price: 23.99,
+          is_meat_bovine: true,
           price: 23.99,
         },
         {
@@ -143,6 +162,7 @@ export default {
           name: 'Linguica Caseira',
           code: '20',
           cost_price: 24.99,
+          is_meat_bovine: true,
           price: 24.99,
         },
         {
@@ -150,6 +170,7 @@ export default {
           name: 'Carne de Panela',
           code: '21',
           cost_price: 24.99,
+          is_meat_bovine: true,
           price: 24.99,
         },
         {
@@ -157,6 +178,7 @@ export default {
           name: 'Carne de Feijoada',
           code: '22',
           cost_price: 23.99,
+          is_meat_bovine: true,
           price: 23.99,
         },
         {
@@ -164,6 +186,7 @@ export default {
           name: 'Produto nao cadastrado',
           code: '23',
           cost_price: 0.99,
+          is_meat_bovine: true,
           price: 0.99,
         },
         {
@@ -171,6 +194,7 @@ export default {
           name: 'Osso de Patin',
           code: '24',
           cost_price: 9.99, 
+          is_meat_bovine: true,
           price: 9.99,
         }
       ],
