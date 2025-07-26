@@ -5,8 +5,8 @@ const productRoutes = Router();
 
 productRoutes.get('/', productController.getAllProducts);
 productRoutes.get('/:id', productController.getProductById);
-productRoutes.patch('/update/:id', productController.updateProduct);
 productRoutes.patch('/update/cost-price-meats', productController.updateCostPriceMeats);
+productRoutes.patch('/update/:id', productController.updateProduct);
 productRoutes.delete('/delete/:id', productController.deleteProduct);
 productRoutes.post('/register', productController.register);
 productRoutes.get('/code/:code', productController.getProductByCode);
