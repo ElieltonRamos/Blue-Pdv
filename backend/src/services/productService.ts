@@ -6,13 +6,12 @@ import { PaginatedResponse, ServiceResponse } from '../interfaces/services';
 const productNotFound = 'Produto não encontrado';
 
 async function register(product: Product): Promise<ServiceResponse<Product>> {
-  const { name, code, price, costPrice } = product;
-  if (!name || !code || !price) {
+  const { name, code, price, costPrice, isMeatBovine } = product;
+  if (!name || !code || !price || isMeatBovine === undefined) {
     return {
       status: 'BAD_REQUEST',
       data: {
-        message:
-          'E necessario informar nome, codico e preço para cadastrar um produto',
+        message: 'E necessario informar nome, codico e preço para cadastrar um produto',
       },
     };
   }
@@ -23,7 +22,7 @@ async function register(product: Product): Promise<ServiceResponse<Product>> {
       data: { message: 'Codico informado já cadastrado' },
     };
   }
-  const productRegistered = await ProductModel.create({ name, code, price, costPrice });
+  const productRegistered = await ProductModel.create({ name, code, price, costPrice, isMeatBovine: false });
   if (!productRegistered) {
     return {
       status: 'SERVER_ERROR',
@@ -72,9 +71,7 @@ async function getProductById(id: number): Promise<ServiceResponse<Product>> {
   return { status: 'OK', data: product.dataValues };
 }
 
-async function getProductByCode(
-  code: string
-): Promise<ServiceResponse<Product>> {
+async function getProductByCode(code: string): Promise<ServiceResponse<Product>> {
   const product = await ProductModel.findOne({ where: { code } });
   if (!product) {
     return {
@@ -85,9 +82,7 @@ async function getProductByCode(
   return { status: 'OK', data: product.dataValues };
 }
 
-async function getProductByName(
-  name: string
-): Promise<ServiceResponse<Product[]>> {
+async function getProductByName(name: string): Promise<ServiceResponse<Product[]>> {
   const products = await ProductModel.findAll({
     where: {
       name: {
@@ -102,9 +97,8 @@ async function getProductByName(
   return { status: 'OK', data: foundProducts };
 }
 
-async function updateProduct( id: number, product: Product ): Promise<ServiceResponse<Product>> {
-
-  const { name, code, price } = product;
+async function updateProduct(id: number, product: Product): Promise<ServiceResponse<Product>> {
+  const { name, code, price, costPrice, isMeatBovine } = product;
   if (!name || !code || !price) {
     return {
       status: 'BAD_REQUEST',
@@ -121,13 +115,31 @@ async function updateProduct( id: number, product: Product ): Promise<ServiceRes
     };
   }
 
-  await ProductModel.update({ name, code, price }, { where: { id } });
+  await ProductModel.update({ name, code, price, costPrice, isMeatBovine }, { where: { id } });
   const updatedProduct = await ProductModel.findByPk(id);
   if (!updatedProduct) {
     return { status: 'SERVER_ERROR', data: { message: 'Erro ao atualizar produto' } };
   }
 
   return { status: 'OK', data: updatedProduct.dataValues };
+}
+
+async function updateCostPriceMeats(costPrice: number): Promise<ServiceResponse<Product>> {
+  if (costPrice <= 0) {
+    return {
+      status: 'BAD_REQUEST',
+      data: { message: 'O preço de custo deve ser maior que zero' },
+    };
+  }
+
+  const products = await ProductModel.findAll({ where: { isMeatBovine: true } });
+  if (!products || products.length === 0) {
+    return { status: 'NOT_FOUND', data: { message: 'Nenhum produto encontrado' } };
+  }
+
+  await ProductModel.update({ costPrice }, { where: { isMeatBovine: true } });
+
+  return { status: 'OK', data: { message: 'Preço de custo das carnes atualizado com sucesso' } };
 }
 
 async function deleteProduct(id: number): Promise<ServiceResponse<null>> {
@@ -147,9 +159,9 @@ async function sugestionCode(): Promise<ServiceResponse<{ code: number }>> {
     order: [['id', 'DESC']],
   });
   const lastCode = Number(lastProduct?.dataValues.code);
-  if (!lastProduct || isNaN(lastCode)) return { status: 'OK', data: {code: 1234} };
+  if (!lastProduct || isNaN(lastCode)) return { status: 'OK', data: { code: 1234 } };
 
-  const code =  lastCode + 1;
+  const code = lastCode + 1;
   return { status: 'OK', data: { code } };
 }
 
@@ -160,6 +172,7 @@ export default {
   getProductByCode,
   getProductByName,
   updateProduct,
+  updateCostPriceMeats,
   deleteProduct,
   sugestionCode,
 };

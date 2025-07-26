@@ -6,8 +6,9 @@ const msgInternalError = 'Internal server error';
 
 async function register(req: Request, res: Response) {
   try {
-    const { name, code, price, costPrice } = req.body;
-    const { status, data } = await productService.register({name, code, price, costPrice});
+    const { name, code, price, costPrice, isMeatBovine } = req.body;
+    const { status, data } = await productService
+      .register({name, code, price, costPrice, isMeatBovine});
     return res.status(mapHttpStatus(status)).json(data);
   } catch (error) {
     console.log('Error in register controller:', error);
@@ -62,14 +63,26 @@ async function getProductByName(req: Request, res: Response) {
 async function updateProduct(req: Request, res: Response) {
   try {
     const { id } = req.params;
-    const { name, code, price, costPrice } = req.body;
-    const { status, data } = await productService.updateProduct(Number(id), {name, code, price, costPrice});
+    const { name, code, price, costPrice, isMeatBovine } = req.body;
+    const { status, data } = await productService
+      .updateProduct(Number(id), {name, code, price, costPrice, isMeatBovine});
     return res.status(mapHttpStatus(status)).json(data);
   } catch (error) {
     console.log('Error in updateProduct controller:', error);
     return res.status(500).json({ message: msgInternalError });
   }
 };
+
+async function updateCostPriceMeats(req: Request, res: Response) {
+  try {
+    const { costPrice } = req.body;
+    const { status, data } = await productService.updateCostPriceMeats(costPrice);
+    return res.status(mapHttpStatus(status)).json(data);
+  } catch (error) {
+    console.log('Error in updateCostPriceMeats controller:', error);
+    return res.status(500).json({ message: msgInternalError });
+  }
+}
 
 async function deleteProduct(req: Request, res: Response) {
   try {
@@ -99,6 +112,7 @@ export default {
   getProductByCode,
   getProductByName,
   updateProduct,
+  updateCostPriceMeats,
   deleteProduct,
   sugestionCode,
 };
