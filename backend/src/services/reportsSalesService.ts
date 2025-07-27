@@ -50,21 +50,6 @@ function initializeAggregators() {
   };
 }
 
-function calculateSaleProfit(products: any[]): number {
-  let profit = 0;
-
-  for (const prod of products) {
-    const cost = Number(prod.costPrice ?? 0);
-    const price = Number(prod.price ?? 0);
-    const quantity = Number(prod.dataValues.sales_products.dataValues.quantity ?? 0);
-
-    const unitProfit = price - cost;
-    profit += unitProfit * quantity;
-  }
-
-  return profit;
-}
-
 function processSale(sale: any, aggregators: any) {
   const { salesByPaymentMethod, salesByOperator, productSales } = aggregators;
   const saleData = sale.dataValues;
@@ -72,12 +57,12 @@ function processSale(sale: any, aggregators: any) {
   const method = normalizePaymentMethod(saleData.paymentMethod);
   const total = Number(saleData.total);
   const discount = Number(saleData.discount ?? 0);
+  const profitSale = Number(saleData.profitSale ?? 0);
 
   aggregators.totalSales++;
   aggregators.grossRevenue += total;
   aggregators.totalDiscounts += discount;
-  const saleProfit = calculateSaleProfit(saleData.products || []);
-  aggregators.grossProfit += saleProfit;
+  aggregators.grossProfit += profitSale;
 
   const opData = processOperatorAggregation(operatorName, total, salesByOperator);
   processPaymentAggregation(method, total, salesByPaymentMethod, opData.paymentBreakdown);

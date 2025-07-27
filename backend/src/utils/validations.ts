@@ -30,7 +30,7 @@ export function validationFindSales(sales: Model<Sale>[]): ValidationResponse {
 
 export function validationCreateSale(sale: Sale): ValidationResponse {
   const requiredFields: (keyof Sale)[] = ['clientId', 'userOperator', 'paymentMethod',
-    'date', 'totalProductsWithoutDiscount', 'total', 'products', 'isPaid'];
+    'date', 'totalProductsWithoutDiscount', 'total', 'products', 'isPaid', 'profitSale'];
 
   const missingFields = requiredFields.filter((field: keyof Sale) => {
     const value = sale[field];

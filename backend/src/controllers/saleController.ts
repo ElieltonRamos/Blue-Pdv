@@ -7,10 +7,10 @@ const internalMsgError = 'Internal server error';
 async function create(req: Request, res: Response) {
   try {
     const { clientId, userOperator, paymentMethod, date, products, 
-      totalProductsWithoutDiscount, total, isPaid, discount } =
+      totalProductsWithoutDiscount, total, isPaid, discount, profitSale } =
       req.body;
     const sale = { clientId, userOperator, paymentMethod, date, products, 
-      totalProductsWithoutDiscount, total, isPaid, discount };
+      totalProductsWithoutDiscount, total, isPaid, discount, profitSale };
     const { status, data } = await salesService.create(sale);
     return res.status(mapHttpStatus(status)).json(data);
   } catch (error) {

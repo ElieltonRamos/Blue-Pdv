@@ -12,6 +12,7 @@ export interface Sale {
   total: number;
   isPaid: boolean;
   discount: number;
+  profitSale: number;
   client?: { name: string };
   formattedDate?: string;
   operator?: { username: string };

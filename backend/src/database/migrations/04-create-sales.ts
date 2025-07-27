@@ -60,6 +60,11 @@ export default {
         type: DataTypes.BOOLEAN,
         allowNull: false,
       },
+      profitSale: {
+        field: 'profit_sale',
+        type: DataTypes.DECIMAL(10, 2),
+        allowNull: false,
+      },
     });
   },
 

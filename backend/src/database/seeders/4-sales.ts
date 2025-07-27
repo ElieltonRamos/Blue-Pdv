@@ -14,6 +14,7 @@ export default {
           total_products_without_discount: 106.56,
           total: 106.56,
           discount: 0,
+          profit_sale: 0.00,
           is_paid: true,
         },
         {
@@ -25,6 +26,7 @@ export default {
           total_products_without_discount: 53.50,
           total: 53.50,
           discount: 0,
+          profit_sale: 0.00,
           is_paid: true,
         }
       ],
