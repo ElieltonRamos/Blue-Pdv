@@ -11,16 +11,17 @@
     "db:migrate": "npx sequelize-cli db:migrate",
     "db:reset": "npx -y tsc && npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
     "build": "npx -y tsc",
-    "build-server-linux": "pkg . --targets node18-linux-x64 --output ./src/scripts/blue-pdv-server",
-    "build-server-win": "pkg . --targets node18-win-x64 --output ./src/scripts/blue-pdv-server",
-    "postbuild-linux": "mv blue-pdv-server installer/blue-pdv-server",
-    "postbuild-win": "mv blue-pdv-server.exe installer/blue-pdv-server.exe",
-    "build-db-backup": "pkg ./build/src/scripts/backup-db.js --output ./src/scripts/run-backup-db.exe --targets node18-win-x64 --config package.json",
-    "build-db-migrations": "pkg ./build/src/scripts/migrations-db.js --output ./src/scripts/run-migrations-db.exe --targets node18-win-x64 --config package.json",
-    "build-db-reset": "pkg ./build/src/scripts/reset-db.js --output ./src/scripts/run-reset-db.exe --targets node18-win-x64 --config package.json",
-    "build-db-restore": "pkg ./build/src/scripts/restore-db.js --output ./src/scripts/run-restore-db.exe --targets node18-win-x64 --config package.json",
-    "build-db-seeds": "pkg ./build/src/scripts/seeds-db.js --output ./src/scripts/run-seeds-db.exe --targets node18-win-x64 --config package.json",
-    "build-db-scripts": "npm run build-backup-db && npm run build-migrations-db && npm run build-reset-db && npm run build-restore-db && npm run build-seeds-db"
+    "build-server-linux": "pkg . --targets node18-linux-x64 --output inno-setup/blue-pdv-server",
+    "build-server-win": "pkg . --targets node18-win-x64 --output inno-setup/blue-pdv-server.exe",
+
+    "build-db-backup": "pkg ./build/src/scripts/backup-db.js --targets node18-win-x64 --output scripts/run-backup-db.exe --config package.json",
+    "build-db-migrations": "pkg ./build/src/scripts/migrations-db.js --targets node18-win-x64 --output scripts/run-migrations-db.exe --config package.json",
+    "build-db-reset": "pkg ./build/src/scripts/reset-db.js --targets node18-win-x64 --output scripts/run-reset-db.exe --config package.json",
+    "build-db-restore": "pkg ./build/src/scripts/restore-db.js --targets node18-win-x64 --output scripts/run-restore-db.exe --config package.json",
+    "build-db-seeds": "pkg ./build/src/scripts/seeds-db.js --targets node18-win-x64 --output scripts/run-seeds-db.exe --config package.json",
+
+    "build-db-scripts-win": "npm run build-db-backup && npm run build-db-migrations && npm run build-db-reset && npm run build-db-restore && npm run build-db-seeds",
+    "build-db-scripts-linux": "pkg ./build/src/scripts/backup-db.js --targets node18-linux-x64 --output scripts/run-backup-db-linux && pkg ./build/src/scripts/migrations-db.js --targets node18-linux-x64 --output scripts/run-migrations-db-linux && pkg ./build/src/scripts/reset-db.js --targets node18-linux-x64 --output scripts/run-reset-db-linux && pkg ./build/src/scripts/restore-db.js --targets node18-linux-x64 --output scripts/run-restore-db-linux && pkg ./build/src/scripts/seeds-db.js --targets node18-linux-x64 --output scripts/run-seeds-db-linux"
   },
   "repository": {
     "type": "git",
