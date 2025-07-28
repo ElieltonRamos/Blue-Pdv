@@ -7,6 +7,7 @@ const config: Options = {
   host: process.env.DB_HOST || 'localhost',
   port: Number(process.env.DB_PORT) || 3306,
   dialect: 'mysql',
+  logging: false,
   timezone: '-03:00',
 };
 
