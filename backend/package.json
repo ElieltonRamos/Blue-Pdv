@@ -22,10 +22,16 @@
   },
   "bin": "build/src/server.js",
   "pkg": {
-    "scripts": "build/**/*.js",
+    "assets": [
+      "build/src/database/migrations/**/*.js",
+      "build/src/database/seeders/**/*.js"
+    ],
+    "scripts": [
+      "build/**/*.js"
+    ],
     "targets": [
-      "node18-win-x64",
-      "node18-linux-x64"
+      "node18-linux-x64",
+      "node18-win-x64"
     ]
   },
   "keywords": [],
@@ -40,7 +46,9 @@
     "express": "4.17.1",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.14.0",
-    "sequelize": "^6.37.7"
+    "mysqldump": "^3.2.0",
+    "sequelize": "^6.37.7",
+    "umzug": "^3.8.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.24.0",

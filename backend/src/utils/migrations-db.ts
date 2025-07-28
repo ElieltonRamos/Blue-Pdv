@@ -1,13 +1,73 @@
-import { exec, ExecException } from 'child_process';
+/* eslint-disable max-lines-per-function */
+/* eslint-disable no-undef */
+import { Sequelize } from 'sequelize';
+import { Umzug, SequelizeStorage } from 'umzug';
+import * as config from '../database/config/database';
+import path from 'path';
+import 'mysql2';
 
-exec('npm run db:migrate', (error: ExecException | null, stdout: string, stderr: string) => {
-  if (error) {
-    console.error(`Erro ao executar o comando: ${error.message}`);
-    return;
+// Caminhos compilados
+const migrationsPath = path.join(__dirname, '../database/migrations');
+const seedersPath = path.join(__dirname, '../database/seeders');
+
+const sequelize = new Sequelize(config);
+
+async function resetDatabase() {
+  try {
+    console.log('🔴 Dropando banco...');
+    await sequelize.drop();
+
+    console.log('🟢 Criando banco...');
+    await sequelize.sync({ force: true }); // Cria tabelas base
+
+    console.log('📦 Rodando migrations...');
+    const migrationUmzug = new Umzug({
+      migrations: {
+        glob: path.join(migrationsPath, '*.js'),
+        resolve: ({ name, path: filePath, context }) => {
+          const migration = require(filePath!);
+          const fn = migration.default ?? migration;
+          return {
+            name,
+            up: async () => fn.up(context),
+            down: async () => fn.down?.(context),
+          };
+        },
+      },
+      context: sequelize.getQueryInterface(),
+      storage: new SequelizeStorage({ sequelize }),
+      logger: console,
+    });
+
+    await migrationUmzug.up();
+
+    console.log('🌱 Rodando seeds...');
+    const seedUmzug = new Umzug({
+      migrations: {
+        glob: path.join(seedersPath, '*.js'),
+        resolve: ({ name, path: filePath, context }) => {
+          const seed = require(filePath!);
+          const fn = seed.default ?? seed;
+          return {
+            name,
+            up: async () => fn.up(context),
+            down: async () => fn.down?.(context),
+          };
+        },
+      },
+      context: sequelize.getQueryInterface(),
+      storage: new SequelizeStorage({ sequelize, modelName: 'seeder_meta' }),
+      logger: console,
+    });
+
+    await seedUmzug.up();
+
+    console.log('✅ Banco resetado com sucesso!');
+    process.exit(0);
+  } catch (err) {
+    console.error('❌ Erro ao resetar banco:', err);
+    process.exit(1);
   }
-  if (stderr) {
-    console.error(`Erro: ${stderr}`);
-    return;
-  }
-  console.log(`Saída: ${stdout}`);
-});
+}
+
+resetDatabase();
