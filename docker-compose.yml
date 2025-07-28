@@ -1,0 +1,55 @@
+services:
+  db:
+    container_name: db_pdv
+    image: mysql:8.0.32
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: ./backend
+    container_name: backend
+    ports:
+      - 3001:3001
+      - 9229:9229
+    command: dev
+    volumes:
+      - ./backend:/app-backend
+    environment:
+      - API_PORT=3001
+      - JWT_SECRET=senhajwt
+      - DB_USER=root
+      - DB_PASSWORD=password
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DATABASE=db_pdv
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "lsof", "-t", "-i:3001"]
+      timeout: 10s
+      retries: 5
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - 4200:4200
+    environment:
+      - FRONT_PORT=4200
+    volumes:
+      - ./frontend:/app-frontend
+    depends_on:
+      - backend
+    healthcheck:
+      test: ["CMD", "lsof", "-t", "-i:4200"]  # Caso utilize outra porta interna para o front, altere ela aqui também
+      timeout: 10s
+      retries: 5
