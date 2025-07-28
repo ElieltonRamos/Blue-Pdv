@@ -12,8 +12,8 @@
     "tauri:build": "tauri build",
     "tauri:build-windows": "cargo tauri build --target x86_64-pc-windows-gnu",
     "tauri:build-linux": "cargo tauri build --bundles deb",
-    "tauri:move-windows": "mkdir -p installer && cp src-tauri/target/x86_64-pc-windows-gnu/release/bundle/nsis/*.exe installer/",
-    "tauri:move-linux": "mkdir -p installer && cp src-tauri/target/release/bundle/deb/*.deb installer/"
+    "posttauri:build-windows": "mkdir -p installer && cp src-tauri/target/x86_64-pc-windows-gnu/release/bundle/nsis/*.exe installer/",
+    "posttauri:build-linux": "mkdir -p installer && cp src-tauri/target/release/bundle/deb/*.deb installer/"
   },
   "private": true,
   "dependencies": {
