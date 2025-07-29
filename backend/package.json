@@ -14,14 +14,14 @@
     "build-server-linux": "pkg . --targets node18-linux-x64 --output inno-setup/blue-pdv-server",
     "build-server-win": "pkg . --targets node18-win-x64 --output inno-setup/blue-pdv-server.exe",
 
-    "build-db-backup": "pkg ./build/src/scripts/backup-db.js --targets node18-win-x64 --output scripts/run-backup-db.exe --config package.json",
-    "build-db-migrations": "pkg ./build/src/scripts/migrations-db.js --targets node18-win-x64 --output scripts/run-migrations-db.exe --config package.json",
-    "build-db-reset": "pkg ./build/src/scripts/reset-db.js --targets node18-win-x64 --output scripts/run-reset-db.exe --config package.json",
-    "build-db-restore": "pkg ./build/src/scripts/restore-db.js --targets node18-win-x64 --output scripts/run-restore-db.exe --config package.json",
-    "build-db-seeds": "pkg ./build/src/scripts/seeds-db.js --targets node18-win-x64 --output scripts/run-seeds-db.exe --config package.json",
+    "build-db-backup": "pkg ./build/scripts/backup-db.js --targets node18-win-x64 --output scripts/run-backup-db.exe --config package.json",
+    "build-db-migrations": "pkg ./build/scripts/migrations-db.js --targets node18-win-x64 --output scripts/run-migrations-db.exe --config package.json",
+    "build-db-reset": "pkg ./build/scripts/reset-db.js --targets node18-win-x64 --output scripts/run-reset-db.exe --config package.json",
+    "build-db-restore": "pkg ./build/scripts/restore-db.js --targets node18-win-x64 --output scripts/run-restore-db.exe --config package.json",
+    "build-db-seeds": "pkg ./build/scripts/seeds-db.js --targets node18-win-x64 --output scripts/run-seeds-db.exe --config package.json",
 
     "build-db-scripts-win": "npm run build-db-backup && npm run build-db-migrations && npm run build-db-reset && npm run build-db-restore && npm run build-db-seeds",
-    "build-db-scripts-linux": "pkg ./build/src/scripts/backup-db.js --targets node18-linux-x64 --output scripts/run-backup-db-linux && pkg ./build/src/scripts/migrations-db.js --targets node18-linux-x64 --output scripts/run-migrations-db-linux && pkg ./build/src/scripts/reset-db.js --targets node18-linux-x64 --output scripts/run-reset-db-linux && pkg ./build/src/scripts/restore-db.js --targets node18-linux-x64 --output scripts/run-restore-db-linux && pkg ./build/src/scripts/seeds-db.js --targets node18-linux-x64 --output scripts/run-seeds-db-linux"
+    "build-db-scripts-linux": "pkg ./build/scripts/backup-db.js --targets node18-linux-x64 --output scripts/run-backup-db-linux && pkg ./build/src/scripts/migrations-db.js --targets node18-linux-x64 --output scripts/run-migrations-db-linux && pkg ./build/src/scripts/reset-db.js --targets node18-linux-x64 --output scripts/run-reset-db-linux && pkg ./build/src/scripts/restore-db.js --targets node18-linux-x64 --output scripts/run-restore-db-linux && pkg ./build/src/scripts/seeds-db.js --targets node18-linux-x64 --output scripts/run-seeds-db-linux"
   },
   "repository": {
     "type": "git",

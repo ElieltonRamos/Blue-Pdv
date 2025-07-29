@@ -6,7 +6,7 @@ import path from 'path';
 import 'mysql2';
 
 // Caminhos compilados
-const migrationsPath = path.join(__dirname, '../database/migrations');
+const migrationsPath = path.join(process.cwd(), '../database/migrations');
 
 const sequelize = new Sequelize(config);
 
