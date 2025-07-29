@@ -3,11 +3,12 @@ import { Sequelize } from 'sequelize';
 import * as config from '../src/database/config/database';
 import fs from 'fs';
 import path from 'path';
+import 'mysql2';
 
 const sequelize = new Sequelize(config);
 const queryInterface = sequelize.getQueryInterface();
 
-const seedersPath = path.join(process.cwd(), '../database/seeders');
+const seedersPath = path.join(__dirname, '../src/database/seeders');
 
 async function runSeeds() {
   try {
