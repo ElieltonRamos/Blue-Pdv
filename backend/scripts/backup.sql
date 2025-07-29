@@ -7,16 +7,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 # ------------------------------------------------------------
-# SCHEMA DUMP FOR TABLE: SequelizeMeta
-# ------------------------------------------------------------
-
-CREATE TABLE IF NOT EXISTS `SequelizeMeta` (
-  `name` varchar(255) COLLATE utf8mb3_unicode_ci NOT NULL,
-  PRIMARY KEY (`name`),
-  UNIQUE KEY `name` (`name`)
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb3 COLLATE = utf8mb3_unicode_ci;
-
-# ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: clients
 # ------------------------------------------------------------
 
@@ -27,7 +17,7 @@ CREATE TABLE IF NOT EXISTS `clients` (
   `phone` varchar(255) NOT NULL,
   `cpf` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 5 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 37 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: expenses
@@ -41,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `expenses` (
   `value` decimal(10, 2) NOT NULL,
   `date_payment` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 2 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: products
@@ -53,10 +43,9 @@ CREATE TABLE IF NOT EXISTS `products` (
   `code` varchar(255) NOT NULL,
   `price` decimal(10, 2) NOT NULL,
   `cost_price` decimal(10, 2) NOT NULL,
-  `is_meat_bovine` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `code` (`code`)
-) ENGINE = InnoDB AUTO_INCREMENT = 30 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 52 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: sales
@@ -72,13 +61,12 @@ CREATE TABLE IF NOT EXISTS `sales` (
   `total` decimal(10, 2) NOT NULL,
   `discount` decimal(10, 2) DEFAULT '0.00',
   `is_paid` tinyint(1) NOT NULL,
-  `profit_sale` decimal(10, 2) DEFAULT '0.00',
   PRIMARY KEY (`id`),
   KEY `client_id` (`client_id`),
   KEY `user_operator` (`user_operator`),
   CONSTRAINT `sales_ibfk_1` FOREIGN KEY (`client_id`) REFERENCES `clients` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `sales_ibfk_2` FOREIGN KEY (`user_operator`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 14 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 47 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: sales_products
@@ -95,6 +83,16 @@ CREATE TABLE IF NOT EXISTS `sales_products` (
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
 # ------------------------------------------------------------
+# SCHEMA DUMP FOR TABLE: sequelizemeta
+# ------------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `sequelizemeta` (
+  `name` varchar(255) COLLATE utf8mb3_unicode_ci NOT NULL,
+  PRIMARY KEY (`name`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb3 COLLATE = utf8mb3_unicode_ci;
+
+# ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: users
 # ------------------------------------------------------------
 
@@ -104,44 +102,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` varchar(255) NOT NULL,
   `user_type` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 5 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
-
-# ------------------------------------------------------------
-# DATA DUMP FOR TABLE: SequelizeMeta
-# ------------------------------------------------------------
-
-INSERT INTO
-  `SequelizeMeta` (`name`)
-VALUES
-  ('01-create-users.js');
-INSERT INTO
-  `SequelizeMeta` (`name`)
-VALUES
-  ('02-create-clients.js');
-INSERT INTO
-  `SequelizeMeta` (`name`)
-VALUES
-  ('03-create-products.js');
-INSERT INTO
-  `SequelizeMeta` (`name`)
-VALUES
-  ('04-create-sales.js');
-INSERT INTO
-  `SequelizeMeta` (`name`)
-VALUES
-  ('05-create-sales-products.js');
-INSERT INTO
-  `SequelizeMeta` (`name`)
-VALUES
-  ('06-create-expenses.js');
-INSERT INTO
-  `SequelizeMeta` (`name`)
-VALUES
-  ('07-add-isMeatBovine-products.js');
-INSERT INTO
-  `SequelizeMeta` (`name`)
-VALUES
-  ('08-add-profitSale-sales.js');
+) ENGINE = InnoDB AUTO_INCREMENT = 4 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: clients
@@ -161,26 +122,342 @@ INSERT INTO
   `clients` (`id`, `name`, `address`, `phone`, `cpf`)
 VALUES
   (
-    2,
-    'João',
-    'Rua dos bobos, n=0, centro',
-    '38988776655',
-    '12345678901'
+    3,
+    'osvaldo',
+    'barreiro dantas',
+    '38991142200',
+    '04565287987'
   );
 INSERT INTO
   `clients` (`id`, `name`, `address`, `phone`, `cpf`)
 VALUES
   (
-    3,
-    'Alicio',
-    'kk eae men',
-    '88888888888',
-    '12345678989'
+    4,
+    'li filha jorje ',
+    'santos domont',
+    '38991123010',
+    '23528597891'
   );
 INSERT INTO
   `clients` (`id`, `name`, `address`, `phone`, `cpf`)
 VALUES
-  (4, 'Eli', 'rua teste', '38988888888', '12345567899');
+  (
+    5,
+    'naiara ',
+    'barreiro dantas',
+    '38998747266',
+    '14256659666'
+  );
+INSERT INTO
+  `clients` (`id`, `name`, `address`, `phone`, `cpf`)
+VALUES
+  (
+    6,
+    'joaquim da sinuca',
+    'jardim orinte',
+    '38991141118',
+    '21578879665'
+  );
+INSERT INTO
+  `clients` (`id`, `name`, `address`, `phone`, `cpf`)
+VALUES
+  (
+    7,
+    'milton nucleo',
+    'nucleo 3',
+    '38998733453',
+    '11765866585'
+  );
+INSERT INTO
+  `clients` (`id`, `name`, `address`, `phone`, `cpf`)
+VALUES
+  (
+    8,
+    'luzia mae',
+    'jardim oriente',
+    '38991146550',
+    '11731151616'
+  );
+INSERT INTO
+  `clients` (`id`, `name`, `address`, `phone`, `cpf`)
+VALUES
+  (
+    9,
+    'alex santana ',
+    'santana',
+    '38984180035',
+    '16588878889'
+  );
+INSERT INTO
+  `clients` (`id`, `name`, `address`, `phone`, `cpf`)
+VALUES
+  (
+    10,
+    'luis neto',
+    'santana',
+    '38992137954',
+    '14765886999'
+  );
+INSERT INTO
+  `clients` (`id`, `name`, `address`, `phone`, `cpf`)
+VALUES
+  (
+    11,
+    'te moacir ',
+    'barreiro',
+    '38991396122',
+    '12359796989'
+  );
+INSERT INTO
+  `clients` (`id`, `name`, `address`, `phone`, `cpf`)
+VALUES
+  (
+    12,
+    'tiao barreiro dantas ',
+    'barreiro dantas',
+    '11995619114',
+    '05456888888'
+  );
+INSERT INTO
+  `clients` (`id`, `name`, `address`, `phone`, `cpf`)
+VALUES
+  (
+    13,
+    'claudio vitor ',
+    'barreiro',
+    '38991894002',
+    '05565665666'
+  );
+INSERT INTO
+  `clients` (`id`, `name`, `address`, `phone`, `cpf`)
+VALUES
+  (
+    14,
+    'geralda ',
+    'barreiro',
+    '38991263303',
+    '02145878788'
+  );
+INSERT INTO
+  `clients` (`id`, `name`, `address`, `phone`, `cpf`)
+VALUES
+  (
+    15,
+    'ze guila',
+    'barreiro dantas',
+    '38991684105',
+    '05166999998'
+  );
+INSERT INTO
+  `clients` (`id`, `name`, `address`, `phone`, `cpf`)
+VALUES
+  (
+    16,
+    'lorim ',
+    'barreiro dantas',
+    '38999024366',
+    '03102656699'
+  );
+INSERT INTO
+  `clients` (`id`, `name`, `address`, `phone`, `cpf`)
+VALUES
+  (
+    17,
+    'kaikai ',
+    'riacho dagua',
+    '38992308979',
+    '45669989997'
+  );
+INSERT INTO
+  `clients` (`id`, `name`, `address`, `phone`, `cpf`)
+VALUES
+  (
+    18,
+    'tone peca ',
+    'sao cristovao',
+    '38991481303',
+    '05059849899'
+  );
+INSERT INTO
+  `clients` (`id`, `name`, `address`, `phone`, `cpf`)
+VALUES
+  (
+    19,
+    'geraldo primo ',
+    'pernanbuco',
+    '38991265603',
+    '05499799979'
+  );
+INSERT INTO
+  `clients` (`id`, `name`, `address`, `phone`, `cpf`)
+VALUES
+  (
+    20,
+    'aurelio ',
+    'paus pretos',
+    '38991606695',
+    '02488988795'
+  );
+INSERT INTO
+  `clients` (`id`, `name`, `address`, `phone`, `cpf`)
+VALUES
+  (
+    21,
+    'kuei santos ',
+    'barreiro',
+    '38991062475',
+    '05465995969'
+  );
+INSERT INTO
+  `clients` (`id`, `name`, `address`, `phone`, `cpf`)
+VALUES
+  (
+    22,
+    'valdeir dantas',
+    'bela vista',
+    '38991143034',
+    '26649985984'
+  );
+INSERT INTO
+  `clients` (`id`, `name`, `address`, `phone`, `cpf`)
+VALUES
+  (
+    23,
+    'junior',
+    'santos mont',
+    '38991240471',
+    '05454744988'
+  );
+INSERT INTO
+  `clients` (`id`, `name`, `address`, `phone`, `cpf`)
+VALUES
+  (
+    24,
+    'paulinho trator',
+    'susuarana',
+    '38991280506',
+    '05153486211'
+  );
+INSERT INTO
+  `clients` (`id`, `name`, `address`, `phone`, `cpf`)
+VALUES
+  (
+    25,
+    'piau pintor ',
+    'santa claudia',
+    '38991685143',
+    '16866060605'
+  );
+INSERT INTO
+  `clients` (`id`, `name`, `address`, `phone`, `cpf`)
+VALUES
+  (
+    26,
+    'izaqui pedreiro',
+    'bela vista',
+    '38997298520',
+    '54356775566'
+  );
+INSERT INTO
+  `clients` (`id`, `name`, `address`, `phone`, `cpf`)
+VALUES
+  (
+    27,
+    'tim moacir',
+    'joao paulo ',
+    '38992027698',
+    '54232223334'
+  );
+INSERT INTO
+  `clients` (`id`, `name`, `address`, `phone`, `cpf`)
+VALUES
+  (
+    28,
+    'daniela',
+    'cidade nova',
+    '38992202594',
+    '54234543434'
+  );
+INSERT INTO
+  `clients` (`id`, `name`, `address`, `phone`, `cpf`)
+VALUES
+  (
+    29,
+    'alicio ferreira da silva',
+    'barreiro dantas',
+    '38991146550',
+    '11731151616'
+  );
+INSERT INTO
+  `clients` (`id`, `name`, `address`, `phone`, `cpf`)
+VALUES
+  (
+    30,
+    'OSVALDO',
+    'barreiro dantas',
+    '38991142200',
+    '38588988789'
+  );
+INSERT INTO
+  `clients` (`id`, `name`, `address`, `phone`, `cpf`)
+VALUES
+  (
+    31,
+    'PAULA MOACIR ',
+    'BARREIO',
+    '38995454555',
+    '21458775658'
+  );
+INSERT INTO
+  `clients` (`id`, `name`, `address`, `phone`, `cpf`)
+VALUES
+  (
+    32,
+    'GENILSON',
+    'barreiro dantas',
+    '38991946980',
+    '03155877796'
+  );
+INSERT INTO
+  `clients` (`id`, `name`, `address`, `phone`, `cpf`)
+VALUES
+  (
+    33,
+    'CIDAO',
+    'paus preto',
+    '38991146550',
+    '03157935425'
+  );
+INSERT INTO
+  `clients` (`id`, `name`, `address`, `phone`, `cpf`)
+VALUES
+  (
+    34,
+    'JOSE FERREIRA DA SILVA',
+    'barreiro dantas',
+    '38991485581',
+    '03405999888'
+  );
+INSERT INTO
+  `clients` (`id`, `name`, `address`, `phone`, `cpf`)
+VALUES
+  (
+    35,
+    'RONALD BODAO',
+    'SANTOS MONT',
+    '38991198890',
+    '04157487758'
+  );
+INSERT INTO
+  `clients` (`id`, `name`, `address`, `phone`, `cpf`)
+VALUES
+  (
+    36,
+    'silvano ',
+    'riacho Dagua',
+    '38991964347',
+    '05415999779'
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: expenses
@@ -204,330 +481,151 @@ VALUES
     100.00,
     '2025-06-30 21:00:00'
   );
+INSERT INTO
+  `expenses` (
+    `id`,
+    `description`,
+    `supplier`,
+    `status`,
+    `value`,
+    `date_payment`
+  )
+VALUES
+  (
+    2,
+    'boi gordo',
+    'gilson',
+    'Pendente',
+    3609.00,
+    '2025-08-11 21:00:00'
+  );
+INSERT INTO
+  `expenses` (
+    `id`,
+    `description`,
+    `supplier`,
+    `status`,
+    `value`,
+    `date_payment`
+  )
+VALUES
+  (
+    3,
+    'boi gordo',
+    'sebartiao',
+    'Pendente',
+    6100.00,
+    '2025-08-02 21:00:00'
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: products
 # ------------------------------------------------------------
 
 INSERT INTO
-  `products` (
-    `id`,
-    `name`,
-    `code`,
-    `price`,
-    `cost_price`,
-    `is_meat_bovine`
-  )
+  `products` (`id`, `name`, `code`, `price`, `cost_price`)
 VALUES
-  (1, 'Paulista', '1', 36.99, 17.00, 1);
+  (26, 'paulista ', '1', 36.99, 22.53);
 INSERT INTO
-  `products` (
-    `id`,
-    `name`,
-    `code`,
-    `price`,
-    `cost_price`,
-    `is_meat_bovine`
-  )
+  `products` (`id`, `name`, `code`, `price`, `cost_price`)
 VALUES
-  (2, 'Alcatra', '2', 39.99, 17.00, 1);
+  (27, 'Alcatra', '2', 39.99, 22.53);
 INSERT INTO
-  `products` (
-    `id`,
-    `name`,
-    `code`,
-    `price`,
-    `cost_price`,
-    `is_meat_bovine`
-  )
+  `products` (`id`, `name`, `code`, `price`, `cost_price`)
 VALUES
-  (3, 'Picanha', '3', 54.99, 17.00, 1);
+  (28, 'picanha ', '3', 54.99, 22.53);
 INSERT INTO
-  `products` (
-    `id`,
-    `name`,
-    `code`,
-    `price`,
-    `cost_price`,
-    `is_meat_bovine`
-  )
+  `products` (`id`, `name`, `code`, `price`, `cost_price`)
 VALUES
-  (4, 'Capa do Filé', '4', 32.99, 17.00, 1);
+  (29, 'CAPA DO FILE', '4', 32.99, 22.53);
 INSERT INTO
-  `products` (
-    `id`,
-    `name`,
-    `code`,
-    `price`,
-    `cost_price`,
-    `is_meat_bovine`
-  )
+  `products` (`id`, `name`, `code`, `price`, `cost_price`)
 VALUES
-  (5, 'File', '5', 33.99, 17.00, 1);
+  (30, 'FILE MINGON', '5', 34.99, 22.53);
 INSERT INTO
-  `products` (
-    `id`,
-    `name`,
-    `code`,
-    `price`,
-    `cost_price`,
-    `is_meat_bovine`
-  )
+  `products` (`id`, `name`, `code`, `price`, `cost_price`)
 VALUES
-  (6, 'Contra File', '6', 39.99, 17.00, 1);
+  (31, 'CONTRA FILE ', '6', 39.99, 22.53);
 INSERT INTO
-  `products` (
-    `id`,
-    `name`,
-    `code`,
-    `price`,
-    `cost_price`,
-    `is_meat_bovine`
-  )
+  `products` (`id`, `name`, `code`, `price`, `cost_price`)
 VALUES
-  (7, 'Maminha', '7', 37.99, 17.00, 1);
+  (32, 'MAMINHA', '7', 37.99, 22.53);
 INSERT INTO
-  `products` (
-    `id`,
-    `name`,
-    `code`,
-    `price`,
-    `cost_price`,
-    `is_meat_bovine`
-  )
+  `products` (`id`, `name`, `code`, `price`, `cost_price`)
 VALUES
-  (8, 'Coxao Mole', '8', 36.99, 17.00, 1);
+  (33, 'COXAO MOLE', '8', 36.99, 22.53);
 INSERT INTO
-  `products` (
-    `id`,
-    `name`,
-    `code`,
-    `price`,
-    `cost_price`,
-    `is_meat_bovine`
-  )
+  `products` (`id`, `name`, `code`, `price`, `cost_price`)
 VALUES
-  (9, 'Coxao Duro', '9', 36.99, 17.00, 1);
+  (34, 'COXAO DURO', '9', 36.99, 22.53);
 INSERT INTO
-  `products` (
-    `id`,
-    `name`,
-    `code`,
-    `price`,
-    `cost_price`,
-    `is_meat_bovine`
-  )
+  `products` (`id`, `name`, `code`, `price`, `cost_price`)
 VALUES
-  (10, 'Carne Moida', '10', 24.99, 17.00, 1);
+  (35, 'CARNE MOIDA', '10', 24.99, 22.53);
 INSERT INTO
-  `products` (
-    `id`,
-    `name`,
-    `code`,
-    `price`,
-    `cost_price`,
-    `is_meat_bovine`
-  )
+  `products` (`id`, `name`, `code`, `price`, `cost_price`)
 VALUES
-  (11, 'Fraldinha', '11', 31.99, 17.00, 1);
+  (36, 'FLALDINHA', '11', 31.99, 22.53);
 INSERT INTO
-  `products` (
-    `id`,
-    `name`,
-    `code`,
-    `price`,
-    `cost_price`,
-    `is_meat_bovine`
-  )
+  `products` (`id`, `name`, `code`, `price`, `cost_price`)
 VALUES
-  (12, 'Acem Bovino', '12', 24.99, 17.00, 1);
+  (37, 'ACEM', '12', 24.99, 22.53);
 INSERT INTO
-  `products` (
-    `id`,
-    `name`,
-    `code`,
-    `price`,
-    `cost_price`,
-    `is_meat_bovine`
-  )
+  `products` (`id`, `name`, `code`, `price`, `cost_price`)
 VALUES
-  (13, 'Miolo da Acem', '13', 29.99, 17.00, 1);
+  (38, 'MIOLO DO ACEM', '13', 29.99, 22.53);
 INSERT INTO
-  `products` (
-    `id`,
-    `name`,
-    `code`,
-    `price`,
-    `cost_price`,
-    `is_meat_bovine`
-  )
+  `products` (`id`, `name`, `code`, `price`, `cost_price`)
 VALUES
-  (14, 'Carne Peixinho Bovino', '14', 29.99, 17.00, 1);
+  (39, 'PEXINHO', '14', 29.99, 22.53);
 INSERT INTO
-  `products` (
-    `id`,
-    `name`,
-    `code`,
-    `price`,
-    `cost_price`,
-    `is_meat_bovine`
-  )
+  `products` (`id`, `name`, `code`, `price`, `cost_price`)
 VALUES
-  (15, 'Carne Lombo Bovino', '15', 29.99, 17.00, 1);
+  (40, 'LOMBO BOVINO', '15', 29.99, 22.53);
 INSERT INTO
-  `products` (
-    `id`,
-    `name`,
-    `code`,
-    `price`,
-    `cost_price`,
-    `is_meat_bovine`
-  )
+  `products` (`id`, `name`, `code`, `price`, `cost_price`)
 VALUES
-  (16, 'Paleta Bovina', '16', 31.99, 17.00, 1);
+  (41, 'PALETA', '16', 31.99, 22.53);
 INSERT INTO
-  `products` (
-    `id`,
-    `name`,
-    `code`,
-    `price`,
-    `cost_price`,
-    `is_meat_bovine`
-  )
+  `products` (`id`, `name`, `code`, `price`, `cost_price`)
 VALUES
-  (17, 'Costela Bovina', '17', 14.99, 17.00, 1);
+  (42, 'COSTELA', '17', 14.99, 22.53);
 INSERT INTO
-  `products` (
-    `id`,
-    `name`,
-    `code`,
-    `price`,
-    `cost_price`,
-    `is_meat_bovine`
-  )
+  `products` (`id`, `name`, `code`, `price`, `cost_price`)
 VALUES
-  (18, 'Figado Bovino', '18', 21.99, 17.00, 1);
+  (43, 'FIGADO ', '18', 21.99, 15.00);
 INSERT INTO
-  `products` (
-    `id`,
-    `name`,
-    `code`,
-    `price`,
-    `cost_price`,
-    `is_meat_bovine`
-  )
+  `products` (`id`, `name`, `code`, `price`, `cost_price`)
 VALUES
-  (19, 'Musculo', '19', 23.99, 17.00, 1);
+  (44, 'MUSCULO', '19', 23.99, 22.53);
 INSERT INTO
-  `products` (
-    `id`,
-    `name`,
-    `code`,
-    `price`,
-    `cost_price`,
-    `is_meat_bovine`
-  )
+  `products` (`id`, `name`, `code`, `price`, `cost_price`)
 VALUES
-  (20, 'Linguica Caseira', '20', 24.99, 17.00, 1);
+  (45, 'LINGUICA CASEIRA', '20', 24.99, 18.99);
 INSERT INTO
-  `products` (
-    `id`,
-    `name`,
-    `code`,
-    `price`,
-    `cost_price`,
-    `is_meat_bovine`
-  )
+  `products` (`id`, `name`, `code`, `price`, `cost_price`)
 VALUES
-  (21, 'Carne de Panela', '21', 24.99, 17.00, 1);
+  (46, 'CARNE DE PANELA', '21', 24.99, 22.53);
 INSERT INTO
-  `products` (
-    `id`,
-    `name`,
-    `code`,
-    `price`,
-    `cost_price`,
-    `is_meat_bovine`
-  )
+  `products` (`id`, `name`, `code`, `price`, `cost_price`)
 VALUES
-  (22, 'Carne de Feijoada', '22', 23.99, 17.00, 1);
+  (47, 'CARNE FEIJOADA', '22', 23.99, 22.53);
 INSERT INTO
-  `products` (
-    `id`,
-    `name`,
-    `code`,
-    `price`,
-    `cost_price`,
-    `is_meat_bovine`
-  )
+  `products` (`id`, `name`, `code`, `price`, `cost_price`)
 VALUES
-  (23, 'Produto nao cadastrado', '23', 0.99, 17.00, 1);
+  (48, 'PESCOCO ', '23', 14.99, 22.53);
 INSERT INTO
-  `products` (
-    `id`,
-    `name`,
-    `code`,
-    `price`,
-    `cost_price`,
-    `is_meat_bovine`
-  )
+  `products` (`id`, `name`, `code`, `price`, `cost_price`)
 VALUES
-  (24, 'Osso de Patin', '24', 9.99, 17.00, 1);
+  (49, 'OSSO PATIM', '24', 9.99, 4.99);
 INSERT INTO
-  `products` (
-    `id`,
-    `name`,
-    `code`,
-    `price`,
-    `cost_price`,
-    `is_meat_bovine`
-  )
+  `products` (`id`, `name`, `code`, `price`, `cost_price`)
 VALUES
-  (25, '156', '156', 15.00, 17.00, 1);
+  (50, 'maca do peito', '25', 31.99, 22.53);
 INSERT INTO
-  `products` (
-    `id`,
-    `name`,
-    `code`,
-    `price`,
-    `cost_price`,
-    `is_meat_bovine`
-  )
+  `products` (`id`, `name`, `code`, `price`, `cost_price`)
 VALUES
-  (26, 'teste', '157', 112.00, 20.00, 0);
-INSERT INTO
-  `products` (
-    `id`,
-    `name`,
-    `code`,
-    `price`,
-    `cost_price`,
-    `is_meat_bovine`
-  )
-VALUES
-  (27, 'teste atualizacao ', '158', 1.00, 17.00, 1);
-INSERT INTO
-  `products` (
-    `id`,
-    `name`,
-    `code`,
-    `price`,
-    `cost_price`,
-    `is_meat_bovine`
-  )
-VALUES
-  (28, 'tes', '160', 1.00, 17.00, 1);
-INSERT INTO
-  `products` (
-    `id`,
-    `name`,
-    `code`,
-    `price`,
-    `cost_price`,
-    `is_meat_bovine`
-  )
-VALUES
-  (29, 'produto teste', '161', 15.89, 10.00, 0);
+  (51, 'rapadura amendoin', '26', 17.99, 12.99);
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: sales
@@ -543,125 +641,19 @@ INSERT INTO
     `total_products_without_discount`,
     `total`,
     `discount`,
-    `is_paid`,
-    `profit_sale`
-  )
-VALUES
-  (
-    1,
-    2,
-    1,
-    'Cartão',
-    '2025-04-30 21:00:00',
-    106.56,
-    106.56,
-    0.00,
-    1,
-    0.00
-  );
-INSERT INTO
-  `sales` (
-    `id`,
-    `client_id`,
-    `user_operator`,
-    `payment_method`,
-    `date`,
-    `total_products_without_discount`,
-    `total`,
-    `discount`,
-    `is_paid`,
-    `profit_sale`
-  )
-VALUES
-  (
-    2,
-    1,
-    2,
-    'Dinheiro',
-    '2025-05-01 21:00:00',
-    53.50,
-    53.50,
-    0.00,
-    1,
-    0.00
-  );
-INSERT INTO
-  `sales` (
-    `id`,
-    `client_id`,
-    `user_operator`,
-    `payment_method`,
-    `date`,
-    `total_products_without_discount`,
-    `total`,
-    `discount`,
-    `is_paid`,
-    `profit_sale`
-  )
-VALUES
-  (
-    3,
-    1,
-    1,
-    'Cartão',
-    '2025-07-25 09:32:11',
-    232.94,
-    232.94,
-    0.00,
-    1,
-    0.00
-  );
-INSERT INTO
-  `sales` (
-    `id`,
-    `client_id`,
-    `user_operator`,
-    `payment_method`,
-    `date`,
-    `total_products_without_discount`,
-    `total`,
-    `discount`,
-    `is_paid`,
-    `profit_sale`
-  )
-VALUES
-  (
-    4,
-    1,
-    1,
-    'Dinheiro',
-    '2025-07-26 09:00:39',
-    36.99,
-    36.99,
-    0.00,
-    1,
-    0.00
-  );
-INSERT INTO
-  `sales` (
-    `id`,
-    `client_id`,
-    `user_operator`,
-    `payment_method`,
-    `date`,
-    `total_products_without_discount`,
-    `total`,
-    `discount`,
-    `is_paid`,
-    `profit_sale`
+    `is_paid`
   )
 VALUES
   (
     5,
-    3,
     1,
-    'Notinha',
-    '2025-07-26 09:01:32',
-    54.99,
-    54.99,
+    3,
+    'Pix',
+    '2025-07-25 16:30:57',
+    127.96,
+    127.96,
     0.00,
-    0,
-    0.00
+    1
   );
 INSERT INTO
   `sales` (
@@ -673,21 +665,19 @@ INSERT INTO
     `total_products_without_discount`,
     `total`,
     `discount`,
-    `is_paid`,
-    `profit_sale`
+    `is_paid`
   )
 VALUES
   (
     6,
-    2,
-    1,
+    3,
+    3,
     'Notinha',
-    '2025-07-26 09:02:20',
-    24.99,
-    24.99,
+    '2025-07-25 17:10:45',
+    127.96,
+    127.96,
     0.00,
-    1,
-    0.00
+    0
   );
 INSERT INTO
   `sales` (
@@ -699,21 +689,19 @@ INSERT INTO
     `total_products_without_discount`,
     `total`,
     `discount`,
-    `is_paid`,
-    `profit_sale`
+    `is_paid`
   )
 VALUES
   (
     7,
-    1,
-    1,
-    'Dinheiro',
-    '2025-07-27 19:02:20',
-    36.99,
-    36.99,
+    28,
+    3,
+    'Notinha',
+    '2025-07-25 17:44:30',
+    109.77,
+    109.77,
     0.00,
-    1,
-    0.00
+    0
   );
 INSERT INTO
   `sales` (
@@ -725,21 +713,19 @@ INSERT INTO
     `total_products_without_discount`,
     `total`,
     `discount`,
-    `is_paid`,
-    `profit_sale`
+    `is_paid`
   )
 VALUES
   (
     8,
     1,
-    1,
-    'Cartão',
-    '2025-07-27 19:03:38',
-    39.99,
-    39.99,
+    3,
+    'Dinheiro',
+    '2025-07-26 06:41:27',
+    29.99,
+    29.99,
     0.00,
-    1,
-    0.00
+    1
   );
 INSERT INTO
   `sales` (
@@ -751,21 +737,19 @@ INSERT INTO
     `total_products_without_discount`,
     `total`,
     `discount`,
-    `is_paid`,
-    `profit_sale`
+    `is_paid`
   )
 VALUES
   (
     9,
-    1,
-    1,
-    'Dinheiro',
-    '2025-07-27 19:05:21',
-    36.99,
-    13.00,
-    23.99,
-    1,
-    0.00
+    12,
+    3,
+    'Notinha',
+    '2025-07-28 10:52:50',
+    61.78,
+    61.78,
+    0.00,
+    0
   );
 INSERT INTO
   `sales` (
@@ -777,21 +761,19 @@ INSERT INTO
     `total_products_without_discount`,
     `total`,
     `discount`,
-    `is_paid`,
-    `profit_sale`
+    `is_paid`
   )
 VALUES
   (
     10,
-    1,
-    1,
-    'Dinheiro',
-    '2025-07-27 19:10:30',
-    86.22,
-    86.22,
+    18,
+    3,
+    'Notinha',
+    '2025-07-28 10:55:26',
+    81.92,
+    81.92,
     0.00,
-    1,
-    0.00
+    0
   );
 INSERT INTO
   `sales` (
@@ -803,21 +785,19 @@ INSERT INTO
     `total_products_without_discount`,
     `total`,
     `discount`,
-    `is_paid`,
-    `profit_sale`
+    `is_paid`
   )
 VALUES
   (
     11,
-    1,
-    1,
-    'Pix',
-    '2025-07-27 19:11:28',
-    23.82,
-    23.82,
+    20,
+    3,
+    'Notinha',
+    '2025-07-28 10:58:33',
+    146.00,
+    146.00,
     0.00,
-    1,
-    0.00
+    0
   );
 INSERT INTO
   `sales` (
@@ -829,21 +809,19 @@ INSERT INTO
     `total_products_without_discount`,
     `total`,
     `discount`,
-    `is_paid`,
-    `profit_sale`
+    `is_paid`
   )
 VALUES
   (
     12,
-    1,
-    1,
-    'Dinheiro',
-    '2025-07-27 19:24:13',
-    36.99,
-    36.99,
+    21,
+    3,
+    'Notinha',
+    '2025-07-28 11:01:02',
+    137.70,
+    137.70,
     0.00,
-    1,
-    0.00
+    0
   );
 INSERT INTO
   `sales` (
@@ -855,21 +833,811 @@ INSERT INTO
     `total_products_without_discount`,
     `total`,
     `discount`,
-    `is_paid`,
-    `profit_sale`
+    `is_paid`
   )
 VALUES
   (
     13,
-    2,
-    1,
+    22,
+    3,
     'Notinha',
-    '2025-07-27 19:25:12',
-    24.99,
-    24.99,
+    '2025-07-28 11:02:41',
+    129.00,
+    129.00,
     0.00,
-    0,
-    0.00
+    0
+  );
+INSERT INTO
+  `sales` (
+    `id`,
+    `client_id`,
+    `user_operator`,
+    `payment_method`,
+    `date`,
+    `total_products_without_discount`,
+    `total`,
+    `discount`,
+    `is_paid`
+  )
+VALUES
+  (
+    14,
+    13,
+    3,
+    'Notinha',
+    '2025-07-28 11:04:44',
+    88.70,
+    88.70,
+    0.00,
+    0
+  );
+INSERT INTO
+  `sales` (
+    `id`,
+    `client_id`,
+    `user_operator`,
+    `payment_method`,
+    `date`,
+    `total_products_without_discount`,
+    `total`,
+    `discount`,
+    `is_paid`
+  )
+VALUES
+  (
+    15,
+    11,
+    3,
+    'Notinha',
+    '2025-07-28 11:06:18',
+    128.00,
+    128.00,
+    0.00,
+    0
+  );
+INSERT INTO
+  `sales` (
+    `id`,
+    `client_id`,
+    `user_operator`,
+    `payment_method`,
+    `date`,
+    `total_products_without_discount`,
+    `total`,
+    `discount`,
+    `is_paid`
+  )
+VALUES
+  (
+    16,
+    14,
+    3,
+    'Notinha',
+    '2025-07-28 11:07:47',
+    176.58,
+    176.58,
+    0.00,
+    1
+  );
+INSERT INTO
+  `sales` (
+    `id`,
+    `client_id`,
+    `user_operator`,
+    `payment_method`,
+    `date`,
+    `total_products_without_discount`,
+    `total`,
+    `discount`,
+    `is_paid`
+  )
+VALUES
+  (
+    17,
+    15,
+    3,
+    'Notinha',
+    '2025-07-28 11:09:32',
+    155.99,
+    155.99,
+    0.00,
+    0
+  );
+INSERT INTO
+  `sales` (
+    `id`,
+    `client_id`,
+    `user_operator`,
+    `payment_method`,
+    `date`,
+    `total_products_without_discount`,
+    `total`,
+    `discount`,
+    `is_paid`
+  )
+VALUES
+  (
+    18,
+    23,
+    3,
+    'Notinha',
+    '2025-07-28 11:11:37',
+    107.99,
+    107.99,
+    0.00,
+    0
+  );
+INSERT INTO
+  `sales` (
+    `id`,
+    `client_id`,
+    `user_operator`,
+    `payment_method`,
+    `date`,
+    `total_products_without_discount`,
+    `total`,
+    `discount`,
+    `is_paid`
+  )
+VALUES
+  (
+    19,
+    7,
+    3,
+    'Notinha',
+    '2025-07-28 11:13:59',
+    67.55,
+    67.55,
+    0.00,
+    0
+  );
+INSERT INTO
+  `sales` (
+    `id`,
+    `client_id`,
+    `user_operator`,
+    `payment_method`,
+    `date`,
+    `total_products_without_discount`,
+    `total`,
+    `discount`,
+    `is_paid`
+  )
+VALUES
+  (
+    20,
+    6,
+    3,
+    'Notinha',
+    '2025-07-28 11:15:10',
+    50.99,
+    50.99,
+    0.00,
+    1
+  );
+INSERT INTO
+  `sales` (
+    `id`,
+    `client_id`,
+    `user_operator`,
+    `payment_method`,
+    `date`,
+    `total_products_without_discount`,
+    `total`,
+    `discount`,
+    `is_paid`
+  )
+VALUES
+  (
+    21,
+    8,
+    3,
+    'Notinha',
+    '2025-07-28 11:18:21',
+    37.99,
+    37.99,
+    0.00,
+    0
+  );
+INSERT INTO
+  `sales` (
+    `id`,
+    `client_id`,
+    `user_operator`,
+    `payment_method`,
+    `date`,
+    `total_products_without_discount`,
+    `total`,
+    `discount`,
+    `is_paid`
+  )
+VALUES
+  (
+    22,
+    4,
+    3,
+    'Notinha',
+    '2025-07-28 11:20:33',
+    106.99,
+    106.99,
+    0.00,
+    0
+  );
+INSERT INTO
+  `sales` (
+    `id`,
+    `client_id`,
+    `user_operator`,
+    `payment_method`,
+    `date`,
+    `total_products_without_discount`,
+    `total`,
+    `discount`,
+    `is_paid`
+  )
+VALUES
+  (
+    23,
+    16,
+    3,
+    'Notinha',
+    '2025-07-28 11:24:12',
+    92.76,
+    92.76,
+    0.00,
+    0
+  );
+INSERT INTO
+  `sales` (
+    `id`,
+    `client_id`,
+    `user_operator`,
+    `payment_method`,
+    `date`,
+    `total_products_without_discount`,
+    `total`,
+    `discount`,
+    `is_paid`
+  )
+VALUES
+  (
+    24,
+    10,
+    3,
+    'Notinha',
+    '2025-07-28 11:26:40',
+    518.99,
+    518.99,
+    0.00,
+    0
+  );
+INSERT INTO
+  `sales` (
+    `id`,
+    `client_id`,
+    `user_operator`,
+    `payment_method`,
+    `date`,
+    `total_products_without_discount`,
+    `total`,
+    `discount`,
+    `is_paid`
+  )
+VALUES
+  (
+    25,
+    27,
+    3,
+    'Notinha',
+    '2025-07-28 11:28:47',
+    172.50,
+    172.50,
+    0.00,
+    0
+  );
+INSERT INTO
+  `sales` (
+    `id`,
+    `client_id`,
+    `user_operator`,
+    `payment_method`,
+    `date`,
+    `total_products_without_discount`,
+    `total`,
+    `discount`,
+    `is_paid`
+  )
+VALUES
+  (
+    26,
+    26,
+    3,
+    'Notinha',
+    '2025-07-28 11:29:45',
+    179.80,
+    179.80,
+    0.00,
+    0
+  );
+INSERT INTO
+  `sales` (
+    `id`,
+    `client_id`,
+    `user_operator`,
+    `payment_method`,
+    `date`,
+    `total_products_without_discount`,
+    `total`,
+    `discount`,
+    `is_paid`
+  )
+VALUES
+  (
+    27,
+    25,
+    3,
+    'Notinha',
+    '2025-07-28 11:31:04',
+    176.50,
+    176.50,
+    0.00,
+    0
+  );
+INSERT INTO
+  `sales` (
+    `id`,
+    `client_id`,
+    `user_operator`,
+    `payment_method`,
+    `date`,
+    `total_products_without_discount`,
+    `total`,
+    `discount`,
+    `is_paid`
+  )
+VALUES
+  (
+    28,
+    19,
+    3,
+    'Notinha',
+    '2025-07-28 11:32:46',
+    152.85,
+    152.85,
+    0.00,
+    0
+  );
+INSERT INTO
+  `sales` (
+    `id`,
+    `client_id`,
+    `user_operator`,
+    `payment_method`,
+    `date`,
+    `total_products_without_discount`,
+    `total`,
+    `discount`,
+    `is_paid`
+  )
+VALUES
+  (
+    29,
+    29,
+    3,
+    'Notinha',
+    '2025-07-28 13:05:07',
+    109.98,
+    109.98,
+    0.00,
+    1
+  );
+INSERT INTO
+  `sales` (
+    `id`,
+    `client_id`,
+    `user_operator`,
+    `payment_method`,
+    `date`,
+    `total_products_without_discount`,
+    `total`,
+    `discount`,
+    `is_paid`
+  )
+VALUES
+  (
+    30,
+    5,
+    3,
+    'Notinha',
+    '2025-07-28 13:21:57',
+    95.79,
+    95.79,
+    0.00,
+    0
+  );
+INSERT INTO
+  `sales` (
+    `id`,
+    `client_id`,
+    `user_operator`,
+    `payment_method`,
+    `date`,
+    `total_products_without_discount`,
+    `total`,
+    `discount`,
+    `is_paid`
+  )
+VALUES
+  (
+    31,
+    35,
+    3,
+    'Notinha',
+    '2025-07-28 13:39:38',
+    51.52,
+    51.52,
+    0.00,
+    0
+  );
+INSERT INTO
+  `sales` (
+    `id`,
+    `client_id`,
+    `user_operator`,
+    `payment_method`,
+    `date`,
+    `total_products_without_discount`,
+    `total`,
+    `discount`,
+    `is_paid`
+  )
+VALUES
+  (
+    32,
+    1,
+    3,
+    'Dinheiro',
+    '2025-07-28 13:42:11',
+    131.99,
+    131.99,
+    0.00,
+    1
+  );
+INSERT INTO
+  `sales` (
+    `id`,
+    `client_id`,
+    `user_operator`,
+    `payment_method`,
+    `date`,
+    `total_products_without_discount`,
+    `total`,
+    `discount`,
+    `is_paid`
+  )
+VALUES
+  (
+    33,
+    33,
+    3,
+    'Notinha',
+    '2025-07-28 13:43:27',
+    122.82,
+    122.82,
+    0.00,
+    0
+  );
+INSERT INTO
+  `sales` (
+    `id`,
+    `client_id`,
+    `user_operator`,
+    `payment_method`,
+    `date`,
+    `total_products_without_discount`,
+    `total`,
+    `discount`,
+    `is_paid`
+  )
+VALUES
+  (
+    34,
+    32,
+    3,
+    'Notinha',
+    '2025-07-28 13:44:40',
+    51.52,
+    51.52,
+    0.00,
+    0
+  );
+INSERT INTO
+  `sales` (
+    `id`,
+    `client_id`,
+    `user_operator`,
+    `payment_method`,
+    `date`,
+    `total_products_without_discount`,
+    `total`,
+    `discount`,
+    `is_paid`
+  )
+VALUES
+  (
+    35,
+    31,
+    3,
+    'Notinha',
+    '2025-07-28 13:46:13',
+    97.24,
+    97.24,
+    0.00,
+    0
+  );
+INSERT INTO
+  `sales` (
+    `id`,
+    `client_id`,
+    `user_operator`,
+    `payment_method`,
+    `date`,
+    `total_products_without_discount`,
+    `total`,
+    `discount`,
+    `is_paid`
+  )
+VALUES
+  (
+    36,
+    35,
+    3,
+    'Notinha',
+    '2025-07-28 13:53:17',
+    34.48,
+    34.48,
+    0.00,
+    0
+  );
+INSERT INTO
+  `sales` (
+    `id`,
+    `client_id`,
+    `user_operator`,
+    `payment_method`,
+    `date`,
+    `total_products_without_discount`,
+    `total`,
+    `discount`,
+    `is_paid`
+  )
+VALUES
+  (
+    37,
+    30,
+    3,
+    'Notinha',
+    '2025-07-28 13:54:41',
+    126.99,
+    126.99,
+    0.00,
+    0
+  );
+INSERT INTO
+  `sales` (
+    `id`,
+    `client_id`,
+    `user_operator`,
+    `payment_method`,
+    `date`,
+    `total_products_without_discount`,
+    `total`,
+    `discount`,
+    `is_paid`
+  )
+VALUES
+  (
+    38,
+    31,
+    3,
+    'Notinha',
+    '2025-07-28 13:55:43',
+    97.14,
+    97.14,
+    0.00,
+    0
+  );
+INSERT INTO
+  `sales` (
+    `id`,
+    `client_id`,
+    `user_operator`,
+    `payment_method`,
+    `date`,
+    `total_products_without_discount`,
+    `total`,
+    `discount`,
+    `is_paid`
+  )
+VALUES
+  (
+    39,
+    11,
+    3,
+    'Notinha',
+    '2025-07-28 15:07:37',
+    329.89,
+    329.89,
+    0.00,
+    0
+  );
+INSERT INTO
+  `sales` (
+    `id`,
+    `client_id`,
+    `user_operator`,
+    `payment_method`,
+    `date`,
+    `total_products_without_discount`,
+    `total`,
+    `discount`,
+    `is_paid`
+  )
+VALUES
+  (
+    40,
+    1,
+    3,
+    'Dinheiro',
+    '2025-07-29 09:48:58',
+    51.35,
+    51.35,
+    0.00,
+    1
+  );
+INSERT INTO
+  `sales` (
+    `id`,
+    `client_id`,
+    `user_operator`,
+    `payment_method`,
+    `date`,
+    `total_products_without_discount`,
+    `total`,
+    `discount`,
+    `is_paid`
+  )
+VALUES
+  (
+    41,
+    1,
+    3,
+    'Dinheiro',
+    '2025-07-29 09:58:50',
+    21.99,
+    21.99,
+    0.00,
+    1
+  );
+INSERT INTO
+  `sales` (
+    `id`,
+    `client_id`,
+    `user_operator`,
+    `payment_method`,
+    `date`,
+    `total_products_without_discount`,
+    `total`,
+    `discount`,
+    `is_paid`
+  )
+VALUES
+  (
+    42,
+    1,
+    3,
+    'Dinheiro',
+    '2025-07-29 10:13:22',
+    36.99,
+    36.99,
+    0.00,
+    1
+  );
+INSERT INTO
+  `sales` (
+    `id`,
+    `client_id`,
+    `user_operator`,
+    `payment_method`,
+    `date`,
+    `total_products_without_discount`,
+    `total`,
+    `discount`,
+    `is_paid`
+  )
+VALUES
+  (
+    43,
+    8,
+    3,
+    'Notinha',
+    '2025-07-29 10:22:06',
+    39.58,
+    39.58,
+    0.00,
+    0
+  );
+INSERT INTO
+  `sales` (
+    `id`,
+    `client_id`,
+    `user_operator`,
+    `payment_method`,
+    `date`,
+    `total_products_without_discount`,
+    `total`,
+    `discount`,
+    `is_paid`
+  )
+VALUES
+  (
+    44,
+    36,
+    3,
+    'Notinha',
+    '2025-07-29 10:58:04',
+    71.38,
+    71.38,
+    0.00,
+    0
+  );
+INSERT INTO
+  `sales` (
+    `id`,
+    `client_id`,
+    `user_operator`,
+    `payment_method`,
+    `date`,
+    `total_products_without_discount`,
+    `total`,
+    `discount`,
+    `is_paid`
+  )
+VALUES
+  (
+    45,
+    36,
+    3,
+    'Notinha',
+    '2025-07-29 10:59:44',
+    17.99,
+    17.99,
+    0.00,
+    0
+  );
+INSERT INTO
+  `sales` (
+    `id`,
+    `client_id`,
+    `user_operator`,
+    `payment_method`,
+    `date`,
+    `total_products_without_discount`,
+    `total`,
+    `discount`,
+    `is_paid`
+  )
+VALUES
+  (
+    46,
+    1,
+    3,
+    'Dinheiro',
+    '2025-07-29 11:10:29',
+    49.98,
+    49.98,
+    0.00,
+    1
   );
 
 # ------------------------------------------------------------
@@ -879,75 +1647,104 @@ VALUES
 INSERT INTO
   `sales_products` (`sale_id`, `product_id`, `quantity`)
 VALUES
-  (1, 1, 1.568);
+  (29, 28, 2.000);
 INSERT INTO
   `sales_products` (`sale_id`, `product_id`, `quantity`)
 VALUES
-  (1, 2, 2.687);
+  (30, 31, 1.000);
 INSERT INTO
   `sales_products` (`sale_id`, `product_id`, `quantity`)
 VALUES
-  (2, 2, 2.549);
+  (31, 50, 1.000);
 INSERT INTO
   `sales_products` (`sale_id`, `product_id`, `quantity`)
 VALUES
-  (3, 1, 1.000);
+  (32, 50, 1.000);
 INSERT INTO
   `sales_products` (`sale_id`, `product_id`, `quantity`)
 VALUES
-  (3, 2, 1.000);
+  (33, 30, 1.000);
 INSERT INTO
   `sales_products` (`sale_id`, `product_id`, `quantity`)
 VALUES
-  (3, 3, 1.000);
+  (34, 50, 1.000);
 INSERT INTO
   `sales_products` (`sale_id`, `product_id`, `quantity`)
 VALUES
-  (3, 4, 1.000);
+  (35, 50, 1.000);
 INSERT INTO
   `sales_products` (`sale_id`, `product_id`, `quantity`)
 VALUES
-  (3, 5, 2.000);
+  (36, 32, 1.000);
 INSERT INTO
   `sales_products` (`sale_id`, `product_id`, `quantity`)
 VALUES
-  (4, 1, 1.000);
+  (37, 50, 1.000);
 INSERT INTO
   `sales_products` (`sale_id`, `product_id`, `quantity`)
 VALUES
-  (5, 3, 1.000);
+  (38, 33, 1.000);
 INSERT INTO
   `sales_products` (`sale_id`, `product_id`, `quantity`)
 VALUES
-  (6, 10, 1.000);
+  (39, 38, 11.000);
 INSERT INTO
   `sales_products` (`sale_id`, `product_id`, `quantity`)
 VALUES
-  (7, 1, 1.000);
+  (40, 46, 2.055);
 INSERT INTO
   `sales_products` (`sale_id`, `product_id`, `quantity`)
 VALUES
-  (8, 2, 1.000);
+  (41, 43, 1.000);
 INSERT INTO
   `sales_products` (`sale_id`, `product_id`, `quantity`)
 VALUES
-  (9, 1, 1.000);
+  (42, 33, 1.000);
 INSERT INTO
   `sales_products` (`sale_id`, `product_id`, `quantity`)
 VALUES
-  (10, 3, 1.568);
+  (43, 26, 1.070);
 INSERT INTO
   `sales_products` (`sale_id`, `product_id`, `quantity`)
 VALUES
-  (11, 17, 1.589);
+  (44, 39, 2.380);
 INSERT INTO
   `sales_products` (`sale_id`, `product_id`, `quantity`)
 VALUES
-  (12, 1, 1.000);
+  (45, 51, 1.000);
 INSERT INTO
   `sales_products` (`sale_id`, `product_id`, `quantity`)
 VALUES
-  (13, 10, 1.000);
+  (46, 46, 2.000);
+
+# ------------------------------------------------------------
+# DATA DUMP FOR TABLE: sequelizemeta
+# ------------------------------------------------------------
+
+INSERT INTO
+  `sequelizemeta` (`name`)
+VALUES
+  ('01-create-users.js');
+INSERT INTO
+  `sequelizemeta` (`name`)
+VALUES
+  ('02-create-clients.js');
+INSERT INTO
+  `sequelizemeta` (`name`)
+VALUES
+  ('03-create-products.js');
+INSERT INTO
+  `sequelizemeta` (`name`)
+VALUES
+  ('04-create-sales.js');
+INSERT INTO
+  `sequelizemeta` (`name`)
+VALUES
+  ('05-create-sales-products.js');
+INSERT INTO
+  `sequelizemeta` (`name`)
+VALUES
+  ('06-create-expenses.js');
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: users
@@ -957,37 +1754,10 @@ INSERT INTO
   `users` (`id`, `username`, `password`, `user_type`)
 VALUES
   (
-    1,
-    'Elielton',
-    '$2b$10$LBuORnlMEf0ywsvUOfELhu9ZYat2Kre1RJnJy8E2jDS6xuuHyu4dC',
-    'Administrador'
-  );
-INSERT INTO
-  `users` (`id`, `username`, `password`, `user_type`)
-VALUES
-  (
-    2,
-    'Lucas',
-    '$2b$10$0ul4sdcGjXXNfVGT0Nk/oeejwhxTuwLw9BkHs3ZkQ7g4iqFlXsIp2',
-    'Operador'
-  );
-INSERT INTO
-  `users` (`id`, `username`, `password`, `user_type`)
-VALUES
-  (
     3,
     'Alicio',
-    '$2b$10$UvUN0aXwDn6JCmBPGgTE/e1hYiHzQE1WaqHckXxiXMWoL5THmxV1.',
+    '$2b$10$iMzXX9rJUSn73PyK2XjxE.lUHoCw2OCx8XAXH5D/5TZdcPIKQGVYm',
     'Administrador'
-  );
-INSERT INTO
-  `users` (`id`, `username`, `password`, `user_type`)
-VALUES
-  (
-    4,
-    'Funcionario 1',
-    '$2b$10$VSNb3gLXD0uIrZYgx5JgUO67s7BXmItO6eX4SnjfRGP1L3vUtLnOK',
-    'Operador'
   );
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
