@@ -24,10 +24,10 @@ Name: "brazilianportuguese"; MessagesFile: "compiler:Languages\BrazilianPortugue
 Name: "desktopicon"; Description: "Criar atalho na área de trabalho"; GroupDescription: "Ícones adicionais"; Flags: unchecked
 
 [Files]
-Source: "H:\Arquivos Elielton\docume\project-blue-pdv-backend\backend\installer\blue-pdv-server.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "H:\Arquivos Elielton\docume\project-blue-pdv-backend\backend\installer\nssm.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "H:\Arquivos Elielton\docume\project-blue-pdv-backend\backend\installer\install-service.bat"; DestDir: "{app}"; Flags: ignoreversion
-Source: "H:\Arquivos Elielton\docume\project-blue-pdv-backend\backend\installer\uninstall-service.bat"; DestDir: "{app}"; Flags: ignoreversion
+Source: "H:\Arquivos Elielton\docume\Blue-Pdv\backend\inno-setup\blue-pdv-server.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "H:\Arquivos Elielton\docume\Blue-Pdv\backend\inno-setup\nssm.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "H:\Arquivos Elielton\docume\Blue-Pdv\backend\inno-setup\install-service.bat"; DestDir: "{app}"; Flags: ignoreversion
+Source: "H:\Arquivos Elielton\docume\Blue-Pdv\backend\inno-setup\uninstall-service.bat"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
 Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
