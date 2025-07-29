@@ -6,19 +6,42 @@ import * as config from '../src/database/config/database';
 import path from 'path';
 import 'mysql2';
 
-// Caminhos compilados
-const migrationsPath = path.join(process.cwd(), '../database/migrations');
-const seedersPath = path.join(process.cwd(), '../database/seeders');
+const migrationsPath = path.join(__dirname, '../src/database/migrations');
+const seedersPath = path.join(__dirname, '../src/database/seeders');
 
 const sequelize = new Sequelize(config);
+const queryInterface = sequelize.getQueryInterface();
+
+async function dropAllTables() {
+  console.log('🔴 Dropando todas as tabelas...');
+
+  await queryInterface.sequelize.query('SET FOREIGN_KEY_CHECKS = 0');
+
+  const tables = await queryInterface.showAllTables();
+
+  const tableNames = tables
+    .map((t: any) => {
+      if (typeof t === 'string') return t;
+      if ('tableName' in t) return t.tableName;
+      if ('name' in t) return t.name;
+      return '';
+    })
+    .filter((name) => name.length > 0);
+
+  for (const tableName of tableNames) {
+    console.log(`🗑 Dropping table ${tableName}`);
+    await queryInterface.dropTable(tableName);
+  }
+
+  await queryInterface.sequelize.query('SET FOREIGN_KEY_CHECKS = 1');
+}
 
 async function resetDatabase() {
   try {
-    console.log('🔴 Dropando banco...');
-    await sequelize.drop();
+    await dropAllTables();
 
-    console.log('🟢 Criando banco...');
-    await sequelize.sync({ force: true }); // Cria tabelas base
+    console.log('🟢 Criando banco (sync)...');
+    await sequelize.sync({ force: true });
 
     console.log('📦 Rodando migrations...');
     const migrationUmzug = new Umzug({
