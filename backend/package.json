@@ -21,7 +21,7 @@
     "build-db-seeds": "pkg ./build/scripts/seeds-db.js --targets node18-win-x64 --output scripts/run-seeds-db.exe --config package.json",
 
     "build-db-scripts-win": "npm run build-db-backup && npm run build-db-migrations && npm run build-db-reset && npm run build-db-restore && npm run build-db-seeds",
-    "build-db-scripts-linux": "pkg ./build/scripts/backup-db.js --targets node18-linux-x64 --output scripts/run-backup-db-linux && pkg ./build/scripts/migrations-db.js --targets node18-linux-x64 --output scripts/run-migrations-db-linux && pkg ./build/scripts/reset-db.js --targets node18-linux-x64 --output scripts/run-reset-db-linux && pkg ./build/scripts/restore-db.js --targets node18-linux-x64 --output scripts/run-restore-db-linux && pkg ./build/scripts/seeds-db.js --targets node18-linux-x64 --output scripts/run-seeds-db-linux"
+    "build-db-scripts-linux": "pkg ./build/scripts/backup-db.js --targets node18-linux-x64 --output scripts/run-backup-db-linux --config package.json && pkg ./build/scripts/migrations-db.js --targets node18-linux-x64 --output scripts/run-migrations-db-linux --config package.json && pkg ./build/scripts/reset-db.js --targets node18-linux-x64 --output scripts/run-reset-db-linux --config package.json && pkg ./build/scripts/restore-db.js --targets node18-linux-x64 --output scripts/run-restore-db-linux --config package.json && pkg ./build/scripts/seeds-db.js --targets node18-linux-x64 --output scripts/run-seeds-db-linux --config package.json"
   },
   "repository": {
     "type": "git",
