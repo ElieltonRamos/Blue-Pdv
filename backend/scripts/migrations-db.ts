@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import { Sequelize } from 'sequelize';
 import { Umzug, SequelizeStorage } from 'umzug';
-import * as config from '../database/config/database';
+import * as config from '../src/database/config/database';
 import path from 'path';
 import 'mysql2';
 

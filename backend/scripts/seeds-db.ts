@@ -1,13 +1,13 @@
 /* eslint-disable no-undef */
 import { Sequelize } from 'sequelize';
-import * as config from '../database/config/database';
+import * as config from '../src/database/config/database';
 import fs from 'fs';
 import path from 'path';
 
 const sequelize = new Sequelize(config);
 const queryInterface = sequelize.getQueryInterface();
 
-const seedersPath = path.join(__dirname, '../database/seeders');
+const seedersPath = path.join(process.cwd(), '../database/seeders');
 
 async function runSeeds() {
   try {

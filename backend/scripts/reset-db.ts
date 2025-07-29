@@ -2,13 +2,13 @@
 /* eslint-disable no-undef */
 import { Sequelize } from 'sequelize';
 import { Umzug, SequelizeStorage } from 'umzug';
-import * as config from '../database/config/database';
+import * as config from '../src/database/config/database';
 import path from 'path';
 import 'mysql2';
 
 // Caminhos compilados
-const migrationsPath = path.join(__dirname, '../database/migrations');
-const seedersPath = path.join(__dirname, '../database/seeders');
+const migrationsPath = path.join(process.cwd(), '../database/migrations');
+const seedersPath = path.join(process.cwd(), '../database/seeders');
 
 const sequelize = new Sequelize(config);
 
