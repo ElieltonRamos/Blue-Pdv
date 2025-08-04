@@ -43,13 +43,51 @@ const options: swaggerJSDoc.Options = {
             },
           },
         },
+        SalesReportSummary: {
+          type: 'object',
+          properties: {
+            totalSales: { type: 'number', example: 25 },
+            grossRevenue: { type: 'number', example: 1240.5 },
+            grossProfit: { type: 'number', example: 430.75 },
+            totalDiscounts: { type: 'number', example: 90.0 },
+            salesByPaymentMethod: {
+              type: 'object',
+              properties: {
+                pix: { type: 'number', example: 10 },
+                cash: { type: 'number', example: 8 },
+                card: { type: 'number', example: 5 },
+                promissoryNote: { type: 'number', example: 2 },
+              },
+            },
+            salesByOperator: {
+              type: 'array',
+              items: {
+                type: 'object',
+                properties: {
+                  operator: { type: 'string', example: 'Elielton' },
+                  totalSales: { type: 'number', example: 12 },
+                  revenue: { type: 'number', example: 600.0 },
+                  paymentBreakdown: {
+                    type: 'object',
+                    properties: {
+                      pix: { type: 'number', example: 5 },
+                      cash: { type: 'number', example: 4 },
+                      card: { type: 'number', example: 2 },
+                      promissoryNote: { type: 'number', example: 1 },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
         Sale: {
           type: 'object',
           properties: {
             id: { type: 'number' },
             clientId: { type: 'number' },
             userOperator: { type: 'number' },
-            paymentMethod: { type: 'string', enum: ['Dinheiro', 'Cartao', 'Notinha'], },
+            paymentMethod: { type: 'string', enum: ['Dinheiro', 'Cartao', 'Notinha'] },
             date: { type: 'string', format: 'date-time' },
             totalProductsWithoutDiscount: { type: 'number' },
             total: { type: 'number' },
@@ -86,7 +124,17 @@ const options: swaggerJSDoc.Options = {
             userType: { type: 'string', example: 'Administrador' },
           },
         },
-
+        Product: {
+          type: 'object',
+          properties: {
+            id: { type: 'number', example: 1 },
+            name: { type: 'string', example: 'Picanha' },
+            code: { type: 'string', example: 'PCN001' },
+            price: { type: 'number', example: 79.99 },
+            costPrice: { type: 'number', example: 50.0 },
+            isMeatBovine: { type: 'boolean', example: true },
+          },
+        },
         // Resposta de erro padrão
         ErrorResponse: {
           type: 'object',
