@@ -32,35 +32,6 @@ const include = [
   },
 ];
 
-async function findSales(where: WhereOptions = {}, page: number, pageLimit: number)
-  : Promise<PaginatedResponse<Sale>> {
-  const offset = (page - 1) * pageLimit;
-  const { count, rows: sales } = await SaleModel.findAndCountAll({
-    where,
-    distinct: true,
-    include,
-    limit: pageLimit,
-    offset,
-  });
-
-  const formattedSales = sales.map((sale) => {
-    const data = sale.dataValues;
-
-    return {
-      ...data,
-      formattedDate: format(new Date(data.date), 'dd/MM/yyyy HH:mm', { locale: ptBR }),
-    };
-  });
-
-  return {
-    data: formattedSales,
-    page,
-    limit: pageLimit,
-    total: count,
-    totalPages: Math.ceil(count / pageLimit),
-  };
-}
-
 async function findSalesByFilters(
   filters: {
     id?: string;
@@ -184,6 +155,14 @@ async function getAll(
 async function create(sale: Sale): Promise<ServiceResponse<Sale>> {
   const validationSale = validationCreateSale(sale);
   if (validationSale) return validationSale;
+  const allowedMethods = ['Cartão', 'Dinheiro', 'Pix', 'Notinha'];
+
+  if (!allowedMethods.includes(sale.paymentMethod)) {
+    return {
+      status: 'BAD_REQUEST',
+      data: { message: 'Método de pagamento inválido, tente: Cartão, Dinheiro, Pix, Notinha' },
+    };
+  }
 
   const newSale = await SaleModel.create(sale);
 
@@ -240,114 +219,9 @@ async function getById(id: number): Promise<ServiceResponse<Sale>> {
   };
 }
 
-async function getSalesByUser(
-  id: number,
-  page: number,
-  pageLimit: number
-): Promise<ServiceResponse<PaginatedResponse<Sale>>> {
-  const validation = validationsParams(id, page, pageLimit);
-  if (validation) return validation;
-
-  const res = await findSales({ userOperator: id }, page, pageLimit);
-
-  return {
-    status: 'OK',
-    data: res,
-  };
-}
-
-async function getSalesByClient(
-  id: number,
-  page: number,
-  pageLimit: number
-): Promise<ServiceResponse<PaginatedResponse<Sale>>> {
-  const validation = validationsParams(id, page, pageLimit);
-  if (validation) return validation;
-
-  const res = await findSales({ clientId: id }, page, pageLimit);
-
-  return {
-    status: 'OK',
-    data: res,
-  };
-}
-
-async function getSalesByDay(
-  date: string,
-  page: number,
-  pageLimit: number,
-  operatorId?: number
-): Promise<ServiceResponse<PaginatedResponse<Sale>>> {
-  const validation = validationsParams(1, page, pageLimit);
-  if (validation) return validation;
-
-  const formattedDate = new Date(date);
-  const startOfDay = new Date(
-    Date.UTC(formattedDate.getUTCFullYear(), formattedDate.getUTCMonth(), formattedDate.getUTCDate())
-  );
-  const endOfDay = new Date(
-    Date.UTC(
-      formattedDate.getUTCFullYear(),
-      formattedDate.getUTCMonth(),
-      formattedDate.getUTCDate() + 1,
-      23,
-      59,
-      59,
-      999
-    )
-  );
-
-  const filters = {
-    [Op.and]: [
-      ...(operatorId ? [{ userOperator: operatorId }] : []),
-      { date: { [Op.between]: [startOfDay, endOfDay] } },
-    ],
-  };
-  const res = await findSales(filters, page, pageLimit);
-
-  return {
-    status: 'OK',
-    data: res,
-  };
-}
-
-async function getSalesByMonth(
-  date: string,
-  page: number,
-  pageLimit: number,
-  operatorId?: number
-): Promise<ServiceResponse<PaginatedResponse<Sale>>> {
-  const validation = validationsParams(1, page, pageLimit);
-  if (validation) return validation;
-
-  const formattedDate = new Date(date);
-  const startOfMonth = new Date(Date.UTC(formattedDate.getUTCFullYear(), formattedDate.getUTCMonth(), 1));
-  const endOfMonth = new Date(
-    Date.UTC(formattedDate.getUTCFullYear(), formattedDate.getUTCMonth() + 1, 0, 23, 59, 59, 999)
-  );
-
-  const filters = {
-    [Op.and]: [
-      ...(operatorId ? [{ userOperator: operatorId }] : []),
-      { date: { [Op.between]: [startOfMonth, endOfMonth] } },
-    ],
-  };
-
-  const res = await findSales(filters, page, pageLimit);
-
-  return {
-    status: 'OK',
-    data: res,
-  };
-}
-
 export default {
   create,
   getAll,
   markAsReceived,
   getById,
-  getSalesByUser,
-  getSalesByClient,
-  getSalesByDay,
-  getSalesByMonth,
 };
