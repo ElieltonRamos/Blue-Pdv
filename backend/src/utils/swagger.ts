@@ -18,6 +18,16 @@ const options: swaggerJSDoc.Options = {
     ],
     components: {
       schemas: {
+        Client: {
+          type: 'object',
+          properties: {
+            id: { type: 'number', example: 1 },
+            name: { type: 'string', example: 'João da Silva' },
+            phone: { type: 'string', example: '(11) 98765-4321' },
+            address: { type: 'string', example: 'Rua A, 123' },
+            cpf: { type: 'string', example: '123.456.789-00' },
+          },
+        },
         Expense: {
           type: 'object',
           properties: {
