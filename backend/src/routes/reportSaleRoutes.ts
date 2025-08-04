@@ -9,7 +9,7 @@ reportSaleRouter.get('/sales', reportSaleController.generateReportByDate);
  * /report/sales:
  *   get:
  *     summary: Gera um relatório de vendas por data
- *     tags: [Relatórios]
+ *     tags: [Relatorios]
  *     parameters:
  *       - in: query
  *         name: startDate

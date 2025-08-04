@@ -77,6 +77,43 @@ productRoutes.get('/:id', productController.getProductById);
  */
 
 productRoutes.patch('/update/cost-price-meats', productController.updateCostPriceMeats);
+/**
+ * @swagger
+ * /product/update/cost-price-meats:
+ *   patch:
+ *     summary: Atualiza o preço de custo de todos os produtos do tipo carne bovina
+ *     tags: [Produtos]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - costPrice
+ *             properties:
+ *               costPrice:
+ *                 type: number
+ *                 example: 29.99
+ *     responses:
+ *       200:
+ *         description: Preço de custo das carnes atualizado com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Preço de custo das carnes atualizado com sucesso
+ *       400:
+ *         description: Requisição inválida
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ */
+
 productRoutes.patch('/update/:id', productController.updateProduct);
 /**
  * @swagger

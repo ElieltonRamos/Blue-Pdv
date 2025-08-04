@@ -18,6 +18,21 @@ const options: swaggerJSDoc.Options = {
     ],
     components: {
       schemas: {
+        Expense: {
+          type: 'object',
+          properties: {
+            id: { type: 'number', example: 1 },
+            supplier: { type: 'string', example: 'Fornecedor XYZ' },
+            description: { type: 'string', example: 'Compra de material de escritório' },
+            value: { type: 'number', example: 250.75 },
+            datePayment: { type: 'string', format: 'date', example: '2025-08-04' },
+            status: {
+              type: 'string',
+              enum: ['Pago', 'Pendente', 'Atrasado'],
+              example: 'Pago',
+            },
+          },
+        },
         PaginatedResponse: {
           type: 'object',
           properties: {
